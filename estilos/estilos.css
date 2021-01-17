@@ -15,6 +15,31 @@
     .carousel-inner .carousel-item img{
         height: 500px;
     }
+
+    .index-product{
+        width: 10%;
+        margin: 0 15px;
+    }
+    
+    .carousel-inner .carousel-item .index-product img{
+        height: 210px;
+    }
+}
+
+.product-section{
+    margin: 130px 0;
+}
+
+.etiqueta-precio{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.btn-shop{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
 }
 
 /*_____-----SKIN-----_____*/
@@ -92,6 +117,28 @@
     top: 30px;
 }
 
+.carousel-control-next.index-product-control{
+    font-size: 40px;
+    color: black;
+
+    top: 70px;
+    right: -110px;
+}
+
+.carousel-control-prev.index-product-control{
+    font-size: 40px;
+    color: black;
+
+    top: 70px;
+    left: -110px;
+}
+
+.index-product{
+    border: 1px solid blue;
+}
+
+
+
 /*_____-----PSEUDOCLASES-----_____*/
 
 .navbar-dark .navbar-nav .nav-link:hover{
@@ -123,6 +170,13 @@
     top: 30px;
 }
 
+.index-product-control:hover{
+    font-size: 40px;
+    color: black;
+
+    top: 70px;
+    right: -110px;
+}
 /*_____-----KEYFRAME-----_____*/
 
 @keyframes menu-square{
