@@ -219,6 +219,150 @@
                 Destacados
             </h1>
             <hr>
+            <div id="carouselId-Destacado" class="carousel slide d-none d-sm-block" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+
+                    <div class="carousel-item active ">
+                        <div class="row d-flex">
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item ">
+                        <div class="row d-flex">
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="col index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <a class="carousel-control-prev index-product-control" href="#carouselId-Destacado" role="button"
+                    data-slide="prev">
+                    <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next index-product-control" href="#carouselId-Destacado" role="button"
+                    data-slide="next">
+                    <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <!--CAROUSEL SMALL-->
+            <div id="carouselId-Destacado" class="carousel slide d-sm-none" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                        <div class="d-flex">
+                            <div class="carousel-item active index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                            <div class="carousel-item index-product card">
+                                <a href="">
+                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="etiqueta-nombre">Nombre</h5>
+                                    <p class="etiqueta-precio">Precio</p>
+                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                </div>
+                            </div>
+                       
+                        </div>
+                </div>
+                <a class="carousel-control-prev index-product-control" href="#carouselId-Destacado" role="button"
+                    data-slide="prev">
+                    <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next index-product-control" href="#carouselId-Destacado" role="button"
+                    data-slide="next">
+                    <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </section>
     </div>
 <?php 
