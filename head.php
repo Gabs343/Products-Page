@@ -1,3 +1,44 @@
+<?php
+    $items_navlist = array(
+        1 => array(
+            "archivo" => "index.php",
+            "nombre" => "Home"
+        ),
+        2 => array(
+            "archivo" => "",
+            "nombre" => "Nosotros"
+        ),
+        3 => array(
+            "archivo" => "products.php",
+            "nombre" => "Productos"
+        ),
+        4 => array(
+            "archivo" => "",
+            "nombre" => "Contacto"
+        ),
+        5 => array(
+            "archivo" => "",
+            "nombre" => "Ingresar"
+    ));
+    
+    function NavList($a_nav){?>
+        <ul class="navbar-nav mt-1">
+            <?php foreach($a_nav as $clave => $valor){?>
+            <li class="nav-item <?php NavActive($valor["archivo"]); ?>">
+                <a class="nav-link" href="<?php echo $valor["archivo"];?>"><?php echo $valor["nombre"];?></a>
+            </li>
+            <?php } ?>
+        </ul>
+        <?php
+        
+    }
+
+    function NavActive($itemNav){
+        echo strpos($_SERVER["SCRIPT_NAME"], $itemNav) ? "active" : "";
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,31 +67,7 @@
         </button>
 
         <div class="collapse navbar-collapse " id="collapsibleNavId">
-            <ul class="navbar-nav mt-1">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Nosotros</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Productos</a>
-                    <div class="dropdown-menu text-right" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="#">Destacados</a>
-                        <a class="dropdown-item" href="#">Nuevos</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contacto</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Ingresar</a>
-                </li>
-            </ul>
-
+            <?php NavList($items_navlist);?>
         </div>
 
     </nav>
