@@ -25,6 +25,12 @@
                     <li>Proximamente</li>
                 </ul>
             </li>
+
+            <li><a href="#collapsePrecio" role="button" data-toggle="collapse">Precio</a>
+                <ul class="collapse sublist-menu" id="collapsePrecio">
+                    
+                </ul>
+            </li>
         </ul>
     </div>
 
