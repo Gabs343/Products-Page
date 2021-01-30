@@ -35,57 +35,12 @@
     </div>
 
     <div class="row row-cols-6">
-        <div class="col index-product card">
-            <a href="">
-                <img src="img/auricular1.png" alt="First slide" class="w-100">    
-            </a>
-                <div class="card-body">
-                    <h5 class="etiqueta-nombre">Nombre</h5>
-                    <p class="etiqueta-precio">Precio</p>
-                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                </div>
-        </div>
-        <div class="col index-product card">
-            <a href="">
-                <img src="img/auricular1.png" alt="First slide" class="w-100">    
-            </a>
-                <div class="card-body">
-                    <h5 class="etiqueta-nombre">Nombre</h5>
-                    <p class="etiqueta-precio">Precio</p>
-                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                </div>
-        </div>
-        <div class="col index-product card">
-            <a href="">
-                <img src="img/auricular1.png" alt="First slide" class="w-100">    
-            </a>
-                <div class="card-body">
-                    <h5 class="etiqueta-nombre">Nombre</h5>
-                    <p class="etiqueta-precio">Precio</p>
-                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                </div>
-        </div>
-        <div class="col index-product card">
-            <a href="">
-                <img src="img/auricular1.png" alt="First slide" class="w-100">    
-            </a>
-                <div class="card-body">
-                    <h5 class="etiqueta-nombre">Nombre</h5>
-                    <p class="etiqueta-precio">Precio</p>
-                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                </div>
-        </div>
+        <?php 
+            for($i = 1; $i <= sizeof($a_productos); $i++){
+                Producto($i, $a_productos);
+            }
 
-        <div class="col index-product card">
-            <a href="">
-                <img src="img/auricular1.png" alt="First slide" class="w-100">    
-            </a>
-                <div class="card-body">
-                    <h5 class="etiqueta-nombre">Nombre</h5>
-                    <p class="etiqueta-precio">Precio</p>
-                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                </div>
-        </div>
+        ?>
              
     </div>
 </section>
