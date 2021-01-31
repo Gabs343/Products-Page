@@ -70,88 +70,34 @@
             <div id="carouselId" class="carousel slide d-none d-sm-block" data-ride="carousel">
                 <div class="carousel-inner" role="listbox">
 
-                    <div class="carousel-item active ">
-                        <div class="row d-flex">
-                            <?php 
-                                Producto(1, $a_productos);
-                            ?>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php 
+                        $newProduct = 1;
+                        for($i = 0; $i < numberOfProducts("nuevo", $a_productos) / 4; $i++){ ?>
+                            <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
+                                <div class="row d-flex">
+                                    <?php
+                                        $countNewProduct = 0;
+                                        
+                                        for($k = 1; $k <= count($a_productos); $k++){
 
-                    <div class="carousel-item ">
-                        <div class="row d-flex">
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                            if ($a_productos[$newProduct]["nuevo"]) {
+                                                Producto($newProduct, $a_productos);
+                                                $countNewProduct ++;
+
+                                                if ($countNewProduct == 4) {
+                                                    $newProduct++;
+                                                    break;
+                                                }
+                                            }
+                                            
+                                            $newProduct == count($a_productos) ? $newProduct = 1 : $newProduct++;    
+                                        }
+
+                                    ?>
                                 </div>
                             </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php }
+                    ?>
 
                 </div>
                 <a class="carousel-control-prev index-product-control" href="#carouselId" role="button"
@@ -215,95 +161,34 @@
             <div id="carouselId-Destacado" class="carousel slide d-none d-sm-block" data-ride="carousel">
                 <div class="carousel-inner" role="listbox">
 
-                    <div class="carousel-item active ">
-                        <div class="row d-flex">
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <?php 
+                        $destProduct = 1;
+                        for($i = 0; $i < numberOfProducts("destacado", $a_productos) / 4; $i++){ ?>
+                            <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
+                                <div class="row d-flex">
+                                    <?php
+                                        $countDestProduct = 0;
+                                        
+                                        for($k = 1; $k <= count($a_productos); $k++){
 
-                    <div class="carousel-item ">
-                        <div class="row d-flex">
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+                                            if ($a_productos[$destProduct]["destacado"]) {
+                                                Producto($destProduct, $a_productos);
+                                                $countDestProduct ++;
+
+                                                if ($countDestProduct == 4) {
+                                                    $destProduct++;
+                                                    break;
+                                                }
+                                            }
+                                            
+                                            $destProduct == count($a_productos) ? $destProduct = 1 : $destProduct++;    
+                                        }
+
+                                    ?>
                                 </div>
                             </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="col index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php }
+                    ?>
 
                 </div>
                 <a class="carousel-control-prev index-product-control" href="#carouselId-Destacado" role="button"
