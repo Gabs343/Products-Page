@@ -9,7 +9,7 @@
             "precio" => 999,
             "id_marca" => 1,
             "id_categoria" => 1,
-            "nuevo" => false,
+            "nuevo" => true,
             "destacado" => false,
             "proximamente" => false,
             "especificaciones" => array(
@@ -31,7 +31,7 @@
             "precio" => 999,
             "id_marca" => 1,
             "id_categoria" => 1,
-            "nuevo" => false,
+            "nuevo" => true,
             "destacado" => false,
             "proximamente" => false,
             "especificaciones" => array()
@@ -46,7 +46,7 @@
             "id_marca" => 1,
             "id_categoria" => 1,
             "nuevo" => false,
-            "destacado" => false,
+            "destacado" => true,
             "proximamente" => false,
             "especificaciones" => array()
         ),
@@ -59,7 +59,7 @@
             "precio" => 999,
             "id_marca" => 1,
             "id_categoria" => 1,
-            "nuevo" => false,
+            "nuevo" => true,
             "destacado" => false,
             "proximamente" => false,
             "especificaciones" => array()
@@ -73,7 +73,77 @@
             "precio" => 999,
             "id_marca" => 1,
             "id_categoria" => 1,
+            "nuevo" => true,
+            "destacado" => false,
+            "proximamente" => false,
+            "especificaciones" => array()
+        ),
+
+        6 => array(
+            "id_producto" => 6,
+            "imagen" => "img/teclado3.png",
+            "nombre" => "Alloy Core RGB",
+            "descripcion" => "",
+            "precio" => 999,
+            "id_marca" => 1,
+            "id_categoria" => 1,
             "nuevo" => false,
+            "destacado" => true,
+            "proximamente" => false,
+            "especificaciones" => array()
+        ),
+
+        7 => array(
+            "id_producto" => 7,
+            "imagen" => "img/auricular2.png",
+            "nombre" => "G332 Leatherette",
+            "descripcion" => "",
+            "precio" => 999,
+            "id_marca" => 1,
+            "id_categoria" => 1,
+            "nuevo" => false,
+            "destacado" => true,
+            "proximamente" => false,
+            "especificaciones" => array()
+        ),
+
+        8 => array(
+            "id_producto" => 8,
+            "imagen" => "img/mouse2.png",
+            "nombre" => "Deathtaker",
+            "descripcion" => "",
+            "precio" => 999,
+            "id_marca" => 1,
+            "id_categoria" => 1,
+            "nuevo" => true,
+            "destacado" => false,
+            "proximamente" => false,
+            "especificaciones" => array()
+        ),
+
+        9 => array(
+            "id_producto" => 9,
+            "imagen" => "img/controller2.png",
+            "nombre" => "Marvo Gt-60",
+            "descripcion" => "",
+            "precio" => 999,
+            "id_marca" => 1,
+            "id_categoria" => 1,
+            "nuevo" => false,
+            "destacado" => true,
+            "proximamente" => false,
+            "especificaciones" => array()
+        ),
+
+        10 => array(
+            "id_producto" => 10,
+            "imagen" => "img/mouse3.png",
+            "nombre" => "Centrophorus M601",
+            "descripcion" => "",
+            "precio" => 999,
+            "id_marca" => 1,
+            "id_categoria" => 1,
+            "nuevo" => true,
             "destacado" => false,
             "proximamente" => false,
             "especificaciones" => array()
@@ -119,6 +189,16 @@
 
     function NavActive($itemNav){
         echo strpos($_SERVER["SCRIPT_NAME"], $itemNav) ? "active" : "";
+    }
+
+    function numberOfProducts($condicion, $a_productos){
+        $numberOfProducts = 0;
+        foreach($a_productos as $clave => $valor){
+            if($valor[$condicion]){
+                $numberOfProducts++;
+            }
+        }
+        return $numberOfProducts;
     }
 
     function Producto($id_producto, $a_productos){?>
