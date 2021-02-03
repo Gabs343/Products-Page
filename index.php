@@ -63,81 +63,28 @@
 
     <div class="container">
         <section class="product-section bd-section">
-            <h1>
-                Novedades
-            </h1>
-            <hr>
-            <div id="carouselId" class="carousel slide d-none d-sm-block" data-ride="carousel">
-                <div class="carousel-inner" role="listbox">
-
-                    <?php 
-                        $newProduct = 1;
-                        for($i = 0; $i < numberOfProducts("nuevo", $a_productos) / 4; $i++){ ?>
-                            <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-                                <div class="row d-flex">
-                                    <?php
-                                        $countNewProduct = 0;
-                                        
-                                        for($k = 1; $k <= count($a_productos); $k++){
-
-                                            if ($a_productos[$newProduct]["nuevo"]) {
-                                                Producto($newProduct, $a_productos);
-                                                $countNewProduct ++;
-
-                                                if ($countNewProduct == 4) {
-                                                    $newProduct++;
-                                                    break;
-                                                }
-                                            }
-                                            
-                                            $newProduct == count($a_productos) ? $newProduct = 1 : $newProduct++;    
-                                        }
-
-                                    ?>
-                                </div>
-                            </div>
-                        <?php }
-                    ?>
-
-                </div>
-                <a class="carousel-control-prev index-product-control" href="#carouselId" role="button"
-                    data-slide="prev">
-                    <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next index-product-control" href="#carouselId" role="button"
-                    data-slide="next">
-                    <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            <?php
+                carouselOfProducts("nuevo", $a_productos)
+            ?>
 
             <!--CAROUSEL SMALL-->
             <div id="carouselId2" class="carousel slide d-sm-none" data-ride="carousel">
                 <div class="carousel-inner" role="listbox">
-                        <div class="d-flex">
-                            <div class="carousel-item active index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
-                            <div class="carousel-item index-product card">
-                                <a href="">
-                                    <img src="img/auricular1.png" alt="First slide" class="w-100">    
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="etiqueta-nombre">Nombre</h5>
-                                    <p class="etiqueta-precio">Precio</p>
-                                    <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                                </div>
-                            </div>
                        
+                    <div class="carousel-item active">
+                            
+                        <?php 
+                            Producto(1, $a_productos)
+                        ?>
                         </div>
+                        <div class="carousel-item ">
+                            
+                        <?php 
+                            Producto(2, $a_productos)
+                        ?>
+                    </div>
+                       
+                        
                 </div>
                 <a class="carousel-control-prev index-product-control" href="#carouselId2" role="button"
                     data-slide="prev">
@@ -154,54 +101,9 @@
 
       
         <section class="product-section bd-section">
-            <h1 class="text-right">
-                Destacados
-            </h1>
-            <hr>
-            <div id="carouselId-Destacado" class="carousel slide d-none d-sm-block" data-ride="carousel">
-                <div class="carousel-inner" role="listbox">
-
-                <?php 
-                        $destProduct = 1;
-                        for($i = 0; $i < numberOfProducts("destacado", $a_productos) / 4; $i++){ ?>
-                            <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-                                <div class="row d-flex">
-                                    <?php
-                                        $countDestProduct = 0;
-                                        
-                                        for($k = 1; $k <= count($a_productos); $k++){
-
-                                            if ($a_productos[$destProduct]["destacado"]) {
-                                                Producto($destProduct, $a_productos);
-                                                $countDestProduct ++;
-
-                                                if ($countDestProduct == 4) {
-                                                    $destProduct++;
-                                                    break;
-                                                }
-                                            }
-                                            
-                                            $destProduct == count($a_productos) ? $destProduct = 1 : $destProduct++;    
-                                        }
-
-                                    ?>
-                                </div>
-                            </div>
-                        <?php }
-                    ?>
-
-                </div>
-                <a class="carousel-control-prev index-product-control" href="#carouselId-Destacado" role="button"
-                    data-slide="prev">
-                    <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next index-product-control" href="#carouselId-Destacado" role="button"
-                    data-slide="next">
-                    <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            <?php
+                carouselOfProducts("destacado", $a_productos)
+            ?>
 
             <!--CAROUSEL SMALL-->
             <div id="carouselId-Destacado" class="carousel slide d-sm-none" data-ride="carousel">
