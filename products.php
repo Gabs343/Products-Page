@@ -4,6 +4,7 @@
 
 <section class="container-fluid d-flex mt-5">
     <div class="filtro">
+        <div>
         <ul>
             <li><a href="#collapseCategoria" role="button" data-toggle="collapse">Categorias</a>
                 <ul class="collapse sublist-menu" id="collapseCategoria">
@@ -32,6 +33,7 @@
                 </ul>
             </li>
         </ul>
+        </div>
     </div>
 
     <div class="row row-cols-6">
