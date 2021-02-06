@@ -338,7 +338,7 @@ function carouselSmallOfProducts($nombre, $a_productos){ ?>
 
 function Producto($id_producto, $a_productos){ ?>
     <div class="col index-product card">
-        <a href="">
+        <a href="product-details.php">
             <img src="<?php echo $a_productos[$id_producto]["imagen"]; ?>" alt="First slide" class="w-100">
         </a>
         <div class="card-body">
