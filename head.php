@@ -253,7 +253,7 @@ function carouselOfProducts($nombre, $a_productos){ ?>
     <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <?php
-            $product = 1;
+            $idProducto = 1;
             for ($i = 0; $i < (numberOfProducts($nombre, $a_productos) / 4); $i++) { ?>
                 <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
                     <div class="row">
@@ -262,17 +262,17 @@ function carouselOfProducts($nombre, $a_productos){ ?>
 
                         for ($k = 1; $k <= count($a_productos); $k++) {
 
-                            if ($a_productos[$product][$nombre]) {
-                                Producto($product, $a_productos);
+                            if ($a_productos[$idProducto][$nombre]) {
+                                Producto($idProducto, $a_productos);
                                 $countProduct++;
 
                                 if ($countProduct == 4) {
-                                    $product++;
+                                    $idProducto++;
                                     break;
                                 }
                             }
 
-                            $product == count($a_productos) ? $product = 1 : $product++;
+                            $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
                         }
 
                         ?>
@@ -296,6 +296,44 @@ function carouselOfProducts($nombre, $a_productos){ ?>
 
 <?php }
 
+
+function carouselSmallOfProducts($nombre, $a_productos){ ?>
+
+    <div id="carouselSmallId-<?php echo $nombre ?>" class="carousel slide d-sm-none" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            <?php 
+                $idProducto = 1;
+                for ($i = 0; $i < count($a_productos); $i++) {
+                    if ($a_productos[$idProducto][$nombre]) {?>
+                        <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
+                            <?php
+                            
+                                Producto($idProducto, $a_productos);
+                            
+                                
+                            ?>
+                        </div>
+                <?php }else{
+                    $i--;
+                }
+                    $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
+                }
+            ?>
+
+            <a class="carousel-control-prev index-product-control" href="#carouselSmallId-<?php echo $nombre ?>" role="button"
+                data-slide="prev">
+                <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next index-product-control" href="#carouselSmallId-<?php echo $nombre ?>" role="button"
+                data-slide="next">
+                <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        
+    </div>
+<?php }
 
 
 function Producto($id_producto, $a_productos){ ?>
