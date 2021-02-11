@@ -1,5 +1,5 @@
 <footer>
-        <section class="pie fondo-pie d-md-flex text-center justify-content-around mt-5 p-4 container-fluid text-white">
+        <section class="pie fondo-pie d-md-flex text-center justify-content-around  p-4 container-fluid text-white">
             <div>
                 <h2>Información</h2>
                 <p class="mt-4">
