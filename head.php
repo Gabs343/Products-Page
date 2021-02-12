@@ -3,7 +3,7 @@
 $a_productos = array(
     1 => array(
         "id_producto" => 1,
-        "imagen" => "img/auricular1.png",
+        "imagen" => "img/auricular1.3.png",
         "nombre" => "Memecoleous H112",
         "descripcion" => "El Redragon Memecoleous ofrece un increíble nivel de sonido a gamers gracias a su sonido diseñado a medida.",
         "precio" => 999,
@@ -25,7 +25,7 @@ $a_productos = array(
 
     2 => array(
         "id_producto" => 2,
-        "imagen" => "img/teclado1.png",
+        "imagen" => "img/teclado1.3.png",
         "nombre" => "Kumara K552",
         "descripcion" => "",
         "precio" => 999,
@@ -53,7 +53,7 @@ $a_productos = array(
 
     4 => array(
         "id_producto" => 4,
-        "imagen" => "img/controller1.png",
+        "imagen" => "img/controller1.3.png",
         "nombre" => "Joystick Xbox",
         "descripcion" => "",
         "precio" => 999,
@@ -81,7 +81,7 @@ $a_productos = array(
 
     6 => array(
         "id_producto" => 6,
-        "imagen" => "img/teclado3.png",
+        "imagen" => "img/teclado3.3.png",
         "nombre" => "Alloy Core RGB",
         "descripcion" => "",
         "precio" => 999,
@@ -109,7 +109,7 @@ $a_productos = array(
 
     8 => array(
         "id_producto" => 8,
-        "imagen" => "img/mouse2.png",
+        "imagen" => "img/mouse2.3.png",
         "nombre" => "Deathtaker",
         "descripcion" => "",
         "precio" => 999,
@@ -123,7 +123,7 @@ $a_productos = array(
 
     9 => array(
         "id_producto" => 9,
-        "imagen" => "img/controller2.png",
+        "imagen" => "img/controller2.3.png",
         "nombre" => "Marvo Gt-60",
         "descripcion" => "",
         "precio" => 999,
@@ -338,7 +338,7 @@ function carouselSmallOfProducts($nombre, $a_productos){ ?>
 
 function Producto($id_producto, $a_productos){ ?>
     <div class="col index-product card">
-        <a href="product-details.php">
+        <a href="product-details.php?id=<?php echo $id_producto; ?>">
             <img src="<?php echo $a_productos[$id_producto]["imagen"]; ?>" alt="First slide" class="w-100">
         </a>
         <div class="card-body">
