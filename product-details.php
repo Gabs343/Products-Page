@@ -2,10 +2,10 @@
 require_once("head.php");
 ?>
 
-<section class="d-flex product-info">
+<section class="d-sm-flex product-info">
 
     <div>
-        <h1 class="display-3 text-center"><?php echo $a_productos[1]["nombre"]; ?></h1>
+        <h1 class="display-3 text-center"><?php echo $a_productos[$_GET["id"]]["nombre"]; ?></h1>
         <hr>
         <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -23,10 +23,11 @@ require_once("head.php");
     </div>
 
     <div class="product-img">
-        <img src="<?php echo $a_productos[1]["imagen"]; ?>" alt="">
+ 
+       <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" alt="" class="d-block w-100">
 
         <div class="shop-buttons">
-            <h3>$ <?php echo $a_productos[1]["precio"]; ?></h3>
+            <h3>$ <?php echo $a_productos[$_GET["id"]]["precio"]; ?></h3>
             <a href="">Comprar</a>
             <a href="">Añadir al Carrito</a>
         </div>
@@ -43,25 +44,32 @@ require_once("head.php");
         <div id="carouselProduct" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/auricular1.png" class="d-block w-100" alt="...">
+                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/auricular1.png" class="d-block w-100" alt="...">
+                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/auricular1.png" class="d-block w-100" alt="...">
+                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
                 </div>
             </div>
         </div>
 
         <div class="details-list">
             <ul>
-                <li> Tipo de salida: Stereo</li>
-                <li> Tipo de copa: Circumaurales: Este tipo de auriculares se coloca rodeando completamente la oreja. Tacto suave y con aislamiento pasivo</li>
-                <li> Material Diadema: Metálica, flexible. Integrada a la estructura</li>
-                <li> Tipo de cable: 2 m Engomado de alta resistencia.</li>
-                <li> Diametro del diafragma: 50 mm con imanes de neodimio</li>
-                <li> Vibración: Si. Motor de vibración 30 mm</li>
+                <?php 
+                    foreach($a_productos as $clave){
+                        if($clave["id_producto"] == $_GET["id"]){
+                           foreach($clave as $subclave){
+                                if(is_array($subclave)) {
+                                    foreach ($subclave as $subclave2 => $subvalor) { ?>
+                                        <li><?php echo $subclave2, ": ", $subvalor ?></li>
+                                    <?php }
+                                } 
+                            }
+                        }   
+                    }
+                ?>
             </ul>
         </div>
     </div>
