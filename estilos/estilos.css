@@ -49,8 +49,8 @@ ul {
     margin: 30px 0;
 }
 
-.filtro ul li ul li, .filtro ul li ul{
-    margin: 5px 0;
+.filtro .sublist li, .filtro .sublist{
+    margin: 10px;
     padding: 0;
 }
 
@@ -97,7 +97,7 @@ ul {
 .shop-buttons{
     text-align: center;
     position: relative;
-    top: -70px;
+    top: -100px;
 }
 
 .shop-buttons h3{
@@ -118,7 +118,6 @@ body{
     background: #ffffff;  /* fallback for old browsers */
   
     background: linear-gradient(to bottom, #8c8c8c, #ffffff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
 }
 
 .navbar{
@@ -240,7 +239,17 @@ body{
 
 .filtro ul a{
     color: white;
+    font-size: 17px;
     text-shadow: 4px 1px 9px black;
+}
+
+.filtro .sublist a{
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.activeItem a{
+    color: yellow;
 }
 
 .product-info, .product-details{
@@ -330,6 +339,10 @@ body{
 .index-product-control:hover{
     font-size: 45px;
     color: rgb(242, 255, 0);
+}
+
+.filtro .sublist a:hover{
+    color: yellow;
 }
 
 .btn-shop i:hover{
