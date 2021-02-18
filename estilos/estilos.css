@@ -248,7 +248,7 @@ body{
     font-size: 15px;
 }
 
-.activeItem a{
+.filtro ul .activeFilter a{
     color: yellow;
 }
 
