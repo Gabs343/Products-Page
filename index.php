@@ -66,8 +66,8 @@
             for($i = 0; $i < 2; $i++){?>
                 <section class="product-section bd-section">
                     <?php 
-                        carouselOfProducts($i == 0 ? "nuevo" : "destacado", $a_productos);
-                        carouselSmallOfProducts($i == 0 ? "nuevo" : "destacado", $a_productos);
+                        CarouselOfProducts($i == 0 ? "Nuevo" : "Destacado", $a_productos, $a_condiciones);
+                        CarouselSmallOfProducts($i == 0 ? "Nuevo" : "Destacado", $a_productos, $a_condiciones);
                     ?>
                 </section>
 
