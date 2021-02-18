@@ -9,11 +9,8 @@
             <li><a href="#collapseCategoria" role="button" data-toggle="collapse">Categorias</a>
                 <ul class="collapse sublist" id="collapseCategoria">
                     <?php 
-                        foreach($a_categorias as $clave){ ?>
-                        
-                            <li class="activeItem"><a href="products.php?categoria=<?php echo $clave["id_categoria"]; ?>"><?php echo $clave["categoria"]; ?></a></li>
-                            
-                        <?php } ?>
+                        FilterList($a_categorias, "categoria", "marca", "condicion");
+                    ?>
                 </ul>
             </li>
             
@@ -23,9 +20,9 @@
 
             <li><a href="#collapseCondicion" role="button" data-toggle="collapse">Condición</a>
                 <ul class="collapse sublist" id="collapseCondicion">
-                    <li>Nuevo</li>
-                    <li>Destacado</li>
-                    <li>Proximamente</li>
+                    <?php 
+                        FilterList($a_condiciones, "condicion", "categoria", "marca");
+                    ?>
                 </ul>
             </li>
 
@@ -44,7 +41,10 @@
                 $p_categoria = $a_productos[$i]["id_categoria"];
                 $g_categoria = $_GET["categoria"];
 
-                if($p_categoria == $g_categoria || $g_categoria == 0){
+                $p_condicion = $a_productos[$i]["id_condicion"];
+                $g_condicion = $_GET["condicion"];
+
+                if(($p_categoria == $g_categoria && $p_condicion == $g_condicion) || ($p_categoria == $g_categoria && $g_condicion == 0) || ($p_condicion == $g_condicion && $g_categoria == 0) || ($g_categoria == 0 && $g_condicion == 0)){
                     Producto($i, $a_productos);
                 }
             }
