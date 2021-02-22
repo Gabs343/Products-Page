@@ -178,30 +178,47 @@ function Producto($id_producto, $a_productos){ ?>
     </div>
 <?php } 
 
-function FilterList($array, $filtro1, $filtro2, $filtro3){
-    
-    foreach($array as $clave){
-        
-        $linkFilter = "<a href='products.php?".$filtro1."=".$clave["id_".$filtro1]."&".$filtro2."=&".$filtro3."='>".$clave[$filtro1]."</a> ";
-        $linkFilter2 = "<a href='products.php?".$filtro1."=".$clave["id_".$filtro1]."&".$filtro2."=".$_GET["marca"]."&".$filtro3."='>".$clave[$filtro1]."</a> ";
-        $linkFilter3 = "<a href='products.php?".$filtro1."=".$clave["id_".$filtro1]."&".$filtro2."=&".$filtro3."=".$_GET["condicion"]."'>".$clave[$filtro1]."</a> ";
-        $linkAllFilters = "<a href='products.php?".$filtro1."=".$clave["id_".$filtro1]."&".$filtro2."=".$_GET["marca"]."&".$filtro3."=".$_GET["condicion"]."'>".$clave[$filtro1]."</a> "; 
+function FilterList($array, $filtro1, $filtro2, $filtro3){ ?>
 
-        if(isset($_GET[$filtro2]) && isset($_GET[$filtro3])){
-            FilterListItem($clave["id_".$filtro1], $_GET[$filtro1], $linkAllFilters);
-        } else if(isset($_GET[$filtro3])){ 
-            FilterListItem($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter3);
-        } else if(isset($_GET[$filtro2])){
-            FilterListItem($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter2);
-        }else{
-            FilterListItem($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter);
-        }
-    }
-}
+    <li><a href="#collapse_<?php echo $filtro1 ?>"} role="button" data-toggle="collapse"><?php echo ucfirst($filtro1) ?></a>
+        <ul class="collapse sublist" id="collapse_<?php echo $filtro1 ?>">
+            <?php 
+                FilterLink($array, $filtro1, $filtro2, $filtro3);
+            ?>
+        </ul>
+    </li>  
+<?php } 
 
-function FilterListItem($id, $idGet, $filterVar){?>
+function FilterSublist($id, $idGet, $filterVar){?>
     <li class="<?php echo $id == $idGet ? "activeFilter" : ""; ?>">
         <?php echo $filterVar; ?>
     </li>
-<?php } ?>
+<?php } 
 
+function FilterLink($array, $filtro1, $filtro2, $filtro3){
+    
+    foreach($array as $clave){
+        
+        $link = "<a href='products.php?".$filtro1."=".$clave["id_".$filtro1]."&".$filtro2;
+        $linkName = $clave[$filtro1]."</a> ";
+
+        $linkFilter = $link."=&".$filtro3."='>".$linkName;
+        $linkFilter2 = $link."=".$_GET[$filtro2]."&".$filtro3."='>".$linkName;
+        $linkFilter3 = $link."=&".$filtro3."=".$_GET[$filtro3]."'>".$linkName;
+        $linkAllFilters = $link."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$linkName; 
+
+        if(isset($_GET[$filtro1]) && isset($_GET[$filtro2]) && isset($_GET[$filtro3])){
+            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkAllFilters);
+
+        } else if(isset($_GET[$filtro3])){ 
+            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter3);
+
+        } else if(isset($_GET[$filtro2])){
+            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter2);
+
+        }else{
+            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter);
+        }
+    }
+} 
+?>
