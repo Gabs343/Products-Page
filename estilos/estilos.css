@@ -64,7 +64,8 @@ ul {
 
 .product-info p{
     margin-top: 40px;
-    padding: 7px 45px;
+    padding: 7px 30px;
+    font-size:  17px;
 }
 
 .product-img .img{
