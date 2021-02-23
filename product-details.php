@@ -1,25 +1,11 @@
-<?php
-require_once("head.php");
-?>
+<?php require_once("head.php"); ?>
 
 <section class="d-sm-flex product-info">
 
-    <div>
+    <div class="product-description">
         <h1 class="display-3 text-center"><?php echo $a_productos[$_GET["id"]]["nombre"]; ?></h1>
         <hr>
-        <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Possimus earum ratione praesentium fugiat iure dignissimos odio quis saepe nesciunt nobis
-            eligendi ea corrupti maxime, magni non ullam delectus. Tenetur, odit? <br>
-
-            <br>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Possimus earum ratione praesentium fugiat iure dignissimos odio quis saepe nesciunt nobis
-            eligendi ea corrupti maxime, magni non ullam delectus. Tenetur, odit?<br>
-
-            <br>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Possimus earum ratione praesentium fugiat iure dignissimos odio quis saepe nesciunt nobis
-            eligendi ea corrupti maxime, magni non ullam delectus. Tenetur, odit?
-        </p>
+        <p><?php TextDescription($a_productos[$_GET["id"]]["descripcion"]); ?></p>
     </div>
 
     <div class="product-img">
@@ -76,6 +62,4 @@ require_once("head.php");
 
 </section>
 
-<?php
-require_once("footer.php");
-?>
+<?php require_once("footer.php"); ?>
