@@ -32,6 +32,11 @@ $items_navlist = array(
     )
 );
 
+$a_banners = array(
+    1 => "img/Banner1.jpg",
+    2 => "img/Banner2.jpg"
+);
+
 
 /*_____FUNCTIONS_____*/
 function NavList($a_nav){ ?>
@@ -47,6 +52,34 @@ function NavList($a_nav){ ?>
 function NavActive($itemNav){
     echo strpos($_SERVER["SCRIPT_NAME"], $itemNav) ? "active" : "";
 }
+
+function Banners($a_banners, $idCarousel){?>
+    <ol class="carousel-indicators">
+        <?php 
+            for($i = 0; $i < sizeof($a_banners); $i++){?>
+                <li data-target = "<?php echo "#".$idCarousel?>" data-slide-to="<?php echo $i ?>" class="<?php echo $i == 0 ? "active" : "" ?>"></li>
+            <?php } ?>
+    </ol>
+    <div class="carousel-inner">
+        <?php 
+            for($k = 1; $k <= sizeof($a_banners); $k++){?>
+                <div class = "carousel-item <?php echo $k == 1 ? "active" : "" ?>">
+                    <img src="<?php echo $a_banners[$k]; ?>" class="d-block w-100" alt="...">
+                </div>
+            <?php } ?>
+    </div>
+    <?php 
+        CarouselControls($idCarousel, "left");
+        CarouselControls($idCarousel, "right");
+    ?>  
+<?php }
+
+function CarouselControls($idCarousel, $direction){ ?>
+    <a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" href="#<?php echo $idCarousel ?>" role="button" data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" >
+        <span aria-hidden="true"><i class="fas fa-angle-double-<?php echo $direction ?>"></i></span>
+        <span class="sr-only"><php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?></span>
+    </a>
+<?php }
 
 function NumberOfProducts($condicion, $a_productos, $a_condiciones){
     $numberOfProducts = 0;
