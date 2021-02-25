@@ -76,7 +76,7 @@ function Banners($a_banners, $idCarousel){?>
 
 function CarouselControls($idCarousel, $direction){ ?>
     <a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" href="#<?php echo $idCarousel ?>" role="button" data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" >
-        <span aria-hidden="true"><i class="fas fa-angle-double-<?php echo $direction ?>"></i></span>
+        <span aria-hidden="true"><i class="fas fa-arrow-circle-<?php echo $direction ?>"></i></span>
         <span class="sr-only"><php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?></span>
     </a>
 <?php }
@@ -102,7 +102,7 @@ function CarouselOfProducts($nombre, $a_productos, $a_condiciones){ ?>
         <?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?>
     </h1>
     <hr>
-    <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block" data-ride="carousel">
+    <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <?php
             $idProducto = 1;
@@ -138,19 +138,12 @@ function CarouselOfProducts($nombre, $a_productos, $a_condiciones){ ?>
             <?php }
             ?>
         </div>
-        <a class="carousel-control-prev index-product-control" href="#carouselId-<?php echo $nombre ?>" role="button"
-                    data-slide="prev">
-                    <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next index-product-control" href="#carouselId-<?php echo $nombre ?>" role="button"
-                    data-slide="next">
-                    <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
-                    <span class="sr-only">Next</span>
-                </a>
+        <?php 
+            CarouselControls("carouselId-".$nombre , "left");
+            CarouselControls("carouselId-".$nombre, "right");
+        ?>  
 
     </div>
-
 <?php }
 
 
@@ -169,29 +162,17 @@ function CarouselSmallOfProducts($nombre, $a_productos, $a_condiciones){ ?>
                     if ($a_productos[$idProducto]["id_condicion"] == $idCondicion) {?>
                         <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
                             <?php
-                            
-                                Producto($idProducto, $a_productos);
-                            
-                                
+                                Producto($idProducto, $a_productos);  
                             ?>
                         </div>
                 <?php }else{
-                    $i--;
-                }
+                        $i--;
+                    }
                     $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
                 }
-            ?>
-
-            <a class="carousel-control-prev index-product-control" href="#carouselSmallId-<?php echo $nombre ?>" role="button"
-                data-slide="prev">
-                <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next index-product-control" href="#carouselSmallId-<?php echo $nombre ?>" role="button"
-                data-slide="next">
-                <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
-                <span class="sr-only">Next</span>
-            </a>
+                CarouselControls("carouselId-".$nombre , "left");
+                CarouselControls("carouselId-".$nombre, "right");
+            ?>  
         </div>
         
     </div>
