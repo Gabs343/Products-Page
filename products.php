@@ -1,6 +1,4 @@
-<?php
-    require_once("head.php");
-?>
+<?php require_once("head.php"); ?>
 
 <section class="container-fluid d-flex mt-5"><div class="filtro"><div><ul>
             <?php 
@@ -8,6 +6,7 @@
                 FilterList($a_marcas, "marca", "categoria", "condicion");
                 FilterList($a_condiciones, "condicion", "categoria", "marca");
             ?>
+            <li class="filterClean"><a href="products.php?categoria=&marca=&condicion=">Limpiar Filtros</a></li>
         </ul></div></div>
 
     <div class="row row-cols-6">
@@ -44,6 +43,4 @@
     </div>
 </section>
 
-<?php 
-    require_once("footer.php");
-?>
+<?php require_once("footer.php"); ?>
