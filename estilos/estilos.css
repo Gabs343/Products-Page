@@ -76,11 +76,11 @@ ul {
     padding: 30px 0;
 }
 
-.product-details h2, .product-details hr{
+.product-details h2, .product-details hr, .product-comments h2, .product-comments hr{
     margin-left: 50px;
 }
 
-.product-details hr{
+.product-details hr, .product-comments hr{
     width: 80%;   
 }
 
@@ -108,6 +108,29 @@ ul {
 .shop-buttons a{
     margin: 0 15px;
     padding: 9px;   
+}
+
+.form-info{
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.form-info div{
+    margin: 0 15px;
+}
+
+.product-comments .form-comment{
+    display: flex;
+    justify-content: center;
+}
+
+.form-comment label{
+    margin: 0 5px;
+}
+
+.sendForm{
+    margin: 30px 0;
+    padding: 5px;
 }
 
 .pie li {
@@ -253,7 +276,12 @@ body{
     color: yellow;
 }
 
-.product-info, .product-details{
+.filtro .filterClean a{
+    color: rgb(255, 255, 255);
+    text-shadow: 3px 1px 6px rgb(255, 0, 0);
+}
+
+.product-info, .product-details, .product-comments{
     /*background: rgb(140,140,140);
     background: linear-gradient(54deg, rgba(140,140,140,1) 0%, rgba(45,45,45,1) 100%);*/
 
@@ -269,11 +297,11 @@ body{
     margin-left: 10px;
 }
 
-.product-info h1, .product-details h2{
+.product-info h1, .product-details h2, .product-comments h2{
     text-shadow: 4px 1px 9px black;
 }
 
-.product-details hr{
+.product-details hr, .product-comments hr  {
     background-color: white;
 }
 
@@ -281,7 +309,7 @@ body{
     font-size: 18px;
 }
 
-.shop-buttons a{
+.shop-buttons a, .sendForm{
     color: white;
     text-shadow: 0px -2px 7px black;
 
@@ -351,7 +379,7 @@ body{
     animation: shop-rotation 0.8s infinite;
 }
 
-.shop-buttons a:hover{
+.shop-buttons a:hover, .sendForm:hover{
     color: rgb(0, 0, 0);
     text-decoration: none;
     text-shadow: 0px -1px 3px rgb(255, 0, 0);
