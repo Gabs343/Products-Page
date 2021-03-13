@@ -9,6 +9,8 @@ $a_condiciones = json_decode(file_get_contents("jsons/condiciones.json"), true);
 
 $a_marcas = json_decode(file_get_contents("jsons/marcas.json"), true);
 
+$a_comentarios = json_decode(file_get_contents("jsons/comentarios.json"), true);
+
 $items_navlist = array(
     1 => array(
         "archivo" => "index.php",
