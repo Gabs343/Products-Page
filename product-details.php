@@ -66,37 +66,92 @@
     <h2 class="display-4">Comentarios</h2>
     <hr>
 
-        <form action="" class="container text-center">
-            <div class="form-info d-flex">
-                <div>
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" placeholder="Nombre" id="nombre" name="nombre" required>
-                </div>
-                <div>
-                    <label for="Mail">Email:</label>
-                    <input type="email" placeholder="@example.com" id="Mail" name="id_correo" required>
-                </div>
-                <div>
-                    <label for="Valoracion">Califica el producto:</label>
-                    <?php
-                        for ($i = 1; $i < 6; $i++) { ?>
-                            <input type="radio" name="valoracion" id="Valoracion" value="<?php echo $i ?>" required><?php echo $i ?></input>
-                        <?php } ?>
-                
-                </div>
-            </div>
-            <div class="form-comment">
-                <label for="Comentario">Comentario:</label>
-                <textarea name="comentario" id="Comentario" cols="50" rows="2" required></textarea>
-                
+    <form action="<?php $_PHP_SELF ?>" class="container text-center" method="POST">
+        <div class="form-info d-flex">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" placeholder="Nombre" id="nombre" name="nombre" required>
             </div>
             <div>
-                <input class="sendForm" type="submit" name="comentar" value="Enviar comentario">
+                <label for="Mail">Email:</label>
+                <input type="email" placeholder="@example.com" id="Mail" name="correo" required>
             </div>
-            
-        </form>
-    
-    <div></div>
-</section>
+            <div>
+                <label for="Valoracion">Califica el producto:</label>
+                <?php
+                    for ($i = 1; $i < 6; $i++) { ?>
+                        <input type="radio" name="valoracion" id="Valoracion" value="<?php echo $i ?>" required><?php echo $i ?></input>
+                    <?php } ?>
+                
+            </div>
+        </div>
+        <div class="form-comment">
+            <label for="Comentario">Comentario:</label>
+            <textarea name="comentario" id="Comentario" cols="50" rows="2" required></textarea>
+                
+        </div>
+        <div>
+            <input class="sendForm" type="submit" name="sendComment" value="Enviar comentario">
+        </div>
+        <?php 
+            if(isset($_POST["sendComment"])){
+                date_default_timezone_set("America/Argentina/Buenos_Aires");
+                $key = date("YmdHis");
 
-<?php require_once("footer.php"); ?>
+                array_pop($_POST);
+                $_POST = array("id_producto" => $_GET["id"], "fecha" => date("d-m-Y H:i:s"), "nombre" => $_POST["nombre"]) + $_POST;
+                $a_comentarios[$key] = $_POST;
+
+                file_put_contents("jsons/comentarios.json", json_encode($a_comentarios));
+            }
+        
+        ?>
+    </form>
+
+    <hr>
+    <div class=" comments container">
+        <div>
+            <h1 class="points">
+                <?php 
+                    $comment = 0;
+                    $sumValor = 0;
+                    foreach($a_comentarios as $clave){
+                        if($clave["id_producto"] == $_GET["id"]){
+                            $comment++;
+                            foreach($clave as $subclave => $subvalor){
+                                if($subclave == "valoracion"){
+                                    $sumValor += $subvalor;
+                                }
+                            }
+                        } 
+                    }
+                    echo $comment == 0 ? 0.0 : $sumValor / $comment; 
+                ?>
+            </h1>
+        </div>
+
+
+        <div>
+            <ul>
+                <?php
+                    foreach($a_comentarios as $clave){
+                        if($clave["id_producto"] == $_GET["id"]){?>
+                            <li>
+                                <?php
+                                    foreach($clave as $subclave => $subvalor){
+                                        if($subclave == "id_producto" || $subclave == "correo"){
+                                            continue;
+                                        }else{ 
+                                            echo $subclave, ": ", $subvalor, "<br>";
+                                        }
+                                    }
+                                ?>
+                            </li>
+                        <?php }
+                    }
+                ?>
+            </ul>
+        </div>
+    </div>
+    
+</section><?php require_once("footer.php"); ?>
