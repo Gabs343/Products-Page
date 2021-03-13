@@ -133,6 +133,20 @@ ul {
     padding: 5px;
 }
 
+.comments{
+    display: flex;
+}
+
+.comments ul{
+    margin: 0 200px;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.comments li{
+    margin-bottom: 50px;
+}
+
 .pie li {
     margin: 10px 16px;
 }
@@ -320,6 +334,14 @@ body{
     box-shadow: 0px -2px 7px black;
 
     transition: 0.5s;
+}
+
+.comments li{
+    font-size: 18px;
+}
+
+.points{
+    font-size: 150px;
 }
 
 .pie {
