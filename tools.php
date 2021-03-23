@@ -1,13 +1,8 @@
 <?php 
 
 /*_____ARRAYS_____*/
+
 $a_productos = json_decode(file_get_contents("jsons/productos.json"), true);
-
-$a_categorias = json_decode(file_get_contents("jsons/categorias.json"), true);
-
-$a_condiciones = json_decode(file_get_contents("jsons/condiciones.json"), true);
-
-$a_marcas = json_decode(file_get_contents("jsons/marcas.json"), true);
 
 $a_comentarios = json_decode(file_get_contents("jsons/comentarios.json"), true);
 
@@ -41,11 +36,12 @@ $a_banners = array(
 
 
 /*_____FUNCTIONS_____*/
+
 function NavList($a_nav){ ?>
     <ul class="navbar-nav mt-1">
         <?php foreach ($a_nav as $clave => $valor) { ?>
             <li class="nav-item <?php NavActive($valor["archivo"]); ?>">
-                <a class="nav-link" href="<?php echo $valor["archivo"] == "products.php" ? "products.php?categoria&marca&condicion" : $valor["archivo"]; ?>"><?php echo $valor["nombre"]; ?></a>
+                <a class="nav-link" href="<?php echo $valor["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0" : $valor["archivo"]; ?>"><?php echo $valor["nombre"]; ?></a>
             </li>
         <?php } ?>
     </ul>
@@ -194,12 +190,12 @@ function Producto($id_producto, $a_productos){ ?>
     </div>
 <?php } 
 
-function FilterList($array, $filtro1, $filtro2, $filtro3){ ?>
+function FilterList($filtro1, $filtro2, $filtro3){ ?>
 
     <li><a href="#collapse_<?php echo $filtro1 ?>"} role="button" data-toggle="collapse"><?php echo ucfirst($filtro1) ?></a>
         <ul class="collapse sublist" id="collapse_<?php echo $filtro1 ?>">
             <?php 
-                FilterLink($array, $filtro1, $filtro2, $filtro3);
+                FilterLink($filtro1, $filtro2, $filtro3);
             ?>
         </ul>
     </li>  
@@ -211,30 +207,45 @@ function FilterSublist($id, $idGet, $filterVar){?>
     </li>
 <?php } 
 
-function FilterLink($array, $filtro1, $filtro2, $filtro3){
-    
-    foreach($array as $clave){
-        
-        $link = "<a href='products.php?".$filtro1."=".$clave["id_".$filtro1]."&".$filtro2;
-        $linkName = $clave[$filtro1]."</a> ";
+function FilterLink($filtro1, $filtro2, $filtro3){
+    require("mysql-login.php");
+    try{
+        $connection = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password);
+    }catch(PDOException $e){
+        print "¡ERROR!: ". $e->getMessage();
+        die();
+    }
 
-        $linkFilter = $link."=&".$filtro3."='>".$linkName;
-        $linkFilter2 = $link."=".$_GET[$filtro2]."&".$filtro3."='>".$linkName;
-        $linkFilter3 = $link."=&".$filtro3."=".$_GET[$filtro3]."'>".$linkName;
-        $linkAllFilters = $link."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$linkName; 
+    $query = "SELECT * FROM $filtro1";
+    $array_filter = $connection->query($query);
+
+    foreach($array_filter as $clave){
+        
+        $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2;
+        $linkName = $clave["Nombre"]."</a> ";
 
         if(isset($_GET[$filtro1]) && isset($_GET[$filtro2]) && isset($_GET[$filtro3])){
-            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkAllFilters);
 
-        } else if(isset($_GET[$filtro3])){ 
-            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter3);
+            $link= $link."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$linkName; 
+            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
+
+        } else if(isset($_GET[$filtro3])){
+
+            $link = $link."=&".$filtro3."=".$_GET[$filtro3]."'>".$linkName;
+            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
 
         } else if(isset($_GET[$filtro2])){
-            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter2);
+
+            $link = $link."=".$_GET[$filtro2]."&".$filtro3."='>".$linkName;
+            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
 
         }else{
-            FilterSublist($clave["id_".$filtro1], $_GET[$filtro1], $linkFilter);
+
+            $link = $link."=&".$filtro3."='>".$linkName;
+            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
         }
+
+    
     }
 }
 
