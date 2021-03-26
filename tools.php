@@ -1,7 +1,24 @@
 <?php 
+require_once("mysql-login.php");
 
+try{
+    $connection = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password);
+}catch(PDOException $e){
+    print "ERROR!: ".$e->getMessage();
+    die();
+}
+
+$queryCategoria = "SELECT * FROM categoria";
+$a_categorias= $connection->query($queryCategoria);
+
+$queryMarca = "SELECT * FROM marca";
+$a_marcas= $connection->query($queryMarca);
+
+$queryCondicion = "SELECT * FROM condicion";
+$a_condiciones= $connection->query($queryCondicion);
+
+$a_condiciones2= $connection->query($queryCondicion);
 /*_____ARRAYS_____*/
-
 $a_productos = json_decode(file_get_contents("jsons/productos.json"), true);
 
 $a_comentarios = json_decode(file_get_contents("jsons/comentarios.json"), true);
@@ -28,13 +45,10 @@ $items_navlist = array(
         "nombre" => "Ingresar"
     )
 );
-
 $a_banners = array(
     1 => "img/Banner1.jpg",
     2 => "img/Banner2.jpg"
 );
-
-
 /*_____FUNCTIONS_____*/
 
 function NavList($a_nav){ ?>
@@ -46,11 +60,9 @@ function NavList($a_nav){ ?>
         <?php } ?>
     </ul>
 <?php }
-
 function NavActive($itemNav){
     echo strpos($_SERVER["SCRIPT_NAME"], $itemNav) ? "active" : "";
 }
-
 function Banners($a_banners, $idCarousel){?>
     <ol class="carousel-indicators">
         <?php 
@@ -71,65 +83,48 @@ function Banners($a_banners, $idCarousel){?>
         CarouselControls($idCarousel, "right");
     ?>  
 <?php }
-
 function CarouselControls($idCarousel, $direction){ ?>
     <a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" href="#<?php echo $idCarousel ?>" role="button" data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" >
         <span aria-hidden="true"><i class="fas fa-arrow-circle-<?php echo $direction ?>"></i></span>
         <span class="sr-only"><php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?></span>
     </a>
 <?php }
-
-function NumberOfProducts($condicion, $a_productos, $a_condiciones){
-    $numberOfProducts = 0;
-    foreach($a_condiciones as $clave => $valor){
-        if($valor["condicion"] == $condicion){
-            $idCondicion = $valor["id_condicion"];
-        }
-    }
-    foreach ($a_productos as $clave => $valor) {
-        if ($valor["id_condicion"] == $idCondicion) {
-            $numberOfProducts++;
-        }
-    }
-    return $numberOfProducts;
-}
-
 function CarouselOfProducts($nombre, $a_productos, $a_condiciones){ ?>
-
-    <h1>
-        <?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?>
-    </h1>
-    <hr>
+    <h1><?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?></h1><hr>
     <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
-            <?php
+            <?php 
             $idProducto = 1;
-            foreach($a_condiciones as $clave => $valor){
-                if($valor["condicion"] == $nombre){
-                    $idCondicion = $valor["id_condicion"];
+            $numberOfProducts = 0;
+            foreach($a_condiciones as $clave){
+                if($clave["Nombre"] == $nombre){ 
+                    $id = $clave["ID"];
+                    
+                    foreach ($a_productos as $clave_pr) {
+                        if ($clave_pr["id_condicion"] == $id) {
+                            $numberOfProducts++;        
+                        }
+                    }
                 }
             }
-            for ($i = 0; $i < (NumberOfProducts($nombre, $a_productos, $a_condiciones) / 4); $i++) { ?>
+            
+            for ($i = 0; $i < ($numberOfProducts / 4); $i++) { ?>
                 <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
                     <div class="row">
                         <?php
                         $countProduct = 0;
-
                         for ($k = 1; $k <= count($a_productos); $k++) {
                             
-                            if ($a_productos[$idProducto]["id_condicion"] == $idCondicion) {
+                            if ($a_productos[$idProducto]["id_condicion"] == $id) {
                                 Producto($idProducto, $a_productos);
                                 $countProduct++;
-
                                 if ($countProduct == 4) {
                                     $idProducto++;
                                     break;
                                 }
                             }
-
                             $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
                         }
-
                         ?>
                     </div>
                 </div>
@@ -140,13 +135,9 @@ function CarouselOfProducts($nombre, $a_productos, $a_condiciones){ ?>
             CarouselControls("carouselId-".$nombre , "left");
             CarouselControls("carouselId-".$nombre, "right");
         ?>  
-
     </div>
 <?php }
-
-
 function CarouselSmallOfProducts($nombre, $a_productos, $a_condiciones){ ?>
-
     <div id="carouselSmallId-<?php echo $nombre ?>" class="carousel slide d-sm-none" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <?php 
@@ -175,8 +166,6 @@ function CarouselSmallOfProducts($nombre, $a_productos, $a_condiciones){ ?>
         
     </div>
 <?php }
-
-
 function Producto($id_producto, $a_productos){ ?>
     <div class="col index-product card">
         <a href="product-details.php?id=<?php echo $id_producto; ?>">
@@ -189,71 +178,45 @@ function Producto($id_producto, $a_productos){ ?>
         </div>
     </div>
 <?php } 
-
-function FilterList($filtro1, $filtro2, $filtro3){ ?>
-
+function FilterList($array, $filtro1, $filtro2, $filtro3){ ?>
     <li><a href="#collapse_<?php echo $filtro1 ?>"} role="button" data-toggle="collapse"><?php echo ucfirst($filtro1) ?></a>
         <ul class="collapse sublist" id="collapse_<?php echo $filtro1 ?>">
             <?php 
-                FilterLink($filtro1, $filtro2, $filtro3);
+                FilterLink($array, $filtro1, $filtro2, $filtro3);
             ?>
         </ul>
     </li>  
 <?php } 
-
 function FilterSublist($id, $idGet, $filterVar){?>
     <li class="<?php echo $id == $idGet ? "activeFilter" : ""; ?>">
         <?php echo $filterVar; ?>
     </li>
 <?php } 
-
-function FilterLink($filtro1, $filtro2, $filtro3){
-    require("mysql-login.php");
-    try{
-        $connection = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password);
-    }catch(PDOException $e){
-        print "¡ERROR!: ". $e->getMessage();
-        die();
-    }
-
-    $query = "SELECT * FROM $filtro1";
-    $array_filter = $connection->query($query);
-
-    foreach($array_filter as $clave){
+function FilterLink($array, $filtro1, $filtro2, $filtro3){
+    
+    foreach($array as $clave){
         
         $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2;
         $linkName = $clave["Nombre"]."</a> ";
-
+        
         if(isset($_GET[$filtro1]) && isset($_GET[$filtro2]) && isset($_GET[$filtro3])){
-
-            $link= $link."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$linkName; 
+            $link = $link."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$linkName; 
             FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-
-        } else if(isset($_GET[$filtro3])){
-
+        } else if(isset($_GET[$filtro3])){ 
             $link = $link."=&".$filtro3."=".$_GET[$filtro3]."'>".$linkName;
             FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-
         } else if(isset($_GET[$filtro2])){
-
             $link = $link."=".$_GET[$filtro2]."&".$filtro3."='>".$linkName;
             FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-
         }else{
-
             $link = $link."=&".$filtro3."='>".$linkName;
             FilterSublist($clave["ID"], $_GET[$filtro1], $link);
         }
-
-    
     }
 }
-
 function TextDescription($string){
     $array_text = str_split($string);
-
     for($i = 0; $i < sizeof($array_text); $i++ ){
-
         echo $array_text[$i];
         echo $array_text[$i] == "." ? "<br><br>" : "";
     }

@@ -80,9 +80,9 @@
                 <label for="Valoracion">Califica el producto:</label>
                 <?php
                     for ($i = 1; $i < 6; $i++) { ?>
-                        <input type="hidden" name="valoracion" id="Valoracion" value="<?php echo $i ?>"required></input>
-                        <i class="far fa-star"></i>
+                        <input type="radio" name="valoracion" id="Valoracion" value="<?php echo $i ?>" required><?php echo $i ?></input>
                     <?php } ?>
+                
             </div>
         </div>
         <div class="form-comment">
@@ -125,9 +125,7 @@
                             }
                         } 
                     }
-                    $comment == 0 ? $result = 0.0 : $result = $sumValor / $comment;
-                    $result = number_format($result, 1);
-                    echo $result; 
+                    echo $comment == 0 ? 0.0 : $sumValor / $comment; 
                 ?>
             </h1>
         </div>
@@ -143,13 +141,7 @@
                                     foreach($clave as $subclave => $subvalor){
                                         if($subclave == "id_producto" || $subclave == "correo"){
                                             continue;
-                                        }else if($subclave == "valoracion"){ 
-                                            echo $subclave, ": ";
-                                            for($i = 0; $i < $subvalor; $i++){?>
-                                                <i class="fas fa-star"></i>
-                                            <?php } ?>
-                                            <br>
-                                        <?php }else{
+                                        }else{ 
                                             echo $subclave, ": ", $subvalor, "<br>";
                                         }
                                     }
