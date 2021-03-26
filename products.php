@@ -6,7 +6,7 @@
                 FilterList($a_marcas, "marca", "categoria", "condicion");
                 FilterList($a_condiciones, "condicion", "categoria", "marca");
             ?>
-            <li class="filterClean"><a href="products.php?categoria=&marca=&condicion=">Limpiar Filtros</a></li>
+            <li class="filterClean"><a href="products.php?categoria=0&marca=0&condicion=0">Limpiar Filtros</a></li>
         </ul></div></div>
 
     <div class="row row-cols-6">
@@ -23,7 +23,7 @@
 
                 $allFilters = $p_categoria == $g_categoria && $p_condicion == $g_condicion && $p_marca == $g_marca;
                 $noneFilters = $g_categoria == 0 && $g_condicion == 0 && $g_marca == 0;
-
+            
                 if($allFilters || 
                     ($p_categoria == $g_categoria && $p_condicion == $g_condicion && $g_marca == 0) ||
                     ($p_categoria == $g_categoria && $p_marca == $g_marca && $g_condicion == 0) ||
