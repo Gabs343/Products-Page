@@ -1,10 +1,10 @@
 <?php require_once("head.php"); ?>
 
 <section class="container-fluid d-flex mt-5"><div class="filtro"><div><ul>
-            <?php 
-                FilterList($a_categorias, "categoria", "marca", "condicion");
-                FilterList($a_marcas, "marca", "categoria", "condicion");
-                FilterList($a_condiciones, "condicion", "categoria", "marca");
+            <?php
+                for($i = 1; $i <= sizeof($a_filtros); $i++){
+                    FilterList($i, $a_filtros, $connection);
+                }
             ?>
             <li class="filterClean"><a href="products.php?categoria=0&marca=0&condicion=0">Limpiar Filtros</a></li>
         </ul></div></div>
