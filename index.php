@@ -41,8 +41,15 @@
     </div>
 
     <div class="container">
-        <section class="product-section bd-section"><?php CarouselOfProducts("Nuevo", $a_productos, $a_condiciones); ?></section>
-        <section class="product-section bd-section"><?php CarouselOfProducts("Destacado", $a_productos, $a_condiciones2); ?></section>
+        <?php 
+            for($i = 0; $i < 2; $i++){?>
+                <section class="product-section bd-section">
+                    <?php 
+                        CarouselOfProducts($i == 0 ? "Nuevo" : "Destacado", $a_productos, $connection);
+                    ?>
+                </section>
+            <?php }
+        ?>
     </div>
 <?php 
     require_once("footer.php");
