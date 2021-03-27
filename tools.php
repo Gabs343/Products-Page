@@ -8,16 +8,6 @@ try{
     die();
 }
 
-$queryCategoria = "SELECT * FROM categoria";
-$a_categorias= $connection->query($queryCategoria);
-
-$queryMarca = "SELECT * FROM marca";
-$a_marcas= $connection->query($queryMarca);
-
-$queryCondicion = "SELECT * FROM condicion";
-$a_condiciones= $connection->query($queryCondicion);
-
-$a_condiciones2= $connection->query($queryCondicion);
 /*_____ARRAYS_____*/
 $a_productos = json_decode(file_get_contents("jsons/productos.json"), true);
 
@@ -48,6 +38,12 @@ $items_navlist = array(
 $a_banners = array(
     1 => "img/Banner1.jpg",
     2 => "img/Banner2.jpg"
+);
+
+$a_filtros = array(
+    1 => "categoria",
+    2 => "marca",
+    3 => "condicion"
 );
 /*_____FUNCTIONS_____*/
 
@@ -89,11 +85,14 @@ function CarouselControls($idCarousel, $direction){ ?>
         <span class="sr-only"><php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?></span>
     </a>
 <?php }
-function CarouselOfProducts($nombre, $a_productos, $a_condiciones){ ?>
+function CarouselOfProducts($nombre, $a_productos, $connection){ ?>
     <h1><?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?></h1><hr>
     <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <?php 
+            $query = "SELECT * FROM condicion";
+            $a_condiciones = $connection->query($query);
+
             $idProducto = 1;
             $numberOfProducts = 0;
             foreach($a_condiciones as $clave){
@@ -178,11 +177,11 @@ function Producto($id_producto, $a_productos){ ?>
         </div>
     </div>
 <?php } 
-function FilterList($array, $filtro1, $filtro2, $filtro3){ ?>
-    <li><a href="#collapse_<?php echo $filtro1 ?>"} role="button" data-toggle="collapse"><?php echo ucfirst($filtro1) ?></a>
-        <ul class="collapse sublist" id="collapse_<?php echo $filtro1 ?>">
+function FilterList($num, $a_filtros, $connection){ ?>
+    <li><a href="#collapse_<?php echo $a_filtros[$num] ?>" role="button" data-toggle="collapse"><?php echo ucfirst($a_filtros[$num]) ?></a>
+        <ul class="collapse sublist" id="collapse_<?php echo $a_filtros[$num] ?>">
             <?php 
-                FilterLink($array, $filtro1, $filtro2, $filtro3);
+                FilterLink($num, $connection);
             ?>
         </ul>
     </li>  
@@ -192,8 +191,28 @@ function FilterSublist($id, $idGet, $filterVar){?>
         <?php echo $filterVar; ?>
     </li>
 <?php } 
-function FilterLink($array, $filtro1, $filtro2, $filtro3){
-    
+function FilterLink($num, $connection){
+    switch($num){
+        case 1:
+            $filtro1 = "categoria";
+            $filtro2 = "marca";
+            $filtro3 = "condicion";
+            break;
+        case 2:
+            $filtro1 = "marca";
+            $filtro2 = "categoria";
+            $filtro3 = "condicion";
+            break;
+        case 3:
+            $filtro1 = "condicion";
+            $filtro2 = "categoria";
+            $filtro3 = "marca";
+            break;
+    }
+
+    $query = "SELECT * FROM $filtro1";
+    $array = $connection->query($query);
+
     foreach($array as $clave){
         
         $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2;
