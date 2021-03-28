@@ -209,28 +209,22 @@ function FilterLink($num, $connection){
             $filtro3 = "marca";
             break;
     }
+    
+    if($_GET["categoria"] != 0 && $filtro1 == "marca"){
+        $query = "SELECT * FROM $filtro1 INNER JOIN rel_categoria_marca ON ID = rel_categoria_marca.ID_Marca AND rel_categoria_marca.ID_Categoria = $_GET[categoria]";
+    }else if($_GET["marca"] != 0 && $filtro1 == "categoria"){
+        $query = "SELECT * FROM $filtro1 INNER JOIN rel_categoria_marca ON ID = rel_categoria_marca.ID_Categoria AND rel_categoria_marca.ID_Marca = $_GET[marca]";
+    }else{
+        $query = "SELECT * FROM $filtro1";
+    }
 
-    $query = "SELECT * FROM $filtro1";
     $array = $connection->query($query);
 
     foreach($array as $clave){
         
-        $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2;
-        $linkName = $clave["Nombre"]."</a> ";
-        
-        if(isset($_GET[$filtro1]) && isset($_GET[$filtro2]) && isset($_GET[$filtro3])){
-            $link = $link."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$linkName; 
-            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-        } else if(isset($_GET[$filtro3])){ 
-            $link = $link."=&".$filtro3."=".$_GET[$filtro3]."'>".$linkName;
-            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-        } else if(isset($_GET[$filtro2])){
-            $link = $link."=".$_GET[$filtro2]."&".$filtro3."='>".$linkName;
-            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-        }else{
-            $link = $link."=&".$filtro3."='>".$linkName;
-            FilterSublist($clave["ID"], $_GET[$filtro1], $link);
-        }
+        $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$clave["Nombre"]."</a> ";
+        FilterSublist($clave["ID"], $_GET[$filtro1], $link);
+      
     }
 }
 function TextDescription($string){
