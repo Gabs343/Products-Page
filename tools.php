@@ -192,7 +192,7 @@ function FilterSublist($id, $idGet, $filterVar){?>
     </li>
 <?php } 
 function FilterLink($num, $connection){
-    switch($num){
+    switch ($num) {
         case 1:
             $filtro1 = "categoria";
             $filtro2 = "marca";
@@ -205,20 +205,11 @@ function FilterLink($num, $connection){
             break;
         case 3:
             $filtro1 = "condicion";
-            $filtro2 = "categoria";
-            $filtro3 = "marca";
+            $filtro2 = "marca";
+            $filtro3 = "categoria";
             break;
     }
-    
-    if($_GET["categoria"] != 0 && $filtro1 == "marca"){
-        $query = "SELECT * FROM $filtro1 INNER JOIN rel_categoria_marca ON ID = rel_categoria_marca.ID_Marca AND rel_categoria_marca.ID_Categoria = $_GET[categoria]";
-    }else if($_GET["marca"] != 0 && $filtro1 == "categoria"){
-        $query = "SELECT * FROM $filtro1 INNER JOIN rel_categoria_marca ON ID = rel_categoria_marca.ID_Categoria AND rel_categoria_marca.ID_Marca = $_GET[marca]";
-    }else{
-        $query = "SELECT * FROM $filtro1";
-    }
-
-    $array = $connection->query($query);
+    $array = $connection->query(FilterConsult($filtro1, $filtro2, $filtro3));
 
     foreach($array as $clave){
         
@@ -227,6 +218,56 @@ function FilterLink($num, $connection){
       
     }
 }
+
+function FilterConsult ($filtro1, $filtro2, $filtro3){
+    switch($filtro1){
+        case "categoria":
+            $tabla1 = "rel_categoria_marca";
+            $tabla2 = "rel_categoria_condicion";
+            break;
+        case "marca":
+            $tabla1 = "rel_categoria_marca";
+            $tabla2 = "rel_marca_condicion";
+            break;
+        case "condicion":
+            $tabla1 = "rel_marca_condicion";
+            $tabla2 = "rel_categoria_condicion";
+            break;
+    }
+   
+    if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] != 0){
+        $query = "SELECT ID, Nombre
+                FROM $filtro1
+                INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2= $_GET[$filtro2]
+                INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]
+                WHERE ID = $_GET[$filtro1]";
+    }else if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] == 0){
+       $query = "SELECT ID, Nombre
+                FROM $filtro1
+                INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]
+                WHERE ID = $_GET[$filtro1]"; 
+    }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro2] == 0){
+        $query = "SELECT ID, Nombre
+                FROM $filtro1
+                INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]
+                WHERE ID = $_GET[$filtro1]"; 
+    }else if($_GET[$filtro2] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro1] == 0){
+        $query = "SELECT ID, Nombre
+                FROM $filtro1
+                INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2= $_GET[$filtro2]
+                INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3= $_GET[$filtro3]";
+    }else if($_GET[$filtro2] != 0 && $_GET[$filtro1] == 0 && $_GET[$filtro3] == 0){
+        $query = "SELECT * FROM $filtro1 INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]";
+    }else if($_GET[$filtro3] != 0 && $_GET[$filtro2] == 0 && $_GET[$filtro1] == 0){
+        $query = "SELECT * FROM $filtro1 INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]";;
+    }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] == 0 && $_GET[$filtro2] == 0){
+        $query = "SELECT * FROM $filtro1 WHERE ID = $_GET[$filtro1]";
+    }else{
+        $query = "SELECT * FROM $filtro1";
+    }
+    return $query;
+}
+
 function TextDescription($string){
     $array_text = str_split($string);
     for($i = 0; $i < sizeof($array_text); $i++ ){
