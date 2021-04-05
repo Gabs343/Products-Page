@@ -31,7 +31,7 @@ $items_navlist = array(
         "nombre" => "Contacto"
     ),
     5 => array(
-        "archivo" => "",
+        "archivo" => "login.php",
         "nombre" => "Ingresar"
     )
 );
