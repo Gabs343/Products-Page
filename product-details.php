@@ -96,13 +96,20 @@
         <?php 
             if(isset($_POST["sendComment"])){
                 date_default_timezone_set("America/Argentina/Buenos_Aires");
-                $key = date("YmdHis");
 
-                array_pop($_POST);
+                $key = intval(date("YmdHis"));
+                $_POST["valoracion"] = intval($_POST["valoracion"]);
+                $idProduct = intval($_GET["id"]);
+
+                $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto) VALUES
+                ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct)";
+
+                $com = $connection->exec($query);
+                /*array_pop($_POST);
                 $_POST = array("id_producto" => $_GET["id"], "fecha" => date("d-m-Y H:i:s"), "nombre" => $_POST["nombre"]) + $_POST;
                 $a_comentarios[$key] = $_POST;
 
-                file_put_contents("jsons/comentarios.json", json_encode($a_comentarios));
+                file_put_contents("jsons/comentarios.json", json_encode($a_comentarios));*/
             }
         
         ?>
