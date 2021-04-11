@@ -49,9 +49,9 @@ $a_filtros = array(
 
 function NavList($a_nav){ ?>
     <ul class="navbar-nav mt-1">
-        <?php foreach ($a_nav as $clave => $valor) { ?>
-            <li class="nav-item <?php NavActive($valor["archivo"]); ?>">
-                <a class="nav-link" href="<?php echo $valor["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0" : $valor["archivo"]; ?>"><?php echo $valor["nombre"]; ?></a>
+        <?php foreach ($a_nav as $clave) { ?>
+            <li class="nav-item <?php NavActive($clave["archivo"]); ?>">
+                <a class="nav-link" href="<?php echo $clave["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0" : $clave["archivo"]; ?>"><?php echo $clave["nombre"]; ?></a>
             </li>
         <?php } ?>
     </ul>
@@ -141,9 +141,9 @@ function CarouselSmallOfProducts($nombre, $a_productos, $a_condiciones){ ?>
         <div class="carousel-inner" role="listbox">
             <?php 
                 $idProducto = 1;
-                foreach($a_condiciones as $clave => $valor){
-                    if($valor["condicion"] == $nombre){
-                        $idCondicion = $valor["id_condicion"];
+                foreach($a_condiciones as $clave){
+                    if($clave["condicion"] == $nombre){
+                        $idCondicion = $clave["id_condicion"];
                     }
                 }
                 for ($i = 0; $i < count($a_productos); $i++) {
