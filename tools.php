@@ -136,35 +136,7 @@ function CarouselOfProducts($nombre, $a_productos, $connection){ ?>
         ?>  
     </div>
 <?php }
-function CarouselSmallOfProducts($nombre, $a_productos, $a_condiciones){ ?>
-    <div id="carouselSmallId-<?php echo $nombre ?>" class="carousel slide d-sm-none" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <?php 
-                $idProducto = 1;
-                foreach($a_condiciones as $clave){
-                    if($clave["condicion"] == $nombre){
-                        $idCondicion = $clave["id_condicion"];
-                    }
-                }
-                for ($i = 0; $i < count($a_productos); $i++) {
-                    if ($a_productos[$idProducto]["id_condicion"] == $idCondicion) {?>
-                        <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-                            <?php
-                                Producto($idProducto, $a_productos);  
-                            ?>
-                        </div>
-                <?php }else{
-                        $i--;
-                    }
-                    $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
-                }
-                CarouselControls("carouselId-".$nombre , "left");
-                CarouselControls("carouselId-".$nombre, "right");
-            ?>  
-        </div>
-        
-    </div>
-<?php }
+
 function Producto($id_producto, $a_productos){ ?>
     <div class="col index-product card">
         <a href="product-details.php?id=<?php echo $id_producto; ?>">
