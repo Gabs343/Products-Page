@@ -24,17 +24,22 @@
                 </div>
                 <?php 
                     if (isset($_POST["sendIng"])) {
-                        $query = "SELECT DNI, Correo, Contraseña FROM cliente";
+                        $query = "SELECT COUNT(*) FROM cliente WHERE Correo = '$_POST[correo]'";
                         $client = $connection->query($query);
-                        
-                        foreach($client as $clave){
-                            if($clave["Correo"] == $_POST["correo"] && password_verify($_POST["pwd"], $clave["Contraseña"])){
-                                echo "bienvenido";
-                            }else{
-                                echo "intenta otra vez";
+       
+                        if($client){
+                            $query = "SELECT * FROM cliente WHERE Correo = '$_POST[correo]'";
+                            $client = $connection->query($query);
+                            foreach($client as $clave){
+                                if(password_verify($_POST["pwd"], $clave["Contraseña"])){
+                                    echo "bienvenido";
+                                }else{
+                                    echo "intenta otra vez";
+                                }
                             }
+                        }else{
+                            echo "error en el correo";
                         }
-
                     }
                 ?>
             </form>
