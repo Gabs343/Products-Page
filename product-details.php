@@ -3,17 +3,17 @@
 <section class="d-sm-flex product-info">
 
     <div class="product-description">
-        <h1 class="display-3 text-center"><?php echo $a_productos[$_GET["id"]]["nombre"]; ?></h1>
+        <h1 class="display-3 text-center"><?php $infoNombre = ProductInfo("Nombre", $_GET["id"]);  echo $infoNombre[0]["Nombre"]; ?></h1>
         <hr>
-        <p><?php TextDescription($a_productos[$_GET["id"]]["descripcion"]); ?></p>
+        <p><?php $infoDescripcion = ProductInfo("Descripcion", $_GET["id"]); TextDescription($infoDescripcion[0]["Descripcion"]); ?></p>
     </div>
 
     <div class="product-img">
  
-       <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" alt="" class="d-block w-100">
+       <img src="<?php $imagen = ProductImages($_GET["id"]); echo $imagen[0]["ruta"]; ?>" alt="" class="d-block w-100">
 
         <div class="shop-buttons">
-            <h3>$ <?php echo $a_productos[$_GET["id"]]["precio"]; ?></h3>
+            <h3>$ <?php $infoPrecio = ProductInfo("Precio", $_GET["id"]);  echo $infoPrecio[0]["Precio"]; ?></h3>
             <a href="">Comprar</a>
             <a href="">Añadir al Carrito</a>
         </div>
@@ -30,13 +30,13 @@
         <div id="carouselProduct" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
+                    <img src="<?php echo $imagen[0]["ruta"]; ?>" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
+                    <img src="<?php echo $imagen[0]["ruta"]; ?>" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
+                    <img src="<?php echo $imagen[0]["ruta"]; ?>" class="d-block w-100" alt="...">
                 </div>
             </div>
         </div>
@@ -105,11 +105,6 @@
                 ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct)";
 
                 $com = $connection->exec($query);
-                /*array_pop($_POST);
-                $_POST = array("id_producto" => $_GET["id"], "fecha" => date("d-m-Y H:i:s"), "nombre" => $_POST["nombre"]) + $_POST;
-                $a_comentarios[$key] = $_POST;
-
-                file_put_contents("jsons/comentarios.json", json_encode($a_comentarios));*/
             }
         
         ?>
