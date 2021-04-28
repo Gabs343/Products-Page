@@ -3,9 +3,9 @@
 <section class="d-sm-flex product-info">
 
     <div class="product-description">
-        <h1 class="display-3 text-center"><?php $infoNombre = ProductInfo("Nombre", $_GET["id"]);  echo $infoNombre[0]["Nombre"]; ?></h1>
+        <h1 class="display-3 text-center"><?php $info = ProductInfo($_GET["id"]);  echo $info[0]["Nombre"]; ?></h1>
         <hr>
-        <p><?php $infoDescripcion = ProductInfo("Descripcion", $_GET["id"]); TextDescription($infoDescripcion[0]["Descripcion"]); ?></p>
+        <p><?php TextDescription($info[0]["Descripcion"]); ?></p>
     </div>
 
     <div class="product-img">
@@ -13,7 +13,7 @@
        <img src="<?php $imagen = ProductImages($_GET["id"]); echo $imagen[0]["ruta"]; ?>" alt="" class="d-block w-100">
 
         <div class="shop-buttons">
-            <h3>$ <?php $infoPrecio = ProductInfo("Precio", $_GET["id"]);  echo $infoPrecio[0]["Precio"]; ?></h3>
+            <h3>$ <?php echo $info[0]["Precio"]; ?></h3>
             <a href="">Comprar</a>
             <a href="">Añadir al Carrito</a>
         </div>
