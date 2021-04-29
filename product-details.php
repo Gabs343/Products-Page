@@ -93,9 +93,10 @@
         <div>
             <input class="sendForm" type="submit" name="sendComment" value="Enviar comentario">
         </div>
+        
         <?php 
+
             if(isset($_POST["sendComment"])){
-                date_default_timezone_set("America/Argentina/Buenos_Aires");
 
                 $key = intval(date("YmdHis"));
                 $_POST["valoracion"] = intval($_POST["valoracion"]);
@@ -104,7 +105,7 @@
                 $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto) VALUES
                 ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct)";
 
-                $com = $connection->exec($query);
+                InsertDB($query);    
             }
         
         ?>
@@ -115,13 +116,15 @@
         <div>
             <h1 class="points">
                 <?php 
+                    $query = "SELECT * FROM comentario WHERE ID_Producto = '$_GET[id]'";
+                    $a_comentarios = ConsultDB($query);
                     $comment = 0;
                     $sumValor = 0;
                     foreach($a_comentarios as $clave){
-                        if($clave["id_producto"] == $_GET["id"]){
+                        if($clave["ID_Producto"] == $_GET["id"]){
                             $comment++;
                             foreach($clave as $subclave => $subvalor){
-                                if($subclave == "valoracion"){
+                                if($subclave == "Valoracion"){
                                     $sumValor += $subvalor;
                                 }
                             }
@@ -138,14 +141,15 @@
         <div>
             <ul>
                 <?php
+                    
                     foreach($a_comentarios as $clave){
-                        if($clave["id_producto"] == $_GET["id"]){?>
+                        if($clave["ID_Producto"] == $_GET["id"]){?>
                             <li>
                                 <?php
                                     foreach($clave as $subclave => $subvalor){
-                                        if($subclave == "id_producto" || $subclave == "correo"){
+                                        if($subclave == "ID" || $subclave == "ID_Producto"){
                                             continue;
-                                        }else if($subclave == "valoracion"){ 
+                                        }else if($subclave == "Valoracion"){ 
                                             echo $subclave, ": ";
                                             for($i = 0; $i < $subvalor; $i++){?>
                                                 <i class="fas fa-star"></i>
