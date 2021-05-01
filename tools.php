@@ -1,18 +1,5 @@
 <?php 
-require_once("mysql-login.php");
-
-try{
-    $connection = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password);
-}catch(PDOException $e){
-    print "ERROR!: ".$e->getMessage();
-    die();
-}
-
 /*_____ARRAYS_____*/
-$a_productos = json_decode(file_get_contents("jsons/productos.json"), true);
-
-$a_comentarios = json_decode(file_get_contents("jsons/comentarios.json"), true);
-
 $items_navlist = array(
     1 => array(
         "archivo" => "index.php",
@@ -46,6 +33,29 @@ $a_filtros = array(
     3 => "condicion"
 );
 /*_____FUNCTIONS_____*/
+
+function Connection(){
+    require("mysql-login.php");
+   
+    try{
+        $connection = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password);
+    }catch(PDOException $e){
+        print "ERROR!: ".$e->getMessage();
+        die();
+    }
+    return $connection; 
+}
+
+function ConsultDB($query){
+    $connection = Connection();
+    $consult = $connection -> query($query)->fetchAll(PDO::FETCH_ASSOC);
+    return $consult;
+}
+
+function InsertDB($query){
+    $connection = Connection();
+    $connection->exec($query);
+}
 
 function NavList($a_nav){ ?>
     <ul class="navbar-nav mt-1">
@@ -85,113 +95,91 @@ function CarouselControls($idCarousel, $direction){ ?>
         <span class="sr-only"><php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?></span>
     </a>
 <?php }
-function CarouselOfProducts($nombre, $a_productos, $connection){ ?>
+
+function ProductInfo($id){
+    $queryInfo = "SELECT Nombre, Precio, Descripcion FROM producto WHERE producto.ID = $id";
+    $info = ConsultDB($queryInfo);
+    return $info;
+}
+
+function ProductImages($id){
+    $queryImages = "SELECT ruta FROM imagen
+                    INNER JOIN producto ON ID_Producto = producto.ID
+                    WHERE producto.ID = $id";
+
+    $productImages = ConsultDB($queryImages);
+    return $productImages;
+}
+
+function CarouselOfProducts($nombre){ ?>
     <h1><?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?></h1><hr>
     <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <?php 
-            $query = "SELECT * FROM condicion";
-            $a_condiciones = $connection->query($query);
 
-            $idProducto = 1;
-            $numberOfProducts = 0;
-            foreach($a_condiciones as $clave){
-                if($clave["Nombre"] == $nombre){ 
-                    $id = $clave["ID"];
-                    
-                    foreach ($a_productos as $clave_pr) {
-                        if ($clave_pr["id_condicion"] == $id) {
-                            $numberOfProducts++;        
-                        }
-                    }
-                }
-            }
-            
-            for ($i = 0; $i < ($numberOfProducts / 4); $i++) { ?>
+            $queryProducts = "SELECT producto.ID, producto.Nombre, producto.Precio FROM producto 
+                            INNER JOIN condicion  ON ID_Condicion = condicion.ID 
+                            WHERE condicion.Nombre = '$nombre'";
+
+            $a_productos = ConsultDB($queryProducts);
+            $array = array();
+            for ($i = 0; $i < ( count($a_productos) / 4); $i++) { ?>
                 <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
                     <div class="row">
                         <?php
                         $countProduct = 0;
-                        for ($k = 1; $k <= count($a_productos); $k++) {
-                            
-                            if ($a_productos[$idProducto]["id_condicion"] == $id) {
-                                Producto($idProducto, $a_productos);
+                        foreach($a_productos as $clave){
+                            if(!in_array($clave["ID"], $array)){
+                                array_push($array, $clave["ID"]);
+                                Product($clave);
                                 $countProduct++;
-                                if ($countProduct == 4) {
-                                    $idProducto++;
-                                    break;
-                                }
                             }
-                            $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
+                            if ($countProduct == 4) {
+                                break;
+                            } 
                         }
+    
                         ?>
                     </div>
                 </div>
-            <?php }
-            ?>
+            <?php } ?>
         </div>
-        <?php 
-            CarouselControls("carouselId-".$nombre , "left");
-            CarouselControls("carouselId-".$nombre, "right");
-        ?>  
+        <?php CarouselControls("carouselId-".$nombre , "left"); CarouselControls("carouselId-".$nombre, "right"); ?>  
     </div>
 <?php }
-function CarouselSmallOfProducts($nombre, $a_productos, $a_condiciones){ ?>
-    <div id="carouselSmallId-<?php echo $nombre ?>" class="carousel slide d-sm-none" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <?php 
-                $idProducto = 1;
-                foreach($a_condiciones as $clave){
-                    if($clave["condicion"] == $nombre){
-                        $idCondicion = $clave["id_condicion"];
-                    }
-                }
-                for ($i = 0; $i < count($a_productos); $i++) {
-                    if ($a_productos[$idProducto]["id_condicion"] == $idCondicion) {?>
-                        <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-                            <?php
-                                Producto($idProducto, $a_productos);  
-                            ?>
-                        </div>
-                <?php }else{
-                        $i--;
-                    }
-                    $idProducto == count($a_productos) ? $idProducto = 1 : $idProducto++;
-                }
-                CarouselControls("carouselId-".$nombre , "left");
-                CarouselControls("carouselId-".$nombre, "right");
-            ?>  
-        </div>
-        
-    </div>
-<?php }
-function Producto($id_producto, $a_productos){ ?>
+
+function Product($producto){ ?>
+    <?php $ruta = ProductImages($producto["ID"]); ?>
+
     <div class="col index-product card">
-        <a href="product-details.php?id=<?php echo $id_producto; ?>">
-            <img src="<?php echo $a_productos[$id_producto]["imagen"]; ?>" alt="First slide" class="w-100">
+        <a href="product-details.php?id=<?php echo $producto["ID"]; ?>">
+            <img src="<?php echo $ruta[0]["ruta"] ?>" alt="First slide" class="w-100">
         </a>
         <div class="card-body">
-            <h5 class="etiqueta-nombre"><?php echo $a_productos[$id_producto]["nombre"]; ?></h5>
-            <p class="etiqueta-precio"><?php echo "$ ", $a_productos[$id_producto]["precio"]; ?></p>
+            <h5 class="etiqueta-nombre"><?php echo $producto["Nombre"]; ?></h5>
+            <p class="etiqueta-precio"><?php echo "$ ", $producto["Precio"]; ?></p>
             <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
         </div>
     </div>
 <?php } 
-function FilterList($num, $a_filtros, $connection){ ?>
+
+function FilterList($num, $a_filtros){ ?>
     <li><a href="#collapse_<?php echo $a_filtros[$num] ?>" role="button" data-toggle="collapse"><?php echo ucfirst($a_filtros[$num]) ?></a>
         <ul class="collapse sublist" id="collapse_<?php echo $a_filtros[$num] ?>">
             <?php 
-                FilterLink($num, $connection);
+                FilterLink($num);
             ?>
         </ul>
     </li>  
 <?php } 
+
 function FilterSublist($id, $idGet, $filterVar){?>
     <li class="<?php echo $id == $idGet ? "activeFilter" : ""; ?>">
         <?php echo $filterVar; ?>
     </li>
 <?php } 
-function FilterLink($num, $connection){
+
+function FilterLink($num){
     switch ($num) {
         case 1:
             $filtro1 = "categoria";
@@ -209,7 +197,7 @@ function FilterLink($num, $connection){
             $filtro3 = "categoria";
             break;
     }
-    $array = $connection->query(FilterConsult($filtro1, $filtro2, $filtro3));
+    $array = ConsultDB(FilterConsult($filtro1, $filtro2, $filtro3));
 
     foreach($array as $clave){
         

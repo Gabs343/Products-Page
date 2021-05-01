@@ -24,17 +24,21 @@
                 </div>
                 <?php 
                     if (isset($_POST["sendIng"])) {
-                        $query = "SELECT DNI, Correo, Contraseña FROM cliente";
-                        $client = $connection->query($query);
-                        
-                        foreach($client as $clave){
-                            if($clave["Correo"] == $_POST["correo"] && password_verify($_POST["pwd"], $clave["Contraseña"])){
-                                echo "bienvenido";
-                            }else{
-                                echo "intenta otra vez";
+                        $query = "SELECT COUNT(*) FROM cliente WHERE Correo = '$_POST[correo]'";
+                        $client = ConsultDB($query);
+                        if(intval($client[0]["COUNT(*)"])){
+                            $query = "SELECT * FROM cliente WHERE Correo = '$_POST[correo]'";
+                            $client = ConsultDB($query);
+                            foreach($client as $clave){
+                                if(password_verify($_POST["pwd"], $clave["Contraseña"])){
+                                    echo "bienvenido";
+                                }else{
+                                    echo "intenta otra vez";
+                                }
                             }
+                        }else{
+                            echo "error en el correo";
                         }
-
                     }
                 ?>
             </form>
@@ -77,7 +81,7 @@
                         $query = "INSERT INTO cliente (DNI, Nombre, Apellido, Correo, Contraseña) VALUES
                         ($_POST[pk], '$_POST[nombre]', '$_POST[apellido]', '$_POST[correo]', '$_POST[pwd]')";
 
-                        $subs = $connection->exec($query);
+                        InsertDB($query);
                     }
 
                 ?>

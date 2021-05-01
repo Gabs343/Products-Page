@@ -3,17 +3,17 @@
 <section class="d-sm-flex product-info">
 
     <div class="product-description">
-        <h1 class="display-3 text-center"><?php echo $a_productos[$_GET["id"]]["nombre"]; ?></h1>
+        <h1 class="display-3 text-center"><?php $info = ProductInfo($_GET["id"]);  echo $info[0]["Nombre"]; ?></h1>
         <hr>
-        <p><?php TextDescription($a_productos[$_GET["id"]]["descripcion"]); ?></p>
+        <p><?php TextDescription($info[0]["Descripcion"]); ?></p>
     </div>
 
     <div class="product-img">
  
-       <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" alt="" class="d-block w-100">
+       <img src="<?php $imagen = ProductImages($_GET["id"]); echo $imagen[0]["ruta"]; ?>" alt="" class="d-block w-100">
 
         <div class="shop-buttons">
-            <h3>$ <?php echo $a_productos[$_GET["id"]]["precio"]; ?></h3>
+            <h3>$ <?php echo $info[0]["Precio"]; ?></h3>
             <a href="">Comprar</a>
             <a href="">Añadir al Carrito</a>
         </div>
@@ -30,13 +30,13 @@
         <div id="carouselProduct" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
+                    <img src="<?php echo $imagen[0]["ruta"]; ?>" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
+                    <img src="<?php echo $imagen[0]["ruta"]; ?>" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="<?php echo $a_productos[$_GET["id"]]["imagen"]; ?>" class="d-block w-100" alt="...">
+                    <img src="<?php echo $imagen[0]["ruta"]; ?>" class="d-block w-100" alt="...">
                 </div>
             </div>
         </div>
@@ -44,17 +44,15 @@
         <div class="details-list">
             <ul>
                 <?php 
-                    foreach($a_productos as $clave){
-                        if($clave["id_producto"] == $_GET["id"]){
-                           foreach($clave as $subclave){
-                                if(is_array($subclave)) {
-                                    foreach ($subclave as $subclave2 => $subvalor) { ?>
-                                        <li><?php echo $subclave2, ": ", $subvalor ?></li>
-                                    <?php }
-                                } 
-                            }
-                        }   
-                    }
+                    $query_esp = "SELECT especificacion.Nombre, esp_descripcion.Descripcion FROM esp_descripcion
+                                INNER JOIN especificacion ON especificacion.ID = ID_Especificacion 
+                                WHERE ID_Producto = $_GET[id]";
+                    
+                    $especificaciones = ConsultDB($query_esp);
+
+                    foreach($especificaciones as $clave){?>
+                        <li><?php echo $clave["Nombre"], ": ", $clave["Descripcion"] ?></li>
+                    <?php }
                 ?>
             </ul>
         </div>
@@ -93,9 +91,10 @@
         <div>
             <input class="sendForm" type="submit" name="sendComment" value="Enviar comentario">
         </div>
+        
         <?php 
+
             if(isset($_POST["sendComment"])){
-                date_default_timezone_set("America/Argentina/Buenos_Aires");
 
                 $key = intval(date("YmdHis"));
                 $_POST["valoracion"] = intval($_POST["valoracion"]);
@@ -104,12 +103,7 @@
                 $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto) VALUES
                 ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct)";
 
-                $com = $connection->exec($query);
-                /*array_pop($_POST);
-                $_POST = array("id_producto" => $_GET["id"], "fecha" => date("d-m-Y H:i:s"), "nombre" => $_POST["nombre"]) + $_POST;
-                $a_comentarios[$key] = $_POST;
-
-                file_put_contents("jsons/comentarios.json", json_encode($a_comentarios));*/
+                InsertDB($query);    
             }
         
         ?>
@@ -120,13 +114,15 @@
         <div>
             <h1 class="points">
                 <?php 
+                    $query = "SELECT * FROM comentario WHERE ID_Producto = '$_GET[id]'";
+                    $a_comentarios = ConsultDB($query);
                     $comment = 0;
                     $sumValor = 0;
                     foreach($a_comentarios as $clave){
-                        if($clave["id_producto"] == $_GET["id"]){
+                        if($clave["ID_Producto"] == $_GET["id"]){
                             $comment++;
                             foreach($clave as $subclave => $subvalor){
-                                if($subclave == "valoracion"){
+                                if($subclave == "Valoracion"){
                                     $sumValor += $subvalor;
                                 }
                             }
@@ -143,14 +139,15 @@
         <div>
             <ul>
                 <?php
+                    
                     foreach($a_comentarios as $clave){
-                        if($clave["id_producto"] == $_GET["id"]){?>
+                        if($clave["ID_Producto"] == $_GET["id"]){?>
                             <li>
                                 <?php
                                     foreach($clave as $subclave => $subvalor){
-                                        if($subclave == "id_producto" || $subclave == "correo"){
+                                        if($subclave == "ID" || $subclave == "ID_Producto"){
                                             continue;
-                                        }else if($subclave == "valoracion"){ 
+                                        }else if($subclave == "Valoracion"){ 
                                             echo $subclave, ": ";
                                             for($i = 0; $i < $subvalor; $i++){?>
                                                 <i class="fas fa-star"></i>

@@ -45,7 +45,7 @@
             for($i = 0; $i < 2; $i++){?>
                 <section class="product-section bd-section">
                     <?php 
-                        CarouselOfProducts($i == 0 ? "Nuevo" : "Destacado", $a_productos, $connection);
+                        CarouselOfProducts($i == 0 ? "Nuevo" : "Destacado");
                     ?>
                 </section>
             <?php }
