@@ -123,16 +123,21 @@ function CarouselOfProducts($nombre){ ?>
 
             $a_productos = ConsultDB($queryProducts);
             $array = array();
+ 
             for ($i = 0; $i < ( count($a_productos) / 4); $i++) { ?>
                 <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-                    <div class="row">
+                    <div class="row row-cols-4">
                         <?php
                         $countProduct = 0;
                         foreach($a_productos as $clave){
+                            
+                            
                             if(!in_array($clave["ID"], $array)){
                                 array_push($array, $clave["ID"]);
                                 Product($clave);
                                 $countProduct++;
+                             
+                               
                             }
                             if ($countProduct == 4) {
                                 break;
