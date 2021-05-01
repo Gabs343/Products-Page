@@ -1,7 +1,5 @@
 <?php 
 /*_____ARRAYS_____*/
-/*$a_productos = json_decode(file_get_contents("jsons/productos.json"), true);*/
-
 $items_navlist = array(
     1 => array(
         "archivo" => "index.php",
@@ -104,7 +102,6 @@ function ProductInfo($id){
     return $info;
 }
 
-
 function ProductImages($id){
     $queryImages = "SELECT ruta FROM imagen
                     INNER JOIN producto ON ID_Producto = producto.ID
@@ -136,10 +133,7 @@ function CarouselOfProducts($nombre){ ?>
                                 array_push($array, $clave["ID"]);
                                 Product($clave);
                                 $countProduct++;
-                            }else{
-                               
                             }
-
                             if ($countProduct == 4) {
                                 break;
                             } 
