@@ -44,17 +44,15 @@
         <div class="details-list">
             <ul>
                 <?php 
-                    foreach($a_productos as $clave){
-                        if($clave["id_producto"] == $_GET["id"]){
-                           foreach($clave as $subclave){
-                                if(is_array($subclave)) {
-                                    foreach ($subclave as $subclave2 => $subvalor) { ?>
-                                        <li><?php echo $subclave2, ": ", $subvalor ?></li>
-                                    <?php }
-                                } 
-                            }
-                        }   
-                    }
+                    $query_esp = "SELECT especificacion.Nombre, esp_descripcion.Descripcion FROM esp_descripcion
+                                INNER JOIN especificacion ON especificacion.ID = ID_Especificacion 
+                                WHERE ID_Producto = $_GET[id]";
+                    
+                    $especificaciones = ConsultDB($query_esp);
+
+                    foreach($especificaciones as $clave){?>
+                        <li><?php echo $clave["Nombre"], ": ", $clave["Descripcion"] ?></li>
+                    <?php }
                 ?>
             </ul>
         </div>
