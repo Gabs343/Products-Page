@@ -4,14 +4,30 @@
             <?php
                 for($i = 1; $i <= sizeof($a_filtros); $i++){
                     FilterList($i, $a_filtros);
-                }
+                } 
             ?>
-            <li class="filterClean"><a href="products.php?categoria=0&marca=0&condicion=0">Limpiar Filtros</a></li>
+            <li><a href="#collapse_Orden" role="button" data-toggle="collapse">Orden</a>
+                <ul class="collapse sublist" id="collapse_Orden">
+                    <?php
+                        for($i = 1; $i <= sizeof($a_orden); $i++){?>
+                            <li class="<?php echo $a_orden[$i]["Codigo"] == $_GET["orden"] ? "activeFilter" : ""; ?>">
+                                <?php 
+                                    echo "<a href=products.php?categoria=".$_GET["categoria"]."&marca=".$_GET["marca"]."&condicion=".$_GET["condicion"]."&orden=".$a_orden[$i]["Codigo"].">".$a_orden[$i]["Nombre"]."</a>";
+                                ?>  
+                            </li>
+                        <?php } ?>
+                </ul>
+            </li> 
+            <li class="filterClean"><a href="products.php?categoria=0&marca=0&condicion=0&orden=">Limpiar Filtros</a></li>
         </ul></div></div>
 
     <div class="row row-cols-6">
         <?php 
-            $queryProducts = "SELECT * FROM producto";
+            if($_GET["orden"] == "ASC" || $_GET["orden"] == "DESC"){
+                $queryProducts = "SELECT * FROM producto ORDER BY Nombre $_GET[orden]";
+            }else{
+                $queryProducts = "SELECT * FROM producto";
+            }
             $a_productos = ConsultDB($queryProducts);
 
             foreach($a_productos as $clave){
