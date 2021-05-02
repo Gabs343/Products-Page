@@ -548,13 +548,17 @@ body{
     }
 
     .index-product{
-        width: 10%;
-        margin: 30px 35px;
+        
+        margin: 30px 38px;
         padding: 0;
     }
     
     .carousel-inner .carousel-item .index-product img{
         height: 210px;
+    }
+
+    .row-cols-4 > *{
+        flex: 0 0 18%;
     }
 
     .carousel-products .carousel-control-next{
