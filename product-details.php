@@ -67,14 +67,6 @@
     <form action="<?php $_PHP_SELF ?>" class="container text-center" method="POST">
         <div class="form-info d-flex">
             <div>
-                <label for="nombre">Nombre:</label>
-                <input type="text" placeholder="Nombre" id="nombre" name="nombre" required>
-            </div>
-            <div>
-                <label for="Mail">Email:</label>
-                <input type="email" placeholder="@example.com" id="Mail" name="correo" required>
-            </div>
-            <div>
                 <label for="Valoracion">Califica el producto:</label>
                 <?php
                     for ($i = 1; $i < 6; $i++) { ?>
@@ -95,15 +87,19 @@
         <?php 
 
             if(isset($_POST["sendComment"])){
+                if(isset($_SESSION["Clave"])){
+                    $key = intval(date("YmdHis"));
+                    $_POST["valoracion"] = intval($_POST["valoracion"]);
+                    $idProduct = intval($_GET["id"]);
 
-                $key = intval(date("YmdHis"));
-                $_POST["valoracion"] = intval($_POST["valoracion"]);
-                $idProduct = intval($_GET["id"]);
+                    $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente) VALUES
+                    ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct, $_SESSION[Clave])";
 
-                $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto) VALUES
-                ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct)";
-
-                InsertDB($query);    
+                    InsertDB($query);    
+                }else{
+                    echo "Debes ingresar sesión para dejar un comentario";
+                }
+  
             }
         
         ?>
@@ -114,19 +110,20 @@
         <div>
             <h1 class="points">
                 <?php 
-                    $query = "SELECT * FROM comentario WHERE ID_Producto = '$_GET[id]'";
+                    $query = "SELECT cliente.Nombre, Comentario, Valoracion, Fecha FROM comentario
+                    INNER JOIN cliente ON ID_Cliente = cliente.DNI 
+                    WHERE ID_Producto = '$_GET[id]'";
                     $a_comentarios = ConsultDB($query);
                     $comment = 0;
                     $sumValor = 0;
                     foreach($a_comentarios as $clave){
-                        if($clave["ID_Producto"] == $_GET["id"]){
-                            $comment++;
-                            foreach($clave as $subclave => $subvalor){
-                                if($subclave == "Valoracion"){
-                                    $sumValor += $subvalor;
-                                }
+                        
+                        $comment++;
+                        foreach ($clave as $subclave => $subvalor) {
+                            if ($subclave == "Valoracion") {
+                                $sumValor += $subvalor;
                             }
-                        } 
+                        }    
                     }
                     $comment == 0 ? $result = 0.0 : $result = $sumValor / $comment; 
                     $result = number_format($result, 1);
@@ -141,13 +138,11 @@
                 <?php
                     
                     foreach($a_comentarios as $clave){
-                        if($clave["ID_Producto"] == $_GET["id"]){?>
+                        ?>
                             <li>
                                 <?php
                                     foreach($clave as $subclave => $subvalor){
-                                        if($subclave == "ID" || $subclave == "ID_Producto"){
-                                            continue;
-                                        }else if($subclave == "Valoracion"){ 
+                                        if($subclave == "Valoracion"){ 
                                             echo $subclave, ": ";
                                             for($i = 0; $i < $subvalor; $i++){?>
                                                 <i class="fas fa-star"></i>
@@ -159,7 +154,7 @@
                                     }
                                 ?>
                             </li>
-                        <?php }
+                        <?php 
                     }
                 ?>
             </ul>
