@@ -1,4 +1,5 @@
 <?php 
+require_once("session.php");
 /*_____ARRAYS_____*/
 $items_navlist = array(
     1 => array(
@@ -18,8 +19,12 @@ $items_navlist = array(
         "nombre" => "Contacto"
     ),
     5 => array(
-        "archivo" => "login.php",
-        "nombre" => "Ingresar"
+        "archivo" => "$logPage",
+        "nombre" => $log
+    ),
+    6 => array(
+        "archivo" => $perfilPage,
+        "nombre" => $perfil
     )
 );
 $a_banners = array(
