@@ -32,6 +32,18 @@ $a_filtros = array(
     2 => "marca",
     3 => "condicion"
 );
+
+$a_orden = array(
+    1 => array(
+        "Nombre" => "Ascendente",
+        "Codigo" => "ASC"
+    ),
+    2 => array(
+        "Nombre" => "Descendente",
+        "Codigo" => "DESC"
+    )
+);
+
 /*_____FUNCTIONS_____*/
 
 function Connection(){
@@ -61,7 +73,7 @@ function NavList($a_nav){ ?>
     <ul class="navbar-nav mt-1">
         <?php foreach ($a_nav as $clave) { ?>
             <li class="nav-item <?php NavActive($clave["archivo"]); ?>">
-                <a class="nav-link" href="<?php echo $clave["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0" : $clave["archivo"]; ?>"><?php echo $clave["nombre"]; ?></a>
+                <a class="nav-link" href="<?php echo $clave["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0&orden=" : $clave["archivo"]; ?>"><?php echo $clave["nombre"]; ?></a>
             </li>
         <?php } ?>
     </ul>
@@ -130,14 +142,11 @@ function CarouselOfProducts($nombre){ ?>
                         <?php
                         $countProduct = 0;
                         foreach($a_productos as $clave){
-                            
-                            
+                                                      
                             if(!in_array($clave["ID"], $array)){
                                 array_push($array, $clave["ID"]);
                                 Product($clave);
-                                $countProduct++;
-                             
-                               
+                                $countProduct++;   
                             }
                             if ($countProduct == 4) {
                                 break;
@@ -168,9 +177,9 @@ function Product($producto){ ?>
     </div>
 <?php } 
 
-function FilterList($num, $a_filtros){ ?>
-    <li><a href="#collapse_<?php echo $a_filtros[$num] ?>" role="button" data-toggle="collapse"><?php echo ucfirst($a_filtros[$num]) ?></a>
-        <ul class="collapse sublist" id="collapse_<?php echo $a_filtros[$num] ?>">
+function FilterList($num, $array){ ?>
+    <li><a href="#collapse_<?php echo $array[$num] ?>" role="button" data-toggle="collapse"><?php echo ucfirst($array[$num]) ?></a>
+        <ul class="collapse sublist" id="collapse_<?php echo $array[$num] ?>">
             <?php 
                 FilterLink($num);
             ?>
@@ -206,7 +215,7 @@ function FilterLink($num){
 
     foreach($array as $clave){
         
-        $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."'>".$clave["Nombre"]."</a> ";
+        $link = "<a href='products.php?".$filtro1."=".$clave["ID"]."&".$filtro2."=".$_GET[$filtro2]."&".$filtro3."=".$_GET[$filtro3]."&orden=".$_GET["orden"]."'>".$clave["Nombre"]."</a> ";
         FilterSublist($clave["ID"], $_GET[$filtro1], $link);
       
     }
@@ -229,24 +238,20 @@ function FilterConsult ($filtro1, $filtro2, $filtro3){
     }
    
     if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] != 0){
-        $query = "SELECT ID, Nombre
-                FROM $filtro1
+        $query = "SELECT ID, Nombre FROM $filtro1
                 INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2= $_GET[$filtro2]
                 INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]
                 WHERE ID = $_GET[$filtro1]";
     }else if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] == 0){
-       $query = "SELECT ID, Nombre
-                FROM $filtro1
+       $query = "SELECT ID, Nombre FROM $filtro1
                 INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]
                 WHERE ID = $_GET[$filtro1]"; 
     }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro2] == 0){
-        $query = "SELECT ID, Nombre
-                FROM $filtro1
+        $query = "SELECT ID, Nombre FROM $filtro1
                 INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]
                 WHERE ID = $_GET[$filtro1]"; 
     }else if($_GET[$filtro2] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro1] == 0){
-        $query = "SELECT ID, Nombre
-                FROM $filtro1
+        $query = "SELECT ID, Nombre FROM $filtro1
                 INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2= $_GET[$filtro2]
                 INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3= $_GET[$filtro3]";
     }else if($_GET[$filtro2] != 0 && $_GET[$filtro1] == 0 && $_GET[$filtro3] == 0){
