@@ -30,8 +30,11 @@
                             $query = "SELECT * FROM cliente WHERE Correo = '$_POST[correo]'";
                             $client = ConsultDB($query);
                             foreach($client as $clave){
-                                if(password_verify($_POST["pwd"], $clave["Contraseña"])){
+                                if(password_verify($_POST["pwd"], $clave["Contraseña"])){  
                                     echo "bienvenido";
+                                    $_SESSION["Clave"] = $clave["DNI"];
+                                    $_SESSION["Correo"] = $clave["Correo"];
+                                    $_SESSION["Nombre"] = $clave["Nombre"];
                                 }else{
                                     echo "intenta otra vez";
                                 }
