@@ -21,10 +21,6 @@ $items_navlist = array(
     5 => array(
         "archivo" => "$logPage",
         "nombre" => $log
-    ),
-    6 => array(
-        "archivo" => $perfilPage,
-        "nombre" => $perfil
     )
 );
 $a_banners = array(

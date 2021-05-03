@@ -1,0 +1,18 @@
+{
+    "20210310213730": {
+        "id_producto": "1",
+        "fecha": "10-03-2021 21:37:30",
+        "nombre": "Gabs",
+        "correo": "gabs343@gmail.com",
+        "valoracion": "5",
+        "comentario": "Excelente producto!!"
+    },
+    "20210313134955": {
+        "id_producto": "1",
+        "fecha": "13-03-2021 13:49:55",
+        "nombre": "Alejandro",
+        "correo": "ale@gmail.com",
+        "valoracion": "4",
+        "comentario": "Justo lo que queria"
+    }
+}

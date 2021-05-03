@@ -32,9 +32,13 @@
                             foreach($client as $clave){
                                 if(password_verify($_POST["pwd"], $clave["Contraseña"])){  
                                     echo "bienvenido";
-                                    $_SESSION["Clave"] = $clave["DNI"];
-                                    $_SESSION["Correo"] = $clave["Correo"];
-                                    $_SESSION["Nombre"] = $clave["Nombre"];
+                                    $_SESSION = $clave;
+                                    echo "
+                                    <script text-type=javascript>
+                                    alert('Bienvenido!');
+                                    window.location='perfil.php';
+                                    </script>
+                                    ";
                                 }else{
                                     echo "intenta otra vez";
                                 }
