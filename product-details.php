@@ -4,18 +4,20 @@
 
     <div class="product-description">
         <h1 class="display-3 text-center"><?php $info = ProductInfo($_GET["id"]);  echo $info[0]["Nombre"]; ?></h1>
-        <hr>
+        <hr class="linea">
         <p><?php TextDescription($info[0]["Descripcion"]); ?></p>
     </div>
 
     <div class="product-img">
- 
-       <img src="<?php $imagen = ProductImages($_GET["id"]); echo $imagen[0]["ruta"]; ?>" alt="" class="d-block w-100">
 
-        <div class="shop-buttons">
+        <img src="<?php $imagen = ProductImages($_GET["id"]); echo $imagen[0]["ruta"]; ?>" alt="" class="d-block w-100">
+
+        <div class="shop-buttons mt-5">
             <h3>$ <?php echo $info[0]["Precio"]; ?></h3>
-            <a href="">Comprar</a>
-            <a href="">Añadir al Carrito</a>
+            <div class="ml-5">
+                <a href="">Comprar</a>
+                <a href="">Añadir al Carrito</a>
+            </div>
         </div>
 
     </div>
@@ -23,8 +25,8 @@
 </section>
 
 <section class="product-details container-fluid">
-    <h2 class="display-4">Caracteristicas</h2>
-    <hr>
+    <h2 class="display-4">Características</h2>
+    <hr class="linea">
     <div class="d-flex container-fluid">
 
         <div id="carouselProduct" class="carousel slide" data-ride="carousel">
@@ -51,8 +53,8 @@
                     $especificaciones = ConsultDB($query_esp);
 
                     foreach($especificaciones as $clave){?>
-                        <li><?php echo $clave["Nombre"], ": ", $clave["Descripcion"] ?></li>
-                    <?php }
+                <li><?php echo $clave["Nombre"], ": ", $clave["Descripcion"] ?></li>
+                <?php }
                 ?>
             </ul>
         </div>
@@ -60,56 +62,62 @@
 
 </section>
 
-<section class="product-comments">
-    <h2 class="display-4">Comentarios</h2>
-    <hr>
+<section class="product-comments pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="display-4 comen-m">Comentarios</h2>
+                <hr class="linea">
 
-    <form action="<?php $_PHP_SELF ?>" class="container text-center" method="POST">
-        <div class="form-info d-flex">
-            <div>
-                <label for="Valoracion">Califica el producto:</label>
-                <?php
-                    for ($i = 1; $i < 6; $i++) { ?>
-                        <input type="radio" name="valoracion" id="Valoracion" value="<?php echo $i ?>" required><?php echo $i ?></input>
-                        <i class="far fa-star"></i>
-                    <?php } ?>
-            </div>
-        </div>
-        <div class="form-comment">
-            <label for="Comentario">Comentario:</label>
-            <textarea name="comentario" id="Comentario" cols="50" rows="2" required></textarea>
-                
-        </div>
-        <div>
-            <input class="sendForm" type="submit" name="sendComment" value="Enviar comentario">
-        </div>
-        
-        <?php 
+                <form action="<?php $_PHP_SELF ?>" class="row container" method="POST">
+                    <div class="form-info">
+                        <div>
+                            <label class="form-label" for="Valoracion">Califica el producto:</label>
+                            <?php
+                        for ($i = 1; $i < 6; $i++) { ?>
+                            <input type="radio" class="ml-3" name="valoracion" id="Valoracion" value="<?php echo $i ?>"
+                                required><?php echo $i ?></input>
+                            <i class="far fa-star"></i>
+                            <?php } ?>
+                        </div>
+                    </div>
 
-            if(isset($_POST["sendComment"])){
-                if(isset($_SESSION["Clave"])){
-                    $key = intval(date("YmdHis"));
-                    $_POST["valoracion"] = intval($_POST["valoracion"]);
-                    $idProduct = intval($_GET["id"]);
+                    <div class="col-12">
+                        <label for="Comentario" class="form-label">Comentario:</label>
+                        <textarea name="comentario" class="form-control" id="Comentario" cols="50" rows="2"
+                            required></textarea>
+                    </div>
 
-                    $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente) VALUES
-                    ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct, $_SESSION[Clave])";
+                    <div>
+                        <input class="btn btn-primary ml-3 mt-4" type="submit" name="sendComment"
+                            value="Enviar comentario">
+                    </div>
 
-                    InsertDB($query);    
-                }else{
-                    echo "Debes ingresar sesión para dejar un comentario";
-                }
+                    <?php 
+
+                    if(isset($_POST["sendComment"])){
+                        if(isset($_SESSION["Clave"])){
+                            $key = intval(date("YmdHis"));
+                            $_POST["valoracion"] = intval($_POST["valoracion"]);
+                            $idProduct = intval($_GET["id"]);
+
+                            $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente) VALUES
+                            ($key, '$_POST[comentario]', $_POST[valoracion], now(), $idProduct, $_SESSION[Clave])";
+
+                            InsertDB($query);    
+                        }else{
+                            consulta("Debe iniciar sesión o suscribirse para dejar un comentario.");
+                        }
   
-            }
+                    }
         
-        ?>
-    </form>
-
-    <hr>
-    <div class=" comments container">
-        <div>
-            <h1 class="points">
-                <?php 
+                ?>
+                </form>
+            </div>
+            <div class="col">
+                <div>
+                    <h1 class="points">
+                        <?php 
                     $query = "SELECT cliente.Nombre, Comentario, Valoracion, Fecha FROM comentario
                     INNER JOIN cliente ON ID_Cliente = cliente.DNI 
                     WHERE ID_Producto = '$_GET[id]'";
@@ -129,36 +137,39 @@
                     $result = number_format($result, 1);
                     echo $result; 
                 ?>
-            </h1>
-        </div>
+                    </h1>
+                </div>
 
 
-        <div>
-            <ul>
-                <?php
+                <div>
+                    <ul>
+                        <?php
                     
                     foreach($a_comentarios as $clave){
                         ?>
-                            <li>
-                                <?php
+                        <li class="comen-muestra">
+                            <?php
                                     foreach($clave as $subclave => $subvalor){
                                         if($subclave == "Valoracion"){ 
                                             echo $subclave, ": ";
                                             for($i = 0; $i < $subvalor; $i++){?>
-                                                <i class="fas fa-star"></i>
-                                            <?php } ?>
-                                            <br>
-                                        <?php }else{
+                            <i class="fas fa-star"></i>
+                            <?php } ?>
+                            <br>
+                            <?php }else{
                                             echo $subclave, ": ", $subvalor, "<br>";
                                         }
                                     }
                                 ?>
-                            </li>
+                        </li>
                         <?php 
-                    }
-                ?>
-            </ul>
+                        }
+                    ?>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    
-</section><?php require_once("footer.php"); ?>
+</section>
+
+<?php require_once("footer.php"); ?>
