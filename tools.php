@@ -7,24 +7,16 @@ $items_navlist = array(
         "nombre" => "Home"
     ),
     2 => array(
-        "archivo" => "",
-        "nombre" => "Nosotros"
-    ),
-    3 => array(
         "archivo" => "products.php",
         "nombre" => "Productos"
     ),
-    4 => array(
-        "archivo" => "",
+    3 => array(
+        "archivo" => "contact.php",
         "nombre" => "Contacto"
     ),
-    5 => array(
+    4 => array(
         "archivo" => "$logPage",
         "nombre" => $log
-    ),
-    6 => array(
-        "archivo" => $perfilPage,
-        "nombre" => $perfil
     )
 );
 $a_banners = array(
@@ -75,42 +67,48 @@ function InsertDB($query){
 }
 
 function NavList($a_nav){ ?>
-    <ul class="navbar-nav mt-1">
-        <?php foreach ($a_nav as $clave) { ?>
-            <li class="nav-item <?php NavActive($clave["archivo"]); ?>">
-                <a class="nav-link" href="<?php echo $clave["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0&orden=" : $clave["archivo"]; ?>"><?php echo $clave["nombre"]; ?></a>
-            </li>
-        <?php } ?>
-    </ul>
+<ul class="navbar-nav mt-1">
+    <?php foreach ($a_nav as $clave) { ?>
+    <li class="nav-item <?php NavActive($clave["archivo"]); ?>">
+        <a class="nav-link"
+            href="<?php echo $clave["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0&orden=" : $clave["archivo"]; ?>"><?php echo $clave["nombre"]; ?></a>
+    </li>
+    <?php } ?>
+</ul>
 <?php }
 function NavActive($itemNav){
     echo strpos($_SERVER["SCRIPT_NAME"], $itemNav) ? "active" : "";
 }
 function Banners($a_banners, $idCarousel){?>
-    <ol class="carousel-indicators">
-        <?php 
-            for($i = 0; $i < sizeof($a_banners); $i++){?>
-                <li data-target = "<?php echo "#".$idCarousel?>" data-slide-to="<?php echo $i ?>" class="<?php echo $i == 0 ? "active" : "" ?>"></li>
-            <?php } ?>
-    </ol>
-    <div class="carousel-inner">
-        <?php 
-            for($k = 1; $k <= sizeof($a_banners); $k++){?>
-                <div class = "carousel-item <?php echo $k == 1 ? "active" : "" ?>">
-                    <img src="<?php echo $a_banners[$k]; ?>" class="d-block w-100" alt="...">
-                </div>
-            <?php } ?>
-    </div>
+<ol class="carousel-indicators">
     <?php 
+            for($i = 0; $i < sizeof($a_banners); $i++){?>
+    <li data-target="<?php echo "#".$idCarousel?>" data-slide-to="<?php echo $i ?>"
+        class="<?php echo $i == 0 ? "active" : "" ?>"></li>
+    <?php } ?>
+</ol>
+<div class="carousel-inner">
+    <?php 
+            for($k = 1; $k <= sizeof($a_banners); $k++){?>
+    <div class="carousel-item <?php echo $k == 1 ? "active" : "" ?>">
+        <img src="<?php echo $a_banners[$k]; ?>" class="d-block w-100" alt="...">
+    </div>
+    <?php } ?>
+</div>
+<?php 
         CarouselControls($idCarousel, "left");
         CarouselControls($idCarousel, "right");
-    ?>  
+    ?>
 <?php }
 function CarouselControls($idCarousel, $direction){ ?>
-    <a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" href="#<?php echo $idCarousel ?>" role="button" data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>" >
-        <span aria-hidden="true"><i class="fas fa-arrow-circle-<?php echo $direction ?>"></i></span>
-        <span class="sr-only"><php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?></span>
-    </a>
+<a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>"
+    href="#<?php echo $idCarousel ?>" role="button"
+    data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>">
+    <span aria-hidden="true"><i class="fas fa-arrow-circle-<?php echo $direction ?>"></i></span>
+    <span class="sr-only">
+        <php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?>
+    </span>
+</a>
 <?php }
 
 function ProductInfo($id){
@@ -129,10 +127,12 @@ function ProductImages($id){
 }
 
 function CarouselOfProducts($nombre){ ?>
-    <h1><?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?></h1><hr>
-    <div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <?php 
+<h1><?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?></h1>
+<hr>
+<div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products flecha"
+    data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        <?php 
 
             $queryProducts = "SELECT producto.ID, producto.Nombre, producto.Precio FROM producto 
                             INNER JOIN condicion  ON ID_Condicion = condicion.ID 
@@ -142,9 +142,9 @@ function CarouselOfProducts($nombre){ ?>
             $array = array();
  
             for ($i = 0; $i < ( count($a_productos) / 4); $i++) { ?>
-                <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-                    <div class="row row-cols-4">
-                        <?php
+        <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
+            <div class="row row-cols-4">
+                <?php
                         $countProduct = 0;
                         foreach($a_productos as $clave){
                                                       
@@ -159,43 +159,46 @@ function CarouselOfProducts($nombre){ ?>
                         }
     
                         ?>
-                    </div>
-                </div>
-            <?php } ?>
+            </div>
         </div>
-        <?php CarouselControls("carouselId-".$nombre , "left"); CarouselControls("carouselId-".$nombre, "right"); ?>  
+        <?php } ?>
     </div>
+    <?php CarouselControls("carouselId-".$nombre , "left"); CarouselControls("carouselId-".$nombre, "right"); ?>
+</div>
 <?php }
 
 function Product($producto){ ?>
-    <?php $ruta = ProductImages($producto["ID"]); ?>
+<?php $ruta = ProductImages($producto["ID"]); ?>
 
-    <div class="col index-product card">
+<div class="col index-product card">
+    <a href="product-details.php?id=<?php echo $producto["ID"]; ?>">
+        <img src="<?php echo $ruta[0]["ruta"] ?>" alt="First slide" class="w-100">
+    </a>
+    <div class="card-body">
         <a href="product-details.php?id=<?php echo $producto["ID"]; ?>">
-            <img src="<?php echo $ruta[0]["ruta"] ?>" alt="First slide" class="w-100">
+            <h5 class="etiqueta-nombre mt-2"><?php echo $producto["Nombre"]; ?></h5>
         </a>
-        <div class="card-body">
-            <h5 class="etiqueta-nombre"><?php echo $producto["Nombre"]; ?></h5>
-            <p class="etiqueta-precio"><?php echo "$ ", $producto["Precio"]; ?></p>
-            <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-        </div>
+        <p class="etiqueta-precio"><?php echo "$ ", $producto["Precio"]; ?></p>
+        <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
     </div>
+</div>
 <?php } 
 
 function FilterList($num, $array){ ?>
-    <li><a href="#collapse_<?php echo $array[$num] ?>" role="button" data-toggle="collapse"><?php echo ucfirst($array[$num]) ?></a>
-        <ul class="collapse sublist" id="collapse_<?php echo $array[$num] ?>">
-            <?php 
+<li><a href="#collapse_<?php echo $array[$num] ?>" role="button"
+        data-toggle="collapse"><?php echo ucfirst($array[$num]) ?></a>
+    <ul class="collapse sublist" id="collapse_<?php echo $array[$num] ?>">
+        <?php 
                 FilterLink($num);
             ?>
-        </ul>
-    </li>  
+    </ul>
+</li>
 <?php } 
 
 function FilterSublist($id, $idGet, $filterVar){?>
-    <li class="<?php echo $id == $idGet ? "activeFilter" : ""; ?>">
-        <?php echo $filterVar; ?>
-    </li>
+<li class="<?php echo $id == $idGet ? "activeFilter" : ""; ?>">
+    <?php echo $filterVar; ?>
+</li>
 <?php } 
 
 function FilterLink($num){
@@ -278,4 +281,11 @@ function TextDescription($string){
         echo $array_text[$i] == "." ? "<br><br>" : "";
     }
 }
+
+function consulta($txt) {?>
+<script>
+alert("<?php echo $txt; ?>")
+</script>
+<?php }
+
 ?>
