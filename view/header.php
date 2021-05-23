@@ -45,7 +45,7 @@
                 <a class="nav-link" href="<?php constant("URL"); ?>main">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php constant("URL"); ?>productList?categoria=&marca=&condicion=&orden=">Productos</a>
+                <a class="nav-link" href="<?php constant("URL"); ?>productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?php constant("URL"); ?>contacto">Contacto</a>
