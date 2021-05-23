@@ -1,9 +1,9 @@
 <?php
-define("URL", "http://localhost/Proyects/Products-Page/");
-define("HOST", "localhost");
-define("DB", "ppt");
-define("USER", "root");
+define("URL", "http://localhost/");
+define("HOST", "");
+define("DB", "");
+define("USER", "");
 define("PASS", "");
-define("PORT", "3306");
+define("PORT", "");
 
 ?>
