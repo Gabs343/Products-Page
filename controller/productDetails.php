@@ -8,7 +8,7 @@
         public function render(){
             $producto = $this->modelo->getProducto($_GET["id"]);
             $comentarios = $this->modelo->getComments($_GET["id"]);
-            $puntuarProducto = $this->PuntuarProducto($comentarios);
+            $puntuarProducto = $this->puntuarProducto($comentarios);
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
             $this->view->puntos = $puntuarProducto;
@@ -36,7 +36,7 @@
             $this->render();
         }
 
-        public function PuntuarProducto($comentarios){
+        public function puntuarProducto($comentarios){
             $numeroComentarios = count($comentarios);
             $sumValor = 0;
             foreach($comentarios as $clave){
