@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <!--Vincula el archivo css -->
-    <link rel="stylesheet" href="<?php constant("URL"); ?>public/css/main.css">
+    <link rel="stylesheet" href="<?= constant("URL"); ?>public/css/main.css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@1,200&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
 <nav class="navbar navbar-expand-sm navbar-dark gradiente-nav bg">
     <div class="ml-5">
         <a class="navbar-brand" href="main">
-            <img src="img/pagina.png" width="100" alt="icono">
+            <img src="public/img/pagina.png" width="100" alt="icono">
         </a>
     </div>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,16 +42,16 @@
     <div class="collapse navbar-collapse separador-navbar" id="collapsibleNavId">
         <ul class="navbar-nav mt-1">
             <li class="nav-item active">
-                <a class="nav-link" href="<?php constant("URL"); ?>main">Home</a>
+                <a class="nav-link" href="<?= constant("URL"); ?>main">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php constant("URL"); ?>productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>
+                <a class="nav-link" href="<?= constant("URL"); ?>productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php constant("URL"); ?>contacto">Contacto</a>
+                <a class="nav-link" href="<?= constant("URL"); ?>contacto">Contacto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php constant("URL"); echo $logPage; ?>"><?php echo $log; ?></a>
+                <a class="nav-link" href="<?= constant("URL"); echo $logPage; ?>"><?php echo $log; ?></a>
             </li>
         </ul>
     </div>
