@@ -1,35 +1,23 @@
 <?php 
-require_once("session.php");
-/*_____ARRAYS_____*/
-$items_navlist = array(
-    1 => array(
-        "archivo" => "index.php",
-        "nombre" => "Home"
-    ),
-    2 => array(
-        "archivo" => "products.php",
-        "nombre" => "Productos"
-    ),
-    3 => array(
-        "archivo" => "contact.php",
-        "nombre" => "Contacto"
-    ),
-    4 => array(
-        "archivo" => "$logPage",
-        "nombre" => $log
-    )
-);
-$a_banners = array(
-    1 => "img/Banner1.jpg",
-    2 => "img/Banner2.jpg"
-);
+function CarouselControls($idCarousel, $direction){ ?>
+    <a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>"
+        href="#<?php echo $idCarousel ?>" role="button"
+        data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>">
+        <span aria-hidden="true"><i class="fas fa-arrow-circle-<?php echo $direction ?>"></i></span>
+        <span class="sr-only">
+            <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> 
+        </span>
+    </a>
+<?php }
 
-$a_filtros = array(
-    1 => "categoria",
-    2 => "marca",
-    3 => "condicion"
-);
-
+function TextDescription($string){
+    $array_text = str_split($string);
+    for($i = 0; $i < sizeof($array_text); $i++ ){
+        echo $array_text[$i];
+        echo $array_text[$i] == "." ? "<br><br>" : "";
+    }
+}
+/*
 $a_orden = array(
     1 => array(
         "Nombre" => "Ascendente",
@@ -40,149 +28,6 @@ $a_orden = array(
         "Codigo" => "DESC"
     )
 );
-
-/*_____FUNCTIONS_____*/
-
-function Connection(){
-    require("mysql-login.php");
-   
-    try{
-        $connection = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password);
-    }catch(PDOException $e){
-        print "ERROR!: ".$e->getMessage();
-        die();
-    }
-    return $connection; 
-}
-
-function ConsultDB($query){
-    $connection = Connection();
-    $consult = $connection -> query($query)->fetchAll(PDO::FETCH_ASSOC);
-    return $consult;
-}
-
-function InsertDB($query){
-    $connection = Connection();
-    $connection->exec($query);
-}
-
-function NavList($a_nav){ ?>
-<ul class="navbar-nav mt-1">
-    <?php foreach ($a_nav as $clave) { ?>
-    <li class="nav-item <?php NavActive($clave["archivo"]); ?>">
-        <a class="nav-link"
-            href="<?php echo $clave["archivo"] == "products.php" ? "products.php?categoria=0&marca=0&condicion=0&orden=" : $clave["archivo"]; ?>"><?php echo $clave["nombre"]; ?></a>
-    </li>
-    <?php } ?>
-</ul>
-<?php }
-function NavActive($itemNav){
-    echo strpos($_SERVER["SCRIPT_NAME"], $itemNav) ? "active" : "";
-}
-function Banners($a_banners, $idCarousel){?>
-<ol class="carousel-indicators">
-    <?php 
-            for($i = 0; $i < sizeof($a_banners); $i++){?>
-    <li data-target="<?php echo "#".$idCarousel?>" data-slide-to="<?php echo $i ?>"
-        class="<?php echo $i == 0 ? "active" : "" ?>"></li>
-    <?php } ?>
-</ol>
-<div class="carousel-inner">
-    <?php 
-            for($k = 1; $k <= sizeof($a_banners); $k++){?>
-    <div class="carousel-item <?php echo $k == 1 ? "active" : "" ?>">
-        <img src="<?php echo $a_banners[$k]; ?>" class="d-block w-100" alt="...">
-    </div>
-    <?php } ?>
-</div>
-<?php 
-        CarouselControls($idCarousel, "left");
-        CarouselControls($idCarousel, "right");
-    ?>
-<?php }
-function CarouselControls($idCarousel, $direction){ ?>
-<a class="carousel-control-<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>"
-    href="#<?php echo $idCarousel ?>" role="button"
-    data-slide="<?php echo $direction == "left" ? "prev" : ($direction == "right" ? "next" : "") ?>">
-    <span aria-hidden="true"><i class="fas fa-arrow-circle-<?php echo $direction ?>"></i></span>
-    <span class="sr-only">
-        <php <?php echo $direction == "left" ? "Previous" : ($direction == "right" ? "Next" : "") ?> ?>
-    </span>
-</a>
-<?php }
-
-function ProductInfo($id){
-    $queryInfo = "SELECT Nombre, Precio, Descripcion FROM producto WHERE producto.ID = $id";
-    $info = ConsultDB($queryInfo);
-    return $info;
-}
-
-function ProductImages($id){
-    $queryImages = "SELECT ruta FROM imagen
-                    INNER JOIN producto ON ID_Producto = producto.ID
-                    WHERE producto.ID = $id";
-
-    $productImages = ConsultDB($queryImages);
-    return $productImages;
-}
-
-function CarouselOfProducts($nombre){ ?>
-<h1><?php echo $nombre == "Nuevo" ? "Nuevos Lanzamientos" : ($nombre == "Destacado" ? "Destacados" : "") ?></h1>
-<hr>
-<div id="carouselId-<?php echo $nombre ?>" class="carousel slide d-none d-md-block carousel-products flecha"
-    data-ride="carousel">
-    <div class="carousel-inner" role="listbox">
-        <?php 
-
-            $queryProducts = "SELECT producto.ID, producto.Nombre, producto.Precio FROM producto 
-                            INNER JOIN condicion  ON ID_Condicion = condicion.ID 
-                            WHERE condicion.Nombre = '$nombre'";
-
-            $a_productos = ConsultDB($queryProducts);
-            $array = array();
- 
-            for ($i = 0; $i < ( count($a_productos) / 4); $i++) { ?>
-        <div class="carousel-item <?php echo $i == 0 ? "active" : ""; ?> ">
-            <div class="row row-cols-4">
-                <?php
-                        $countProduct = 0;
-                        foreach($a_productos as $clave){
-                                                      
-                            if(!in_array($clave["ID"], $array)){
-                                array_push($array, $clave["ID"]);
-                                Product($clave);
-                                $countProduct++;   
-                            }
-                            if ($countProduct == 4) {
-                                break;
-                            } 
-                        }
-    
-                        ?>
-            </div>
-        </div>
-        <?php } ?>
-    </div>
-    <?php CarouselControls("carouselId-".$nombre , "left"); CarouselControls("carouselId-".$nombre, "right"); ?>
-</div>
-<?php }
-
-function Product($producto){ ?>
-<?php $ruta = ProductImages($producto["ID"]); ?>
-
-<div class="col index-product card">
-    <a href="product-details.php?id=<?php echo $producto["ID"]; ?>">
-        <img src="<?php echo $ruta[0]["ruta"] ?>" alt="First slide" class="w-100">
-    </a>
-    <div class="card-body">
-        <a href="product-details.php?id=<?php echo $producto["ID"]; ?>">
-            <h5 class="etiqueta-nombre mt-2"><?php echo $producto["Nombre"]; ?></h5>
-        </a>
-        <p class="etiqueta-precio"><?php echo "$ ", $producto["Precio"]; ?></p>
-        <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-    </div>
-</div>
-<?php } 
 
 function FilterList($num, $array){ ?>
 <li><a href="#collapse_<?php echo $array[$num] ?>" role="button"
@@ -274,18 +119,10 @@ function FilterConsult ($filtro1, $filtro2, $filtro3){
     return $query;
 }
 
-function TextDescription($string){
-    $array_text = str_split($string);
-    for($i = 0; $i < sizeof($array_text); $i++ ){
-        echo $array_text[$i];
-        echo $array_text[$i] == "." ? "<br><br>" : "";
-    }
-}
-
 function consulta($txt) {?>
 <script>
 alert("<?php echo $txt; ?>")
 </script>
-<?php }
+<?php }*/
 
 ?>
