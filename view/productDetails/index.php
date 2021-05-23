@@ -53,7 +53,7 @@
             <div class="col">
                 <h2 class="display-4 comen-m">Comentarios</h2>
                 <hr class="linea">
-                <form action="<?php echo constant("URL"); ?>productDetails/Insertar" class="row container" method="POST">
+                <form action="<?php $_PHP_SELF ?>" class="row container" method="POST">
                     <div class="form-info">
                         <div>
                             <label class="form-label" for="Valoracion">Califica el producto:</label>
