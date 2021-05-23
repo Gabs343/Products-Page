@@ -6,25 +6,31 @@
         }
 
         public function render(){
-            $producto = $this->modelo->getProducto($_GET["id"]);
-            $comentarios = $this->modelo->getComments($_GET["id"]);
+            $producto = $this->modelo->getProducto();
+            $comentarios = $this->modelo->getComments();
             $puntuarProducto = $this->puntuarProducto($comentarios);
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
             $this->view->puntos = $puntuarProducto;
+            $this->view->enviar = $this->isSubmit();
             $this->view->render("productDetails/index");
         }
 
-        public function Insertar(){
+        public function isSubmit(){
+            if(isset($_POST["sendComment"])){
+                $this->Insertar();
+            }   
+        }
+
+        private function Insertar(){
             $datos = array(
                 "ID" => intval(date("YmdHis")),
                 "Comentario" => $_POST["comentario"],
                 "Valoracion" => intval($_POST["valoracion"]),
-                "ID_Producto" => 1,
+                "ID_Producto" => $_GET["id"],
                 "ID_Cliente" => 343
                
             );
-            var_dump($datos);
             $insertar = $this->modelo->InsertComment($datos);
             $mensaje = '';
             if (!$insertar){
@@ -33,7 +39,6 @@
                 $mensaje = "comentario insertado con exito"; 
             }
             $this->view->mensaje = $mensaje;
-            $this->render();
         }
 
         public function puntuarProducto($comentarios){
