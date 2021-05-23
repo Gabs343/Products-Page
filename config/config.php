@@ -1,5 +1,5 @@
 <?php
-define("URL", "http://localhost/Proyects/MVC_PPT/");
+define("URL", "http://localhost/Proyects/Products-Page/");
 define("HOST", "localhost");
 define("DB", "ppt");
 define("USER", "root");
