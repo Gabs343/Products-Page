@@ -7,13 +7,13 @@
             parent::__construct();
         }
 
-        public function getProducto($id){
+        public function getProducto(){
             $producto = null;
             try{
                 $query = "SELECT producto.ID, producto.Nombre, Precio, producto.Descripcion, Ruta
                             FROM producto
                             inner join imagen on producto.ID = imagen.ID_Producto
-                            WHERE producto.ID = $id";
+                            WHERE producto.ID = $_GET[id]";
                 $con = $this->db->connect();
                 $con = $con->query($query)->fetch();
                 
@@ -28,7 +28,7 @@
 
                 $query = "SELECT especificacion.Nombre, esp_descripcion.Descripcion FROM esp_descripcion
                 INNER JOIN especificacion ON especificacion.ID = ID_Especificacion 
-                WHERE ID_Producto = $id";
+                WHERE ID_Producto =  $_GET[id]";
 
                 $con = $this->db->connect();
                 $con = $con->query($query);   
@@ -58,12 +58,12 @@
             }
         }
 
-        public function getComments($id){
+        public function getComments(){
             $comentarios = [];
             try{
                 $query = "SELECT cliente.Nombre, Comentario, Valoracion, Fecha FROM comentario
                         INNER JOIN cliente ON ID_Cliente = cliente.DNI 
-                        WHERE ID_Producto = $id";
+                        WHERE ID_Producto =  $_GET[id]";
                 $con = $this->db->connect();
                 $con = $con->query($query);
 
