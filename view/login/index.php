@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="ml-5 mr-5">
-                    <form action="<?php echo constant("URL"); ?>login/ingresarUsuario" method="POST">
+                    <form action="<?php $_PHP_SELF;?>" method="POST">
                         <div>
                             <label for="pk" class="form-label">DNI:</label>
                             <input type="tel" class="form-control" placeholder="DNI" id="pk" name="pk" required>
@@ -89,22 +89,11 @@
                         <div class="boton-suscribirse">
                             <input class="sendForm" type="submit" name="sendSubs" value="Subscribirse">
                         </div>
-                        <?php   
-                           /*if(isset($_POST["sendSubs"])){
-                            $_POST["pwd"] = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-                            $query = "INSERT INTO cliente (DNI, Nombre, Apellido, Correo, Contraseña) VALUES
-                            ($_POST[pk], '$_POST[nombre]', '$_POST[apellido]', '$_POST[correo]', '$_POST[pwd]')";
-    
-                            InsertDB($query);
-                        }*/
-
-                        ?>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <?php require "view/footer.php"; ?>
 </body>
