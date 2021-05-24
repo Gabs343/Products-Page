@@ -7,6 +7,7 @@
 
         public function render(){
             $this->view->subs = $this->isSubmit("sendSubs");
+            $this->view->login = $this->isSubmit("sendLog");
             $this->view->render("login/index");
         }
 
@@ -29,6 +30,20 @@
                 $mensaje = "no se pudo insertar el usuario";
             }else{
                 $mensaje = "usuario insertado con exito"; 
+            }
+            $this->view->mensaje = $mensaje;
+        }
+
+        public function sendLog(){
+            $datos = array(
+                "Correo" => $_POST["correo"],
+                "Pass" => $_POST["pwd"]
+            );
+            $existe = $this->modelo->findUsuario($datos);
+            if (!$existe){
+                $mensaje = "no se pudo encontrar el usuario";
+            }else{
+                $mensaje = "login con exito"; 
             }
             $this->view->mensaje = $mensaje;
         }
