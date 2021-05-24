@@ -1,4 +1,4 @@
-<?php require "view/header.php"; ?>
+<?php require "view/header.php";?>
 <section class="container">
     <div class="container mt-5 mb-5 loguearse">
         <div class="row bg-light">
@@ -8,7 +8,7 @@
                         <hr class="linea">
                 </div>
                 <div>
-                    <form action="<?php echo constant("URL"); ?>login/buscarUsuario" method="POST">
+                    <form action="<?php $_PHP_SELF;?>" method="POST">
                         <div class="ml-5 mr-5">
                             <div class="mb-3">
                                 <label for="Mail" class="form-label">Email:</label>
@@ -23,33 +23,8 @@
                         </div>
 
                         <div class="boton-loguearse">
-                            <input class="sendForm" type="submit" name="sendIng" value="Ingresar">
+                            <input class="sendForm" type="submit" name="sendLog" value="Ingresar">
                         </div>
-                        <?php 
-                    /*if (isset($_POST["sendIng"])) {
-                        $query = "SELECT COUNT(*) FROM cliente WHERE Correo = '$_POST[correo]'";
-                        $client = ConsultDB($query);
-                        if(intval($client[0]["COUNT(*)"])){
-                            $query = "SELECT * FROM cliente WHERE Correo = '$_POST[correo]'";
-                            $client = ConsultDB($query);
-                            foreach($client as $clave){
-                                if(password_verify($_POST["pwd"], $clave["Contraseña"])){  
-                                    $_SESSION = $clave;
-                                    echo "
-                                    <script text-type=javascript>
-                                    alert('Bienvenido!');
-                                    window.location='perfil.php';
-                                    </script>
-                                    ";
-                                }else{
-                                    echo "intenta otra vez";
-                                }
-                            }
-                        }else{
-                            echo "error en el correo";
-                        }
-                    }*/
-                ?>
                     </form>
                 </div>
             </div>
