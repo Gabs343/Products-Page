@@ -1,6 +1,6 @@
 <?php
-    require_once("session.php");
     require_once("tools.php");
+    require_once("session.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +51,7 @@
                 <a class="nav-link" href="<?= constant("URL"); ?>contacto">Contacto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= constant("URL"); echo $logPage; ?>"><?php echo $log; ?></a>
+                <a class="nav-link" href="<?= constant("URL"); echo $logPage; ?>?>"><?php echo $log; ?></a>
             </li>
         </ul>
     </div>
