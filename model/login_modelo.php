@@ -26,20 +26,20 @@
                 $con = $this->db->connect();
                 $con = $con->query($query)->fetch();
                 if(intval($con["existe"])){
-                    $query = "SELECT Nombre, Correo, Contraseña FROM cliente WHERE Correo = '$datos[Correo]'";
+                    $query = "SELECT DNI, Nombre, Contraseña FROM cliente WHERE Correo = '$datos[Correo]'";
                     $con = $this->db->connect();
-                    $usuario = $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($usuario as $clave){
-                        if(password_verify($datos["Pass"], $clave["Contraseña"])){
+                    $array = $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($array as $clave){
+                        if(password_verify($datos["Pass"], $clave["Contraseña"])){ 
+                            session_start(); //?
                             $existe = true;
-                            return $existe;
-                        }else{
-                            return $existe;
-                        }
-                    }
-                }else{
-                    return $existe;
+                            $_SESSION["Key"] = $clave["DNI"];
+                            $_SESSION["Nombre"] = $clave["Nombre"];
+                            header("location: perfil");
+                        }    
+                    }    
                 }
+                return $existe;
             }catch(PDOException $e){
                 return $existe;
             }
