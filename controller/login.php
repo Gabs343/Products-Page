@@ -6,8 +6,10 @@
         }
 
         public function render(){
+            $this->mensaje = "";
             $this->view->subs = $this->isSubmit("sendSubs");
             $this->view->login = $this->isSubmit("sendLog");
+            $this->view->mensaje = $this->mensaje;
             $this->view->render("login/index");
         }
 
@@ -39,15 +41,14 @@
                 "Correo" => $_POST["correo"],
                 "Pass" => $_POST["pwd"]
             );
-            $existe = $this->modelo->findUsuario($datos);
+            $existe = $this->modelo->findUsuario($datos); 
             if (!$existe){
                 $mensaje = "no se pudo encontrar el usuario";
             }else{
-                $mensaje = "login con exito"; 
+                $mensaje = "login con exito";
             }
-            $this->view->mensaje = $mensaje;
+            $this->mensaje = $mensaje;
         }
-
     }
 
 ?>
