@@ -46,8 +46,8 @@
         }
 
         public function InsertComment($datos){
-            $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente) VALUES
-                        (:ID, :Comentario, :Valoracion, now(), :ID_Producto, :ID_Cliente)";
+            $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente, Mostrar) VALUES
+                        (:ID, :Comentario, :Valoracion, now(), :ID_Producto, :ID_Cliente, 0)";
             $con = $this->db->connect();
             $con = $con->prepare($query);
 
@@ -63,7 +63,7 @@
             try{
                 $query = "SELECT cliente.Nombre, Comentario, Valoracion, Fecha FROM comentario
                         INNER JOIN cliente ON ID_Cliente = cliente.DNI 
-                        WHERE ID_Producto =  $_GET[id]";
+                        WHERE ID_Producto =  $_GET[id] AND Mostrar = 1";
                 $con = $this->db->connect();
                 $con = $con->query($query);
 
