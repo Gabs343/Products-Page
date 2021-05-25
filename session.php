@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    if(isset($_SESSION["Correo"])){
+    if(isset($_SESSION["Key"])){
         $log = $_SESSION["Nombre"];
         $logPage = "perfil";
         if(isset($_POST["sendExit"])){
@@ -18,5 +18,6 @@
         $log = "Ingresar";
         $logPage = "login";
     }
+
 
 ?>
