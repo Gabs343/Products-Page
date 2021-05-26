@@ -71,7 +71,29 @@
             try{
                 $query = "SELECT producto.ID, Nombre, ID_Marca, ID_Categoria, ID_Condicion, Precio, ruta 
                         FROM producto inner join imagen on producto.ID = imagen.ID_Producto";
-                        
+
+                if($_GET["categoria"] != 0 && $_GET["marca"] != 0 && $_GET["condicion"] != 0){
+                    $query = $query." WHERE ID_Categoria = $_GET[categoria] AND 
+                                    ID_Marca = $_GET[marca] AND 
+                                    ID_Condicion = $_GET[condicion]";
+                }else if($_GET["categoria"] != 0 && $_GET["marca"] != 0 && $_GET["condicion"] == 0){
+                    $query = $query." WHERE ID_Categoria = $_GET[categoria] AND 
+                                        ID_Marca = $_GET[marca]";
+                }else if($_GET["categoria"] != 0 && $_GET["condicion"] != 0 && $_GET["marca"] == 0){
+                    $query = $query." WHERE ID_Categoria = $_GET[categoria] AND 
+                                        ID_Condicion = $_GET[condicion]";
+                }else if($_GET["marca"] != 0 && $_GET["condicion"] != 0 && $_GET["categoria"] == 0){
+                    $query = $query." WHERE ID_Marca = $_GET[marca] AND 
+                                        ID_Condicion = $_GET[condicion]";
+                }else if($_GET["categoria"] != 0 && $_GET["marca"] == 0 && $_GET["condicion"] == 0){
+                    $query = $query." WHERE ID_Categoria = $_GET[categoria]";
+                }else if($_GET["marca"] != 0 && $_GET["categoria"] == 0 && $_GET["condicion"] == 0){
+                    $query = $query." WHERE ID_Marca = $_GET[marca]";
+                }else if($_GET["condicion"] != 0 && $_GET["categoria"] == 0 && $_GET["marca"] == 0){
+                    $query = $query." WHERE ID_Condicion = $_GET[condicion]";
+                }
+
+
                 if($_GET["orden"] == "ASC" || $_GET["orden"] == "DESC"){
                     $query = $query." ORDER BY Nombre $_GET[orden]";
                 }
