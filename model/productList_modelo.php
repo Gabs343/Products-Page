@@ -47,7 +47,7 @@
             $firstInner = " INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]";
             $secondInner = " INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]";
             $where = " WHERE ID = $_GET[$filtro1]";
-            
+
             if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] != 0){
                 $query = $query.$firstInner.$secondInner.$where;
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] == 0){
@@ -69,13 +69,11 @@
         public function getProductos(){
             $productos = [];
             try{
+                $query = "SELECT producto.ID, Nombre, ID_Marca, ID_Categoria, ID_Condicion, Precio, ruta 
+                        FROM producto inner join imagen on producto.ID = imagen.ID_Producto";
+                        
                 if($_GET["orden"] == "ASC" || $_GET["orden"] == "DESC"){
-                    $query = "SELECT producto.ID, Nombre, ID_Marca, ID_Categoria, ID_Condicion, Precio, ruta 
-                    FROM producto inner join imagen on producto.ID = imagen.ID_Producto
-                    ORDER BY Nombre $_GET[orden]";
-                }else{
-                    $query = "SELECT producto.ID, Nombre, ID_Marca, ID_Categoria, ID_Condicion, Precio, ruta 
-                    FROM producto inner join imagen on producto.ID = imagen.ID_Producto ";
+                    $query = $query." ORDER BY Nombre $_GET[orden]";
                 }
 
                 $con = $this->db->connect();
