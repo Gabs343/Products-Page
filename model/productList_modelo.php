@@ -43,32 +43,25 @@
                     $tabla2 = "rel_categoria_condicion";
                     break;
             }
-
+            $query = "SELECT ID, Nombre FROM $filtro1";
+            $firstInner = " INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]";
+            $secondInner = " INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]";
+            $where = " WHERE ID = $_GET[$filtro1]";
+            
             if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] != 0){
-                $query = "SELECT ID, Nombre FROM $filtro1
-                        INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]
-                        INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]
-                        WHERE ID = $_GET[$filtro1]";
+                $query = $query.$firstInner.$secondInner.$where;
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] == 0){
-               $query = "SELECT ID, Nombre FROM $filtro1
-                        INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]
-                        WHERE ID = $_GET[$filtro1]"; 
+               $query = $query.$firstInner.$where; 
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro2] == 0){
-                $query = "SELECT ID, Nombre FROM $filtro1
-                        INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]
-                        WHERE ID = $_GET[$filtro1]"; 
+                $query = $query.$secondInner.$where; 
             }else if($_GET[$filtro2] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro1] == 0){
-                $query = "SELECT ID, Nombre FROM $filtro1
-                        INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]
-                        INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]";
+                $query = $query.$firstInner.$secondInner;
             }else if($_GET[$filtro2] != 0 && $_GET[$filtro1] == 0 && $_GET[$filtro3] == 0){
-                $query = "SELECT * FROM $filtro1 INNER JOIN $tabla1 ON ID = $tabla1.ID_$filtro1 AND $tabla1.ID_$filtro2 = $_GET[$filtro2]";
+                $query = $query.$firstInner;
             }else if($_GET[$filtro3] != 0 && $_GET[$filtro2] == 0 && $_GET[$filtro1] == 0){
-                $query = "SELECT * FROM $filtro1 INNER JOIN $tabla2 ON ID = $tabla2.ID_$filtro1 AND $tabla2.ID_$filtro3 = $_GET[$filtro3]";
+                $query = $query.$secondInner;
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] == 0 && $_GET[$filtro2] == 0){
-                $query = "SELECT * FROM $filtro1 WHERE ID = $_GET[$filtro1]";
-            }else{
-                $query = "SELECT * FROM $filtro1";
+                $query = $query.$where;
             }
             return $query;
         }
