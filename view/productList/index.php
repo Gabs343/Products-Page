@@ -70,47 +70,20 @@
 </div>
 
 <div class="row row-cols-6">
-    <?php  
-        foreach($this->productos as $clave){
-            $producto = $clave;
-            $p_categoria = intval($producto->idCategoria);
-            $g_categoria = $_GET["categoria"];
-
-            $p_condicion = intval($producto->idCondicion);
-            $g_condicion = $_GET["condicion"];
-
-            $p_marca = intval($producto->idMarca);
-            $g_marca = $_GET["marca"];
-
-            $allFilters = $p_categoria == $g_categoria && $p_condicion == $g_condicion && $p_marca == $g_marca;
-            $noneFilters = $g_categoria == 0 && $g_condicion == 0 && $g_marca == 0;
-
-            if($allFilters || 
-                ($p_categoria == $g_categoria && $p_condicion == $g_condicion && $g_marca == 0) ||
-                ($p_categoria == $g_categoria && $p_marca == $g_marca && $g_condicion == 0) ||
-                ($p_marca == $g_marca && $p_condicion == $g_condicion && $g_categoria == 0) ||
-
-                ($p_categoria == $g_categoria && $g_condicion == 0 && $g_marca == 0) ||
-                ($p_condicion == $g_condicion && $g_categoria == 0 && $g_marca == 0) || 
-                ($p_marca == $g_marca && $g_categoria == 0 && $g_condicion == 0) ||
-
-                $noneFilters){ ?>
-                <div class="col index-product card">
-                    <a href="productDetails?id=<?php echo $producto->id; ?>">
-                        <img src="<?php echo $producto->imagen; ?>" alt="First slide" class="w-100">
-                    </a>
-                    <div class="card-body">
-                        <a href="productDetails?id=<?php echo $producto->id; ?>">
-                            <h5 class="etiqueta-nombre mt-2"><?php echo $producto->nombre; ?></h5>
-                        </a>
-                        <p class="etiqueta-precio"><?php echo "$ ", $producto->precio; ?></p>
-                        <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
-                    </div>
-                </div>
-            <?php }
-        }
-    ?>
-
+    <?php  foreach($this->productos as $clave){ ?>
+        <div class="col index-product card">
+            <a href="productDetails?id=<?php echo $producto->id; ?>">
+                <img src="<?php echo $producto->imagen; ?>" alt="First slide" class="w-100">
+            </a>
+            <div class="card-body">
+                <a href="productDetails?id=<?php echo $producto->id; ?>">
+                    <h5 class="etiqueta-nombre mt-2"><?php echo $producto->nombre; ?></h5>
+                </a>
+                <p class="etiqueta-precio"><?php echo "$ ", $producto->precio; ?></p>
+                <span class="btn-shop"><a href=""><i class="fas fa-cart-plus"></i></a></span>
+            </div>
+        </div>
+    <?php } ?>
 </div>
 </section>
 <?php require "view/footer.php"; ?>
