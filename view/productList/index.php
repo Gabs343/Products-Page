@@ -70,7 +70,7 @@
 </div>
 
 <div class="row row-cols-6">
-    <?php  foreach($this->productos as $clave){ ?>
+    <?php  foreach($this->productos as $clave){ $producto = $clave; ?>
         <div class="col index-product card">
             <a href="productDetails?id=<?php echo $producto->id; ?>">
                 <img src="<?php echo $producto->imagen; ?>" alt="First slide" class="w-100">
