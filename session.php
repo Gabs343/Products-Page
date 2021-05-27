@@ -1,8 +1,8 @@
 <?php 
     session_start();
-    if(isset($_SESSION["Correo"])){
+    if(isset($_SESSION["Key"])){
         $log = $_SESSION["Nombre"];
-        $logPage = "perfil.php";
+        $logPage = "perfil";
         if(isset($_POST["sendExit"])){
             echo "
             <script text-type=javascript>
@@ -16,7 +16,8 @@
         $perfil = "Nombre";
         $perfilPage = "";
         $log = "Ingresar";
-        $logPage = "login.php";
+        $logPage = "login";
     }
+
 
 ?>
