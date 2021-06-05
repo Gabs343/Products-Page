@@ -1,6 +1,5 @@
-<?php 
-    session_start();
-    if(isset($_SESSION["Key"])){
+<?php
+    if(!empty($_SESSION)){
         $log = $_SESSION["Nombre"];
         $logPage = "perfil";
         if(isset($_POST["sendExit"])){
@@ -18,6 +17,5 @@
         $log = "Ingresar";
         $logPage = "login";
     }
-
 
 ?>
