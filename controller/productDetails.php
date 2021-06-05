@@ -28,7 +28,8 @@
                 "Comentario" => $_POST["comentario"],
                 "Valoracion" => intval($_POST["valoracion"]),
                 "ID_Producto" => $_GET["id"],
-                "ID_Cliente" => 343
+                "ID_Cliente" => empty($_SESSION) ? 0 : $_SESSION["Key"],
+                "Ip" => gethostbyname(php_uname("n"))
                
             );
             $insertar = $this->modelo->InsertComment($datos);
