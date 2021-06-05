@@ -9,26 +9,26 @@
             <div class="col mt-5">
                 <div>
                     <h3>Nombre:</h3>
-                    <p><?php echo $_SESSION["Nombre"]?></p>
+                    <p><?php echo $this->info["Nombre"]; ?></p>
                 </div>
                 <div>
                     <h3>Apellido:</h3>
-                    <p><?php echo $_SESSION["Apellido"]?></p>
+                    <p><?php echo $this->info["Apellido"]; ?></p>
                 </div>
             </div>
             <div class="col mt-5">
                 <div>
                     <h3>Correo:</h3>
-                    <p><?php echo $_SESSION["Correo"]?></p>
+                    <p><?php echo $this->info["Correo"]; ?></p>
                 </div>
                 <div>
                     <h3>DNI:</h3>
-                    <p><?php echo $_SESSION["DNI"]?></p>
+                    <p><?php echo $this->info["DNI"]; ?></p>
                 </div>
             </div>
         </div>
         <div class="salir-perfil">
-            <form action="index.php" method="POST">
+            <form action="main" method="POST">
                 <input class="sendForm" type="submit" name="sendExit" value="Salir">
             </form>
         </div>
