@@ -1,4 +1,4 @@
-<?php require "view/header.php";?>
+<?php require "view/header.php"; echo $this->mensaje; ?>
 <section class="container">
     <div class="container mt-5 mb-5 loguearse">
         <div class="row bg-light">
