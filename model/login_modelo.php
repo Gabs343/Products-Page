@@ -6,8 +6,8 @@
         }
 
         public function insertSubscriptor($datos){
-            $query = "INSERT INTO cliente (DNI, Nombre, Apellido, Correo, Contraseña) VALUES
-            (:DNI, :Nombre, :Apellido, :Correo, :Pass)";
+            $query = "INSERT INTO cliente (DNI, Nombre, Apellido, Correo, Contraseña, ID_Perfil) VALUES
+            (:DNI, :Nombre, :Apellido, :Correo, :Pass, 2)";
             $con = $this->db->connect();
             $con = $con->prepare($query);
 

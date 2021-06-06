@@ -93,7 +93,14 @@
                     </div>
                 <?php } ?>
             </div>
-            <?php CarouselControls("carouselId_Nuevo", "left"); CarouselControls("carouselId_Nuevo", "right"); ?>
+            <a class="carousel-control-prev" href="#carouselId_Nuevo" role="button" data-slide="prev">
+                <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselId_Nuevo" role="button" data-slide="next">       
+                <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
         
     </section>
@@ -133,7 +140,14 @@
                     </div>
                 <?php } ?>
             </div>
-            <?php CarouselControls("carouselId_Destacado", "left"); CarouselControls("carouselId_Destacado", "right"); ?>
+            <a class="carousel-control-prev" href="#carouselId_Destacado" role="button" data-slide="prev">
+                <span aria-hidden="true"><i class="fas fa-arrow-circle-left"></i></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselId_Destacado" role="button" data-slide="next">       
+                <span aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
         
     </section>
