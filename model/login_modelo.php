@@ -30,8 +30,7 @@
                     $con = $this->db->connect();
                     $array = $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
                     foreach($array as $clave){
-                        if(password_verify($datos["Pass"], $clave["Contraseña"])){ 
-                            session_start(); //?
+                        if(password_verify($datos["Pass"], $clave["Contraseña"])){      
                             $existe = true;
                             $_SESSION["Key"] = $clave["DNI"];
                             $_SESSION["Nombre"] = $clave["Nombre"];

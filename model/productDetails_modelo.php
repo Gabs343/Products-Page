@@ -46,8 +46,8 @@
         }
 
         public function InsertComment($datos){
-            $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente, Mostrar) VALUES
-                        (:ID, :Comentario, :Valoracion, now(), :ID_Producto, :ID_Cliente, 0)";
+            $query = "INSERT INTO comentario (ID, Comentario, Valoracion, Fecha, ID_Producto, ID_Cliente, Ip, Mostrar) VALUES
+                        (:ID, :Comentario, :Valoracion, now(), :ID_Producto, :ID_Cliente, :Ip, 0)";
             $con = $this->db->connect();
             $con = $con->prepare($query);
 

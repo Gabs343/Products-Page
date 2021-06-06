@@ -25,7 +25,7 @@
     <script src="https://kit.fontawesome.com/cedf025736.js" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="public/js/main.js"></script>
+    <script src="<?= constant("URL"); ?>public/js/main.js"></script>
 
 </head>
 <body>
@@ -51,7 +51,7 @@
                 <a class="nav-link" href="<?= constant("URL"); ?>contacto">Contacto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= constant("URL"); echo $logPage; ?>?>"><?php echo $log; ?></a>
+                <a class="nav-link" href="<?= constant("URL"); echo $logPage; ?>"><?php echo $log; ?></a>
             </li>
         </ul>
     </div>
