@@ -15,8 +15,8 @@
                 $controlador = new $ruta;
                 $controlador->loadModel($ruta);
 
-                if(isset($url[1])){
-                    $controlador->{$url[1]}();
+                if($controlador->getPerfil() > 2){
+                    $controlador->renderForEmpleados();
                 }else{
                     $controlador->render();
                 }
