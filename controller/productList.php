@@ -16,6 +16,10 @@
             $this->view->productos = $productos;
             $this->view->render("productList/index");
         }
+
+        public function renderForEmpleados(){
+            $this->view->render("productList/index_emp");
+        }
     }
 
 ?>
