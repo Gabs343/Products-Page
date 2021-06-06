@@ -8,6 +8,10 @@
         function render(){
             $this->view->render("contacto/index");
         }
+
+        public function renderForEmpleados(){
+            $this->view->render("contacto/index_emp");
+        }
     }
 
 ?>
