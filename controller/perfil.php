@@ -10,6 +10,10 @@
             $this->view->info = $info;
             $this->view->render("perfil/index");
         }
+
+        public function renderForEmpleados(){
+            $this->view->render("perfil/index_emp");
+        }
     }
 
 ?>
