@@ -69,7 +69,7 @@
         public function getProductos(){
             $productos = [];
             try{
-                $query = "SELECT producto.ID, Nombre, ID_Marca, ID_Categoria, ID_Condicion, Precio, ruta 
+                $query = "SELECT producto.ID, Nombre, ID_Marca, ID_Categoria, ID_Condicion, Precio, Activo, ruta 
                         FROM producto inner join imagen on producto.ID = imagen.ID_Producto";
 
                 if($_GET["categoria"] != 0 && $_GET["marca"] != 0 && $_GET["condicion"] != 0){
@@ -93,10 +93,17 @@
                     $query = $query." WHERE ID_Condicion = $_GET[condicion]";
                 }
 
+                if(empty($_SESSION)){
+                    $query = $query." AND Activo = 1";
+                }else{
+                    if($_SESSION["Perfil"] <= 2){
+                        $query = $query." AND Activo = 1";    
+                    }
+                }
 
                 if($_GET["orden"] == "ASC" || $_GET["orden"] == "DESC"){
                     $query = $query." ORDER BY Nombre $_GET[orden]";
-                }
+                } 
 
                 $con = $this->db->connect();
                 $con = $con->query($query);
@@ -110,6 +117,7 @@
                     $producto->idCondicion = $row["ID_Condicion"];
                     $producto->precio = $row["Precio"];
                     $producto->imagen = $row["ruta"];
+                    $producto->active = $row["Activo"];
                     array_push($productos, $producto);
                 }
                 return $productos;
