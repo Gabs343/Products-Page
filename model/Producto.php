@@ -9,6 +9,7 @@
         public $idCondicion;
         public $precio;
         public $imagen; //proximamente array
+        public $active;
     }
 
 ?>
