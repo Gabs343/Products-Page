@@ -125,5 +125,15 @@
                 return [];
             }
         }
+
+        public function actualizarProducto($estado){
+            $exito = false;
+            $query = "UPDATE producto SET Activo = $estado[Activo] WHERE ID = $estado[ID]";
+            $con = $this->db->connect();
+            if($con = $con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
     }
 ?>
