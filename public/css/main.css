@@ -234,6 +234,10 @@ ul {
     margin-top: -75px;
 }
 
+.insertImg{
+    margin: 100px;
+}
+
 /*_____-----SKIN-----_____*/
 body{
     background: #ffffff;  /* fallback for old browsers */
