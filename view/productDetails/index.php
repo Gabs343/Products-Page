@@ -89,7 +89,7 @@
                                                 <i class="fas fa-star"></i>
                                             <?php } ?>
                                             <br>
-                                        <?php }else{
+                                        <?php }else if($subclave != "Mostrar" && $subclave != "ID"){
                                             echo $subclave, ": ", $subvalor, "<br>";
                                         }
                                     } ?>

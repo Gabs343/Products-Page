@@ -61,7 +61,7 @@
         public function getComments(){
             $comentarios = [];
             try{
-                $query = "SELECT cliente.Nombre, Comentario, Valoracion, Fecha FROM comentario
+                $query = "SELECT ID, cliente.Nombre, Comentario, Valoracion, Fecha, Mostrar FROM comentario
                         INNER JOIN cliente ON ID_Cliente = cliente.DNI 
                         WHERE ID_Producto =  $_GET[id]";
 
@@ -70,6 +70,10 @@
                 }else{
                     if($_SESSION["Perfil"] <= 2){
                         $query = $query." AND Mostrar = 1";    
+                    }else{
+                        if(isset($_GET["estado"])){
+                            $query = $query." AND Mostrar = $_GET[estado]";
+                        }                    
                     }
                 }
                 $con = $this->db->connect();
@@ -83,6 +87,16 @@
                 return [];
             }
 
+        }
+
+        public function actualizarComentario($estado){  
+            $exito = false;
+            $query = "UPDATE comentario SET Mostrar = $estado[Mostrar] WHERE ID = $estado[ID]";
+            $con = $this->db->connect();
+            if($con = $con->query($query)){
+                $exito = true;
+            }
+            return $exito;
         }
     }
 ?>
