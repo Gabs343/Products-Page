@@ -17,10 +17,13 @@
         }
 
         public function renderForEmpleados(){
-            $producto = $this->modelo->getProducto();
-            $comentarios = $this->modelo->getComments();
-            $this->view->producto = $producto;
-            $this->view->comentarios = $comentarios;
+            if(isset($_GET["id"])){
+                $producto = $this->modelo->getProducto();
+                $this->view->producto = $producto;
+                $comentarios = $this->modelo->getComments();
+                $this->view->comentarios = $comentarios;
+            }
+            $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->render("productDetails/index_emp");
         }
