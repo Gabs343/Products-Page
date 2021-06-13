@@ -16,6 +16,14 @@
             $this->view->render("productDetails/index");
         }
 
+        public function renderForEmpleados(){
+            $producto = $this->modelo->getProducto();
+            $comentarios = $this->modelo->getComments();
+            $this->view->producto = $producto;
+            $this->view->comentarios = $comentarios;
+            $this->view->render("productDetails/index_emp");
+        }
+
         public function isSubmit(){
             if(isset($_POST["sendComment"])){
                 $this->Insertar();

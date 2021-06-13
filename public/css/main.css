@@ -535,6 +535,18 @@ h1, .contacto-h2 h2, .loguearse h2 {
     color: white;
 }
 
+.action-link {
+    margin: 0;
+}
+
+.action-link{
+    text-align: center;
+}
+
+.action-link a{
+    margin: 0 9px;
+}
+
 /*_____-----PSEUDOCLASES-----_____*/
 
 .navbar-dark .navbar-nav .nav-link:hover{

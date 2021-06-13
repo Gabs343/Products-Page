@@ -26,7 +26,7 @@
                 $con = $this->db->connect();
                 $con = $con->query($query)->fetch();
                 if(intval($con["existe"])){
-                    $query = "SELECT DNI, Nombre, Contraseña FROM cliente WHERE Correo = '$datos[Correo]'";
+                    $query = "SELECT DNI, Nombre, Contraseña, ID_Perfil FROM cliente WHERE Correo = '$datos[Correo]'";
                     $con = $this->db->connect();
                     $array = $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
                     foreach($array as $clave){
@@ -34,6 +34,7 @@
                             $existe = true;
                             $_SESSION["Key"] = $clave["DNI"];
                             $_SESSION["Nombre"] = $clave["Nombre"];
+                            $_SESSION["Perfil"] = $clave["ID_Perfil"];
                             header("location: perfil");
                         }    
                     }    

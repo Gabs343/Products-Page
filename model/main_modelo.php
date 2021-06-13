@@ -12,6 +12,14 @@
                 inner join imagen on producto.ID = imagen.ID_Producto
                 inner join condicion ON ID_Condicion = condicion.ID
                 WHERE condicion.Nombre = '$condicion'";
+
+                if(empty($_SESSION)){
+                    $query = $query." AND Activo = 1";
+                }else{
+                    if($_SESSION["Perfil"] <= 2){
+                        $query = $query." AND Activo = 1";    
+                    }
+                }
                 $con = $this->db->connect();
                 $con = $con->query($query);
                 
