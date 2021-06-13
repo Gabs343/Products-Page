@@ -63,7 +63,15 @@
             try{
                 $query = "SELECT cliente.Nombre, Comentario, Valoracion, Fecha FROM comentario
                         INNER JOIN cliente ON ID_Cliente = cliente.DNI 
-                        WHERE ID_Producto =  $_GET[id] AND Mostrar = 1";
+                        WHERE ID_Producto =  $_GET[id]";
+
+                if(empty($_SESSION)){
+                    $query = $query." AND Mostrar = 1";
+                }else{
+                    if($_SESSION["Perfil"] <= 2){
+                        $query = $query." AND Mostrar = 1";    
+                    }
+                }
                 $con = $this->db->connect();
                 $con = $con->query($query);
 
