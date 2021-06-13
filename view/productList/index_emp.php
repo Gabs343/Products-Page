@@ -65,8 +65,8 @@
             <li class="filterClean">
                 <a href="productList?categoria=0&marca=0&condicion=0&orden=0">Limpiar Filtros</a>
             </li>
-            <li class="">
-                <a href="">Añadir Producto</a>
+            <li>
+                <a href="productDetails">Añadir Producto</a>
             </li>
         </ul>
     </div>
