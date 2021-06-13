@@ -33,8 +33,18 @@
         <h2 class="display-4 comen-m">Comentarios</h2>
         <hr class="linea">
         <div class="row">
-            <div class="col">
-
+            <div class="col filtro">
+                <ul>
+                    <li><a href="#collapseMostrar" role="button" data-toggle="collapse">Mostrar</a>
+                        <ul class="collapse sublist" id="collapseMostrar">
+                            <li><a href="productDetails?<?php echo "id=".$_GET["id"]."&estado=1"?>">Activos</a></li>
+                            <li><a href="productDetails?<?php echo "id=".$_GET["id"]."&estado=0"?>">Desactivados</a></li>
+                        </ul>
+                    </li>
+                    <li class="filterClean">
+                        <a href="productDetails?<?php echo "id=".$_GET["id"]?>">Limpiar Filtros</a>
+                    </li>
+                </ul>
             </div>
             <div class="col">
                 <ul>
