@@ -79,9 +79,9 @@
             <div class="card-body">
                 <h5 class="etiqueta-nombre mt-2"><?php echo $producto->nombre; ?></h5>
                 <p class="etiqueta-nombre mb-0"><?php echo "$ ", $producto->precio; ?></p>
-                <div class="action-link">
+                <div class="action-link"> 
                     <form action="<?php $_PHP_SELF;?>" method="POST">
-                        <input class="" type="submit" name="editarProducto" value="Editar">
+                        <a href="productDetails?id=<?php echo $producto->id; ?>">Editar</a>
                         <input type="hidden" name="ID" value="<?php echo $producto->id; ?>">
                         <input class="" type="submit" name="mostrarProducto" value="<?php echo $producto->active == 0 ? "Activar" : "Desactivar"; ?>">
                     </form>
