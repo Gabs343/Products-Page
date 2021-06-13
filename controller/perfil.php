@@ -12,6 +12,8 @@
         }
 
         public function renderForEmpleados(){
+            $info = $this->modelo->getInfo();
+            $this->view->info = $info;
             $this->view->render("perfil/index_emp");
         }
     }
