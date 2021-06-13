@@ -27,7 +27,6 @@
             $this->view->condiciones = $condiciones;
             $this->view->productos = $productos;
             $this->view->mostrar = $this->isSubmit("mostrarProducto");
-            $this->view->editar = $this->isSubmit("editarProducto");
             $this->view->render("productList/index_emp");
         }
 
@@ -56,10 +55,6 @@
                 //echo "EXITO";
                 echo "<meta http-equiv='refresh' content='0'>";
             }
-        }
-
-        public function editarProducto(){
-            echo "editar";
         }
 
     }
