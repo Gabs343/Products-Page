@@ -70,6 +70,10 @@
                 }else{
                     if($_SESSION["Perfil"] <= 2){
                         $query = $query." AND Mostrar = 1";    
+                    }else{
+                        if(isset($_GET["estado"])){
+                            $query = $query." AND Mostrar = $_GET[estado]";
+                        }                    
                     }
                 }
                 $con = $this->db->connect();
