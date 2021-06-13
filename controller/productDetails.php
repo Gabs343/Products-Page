@@ -12,7 +12,7 @@
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
             $this->view->puntos = $puntuarProducto;
-            $this->view->enviar = $this->isSubmit();
+            $this->view->enviar = $this->isSubmit("sendComment");
             $this->view->render("productDetails/index");
         }
 
@@ -21,16 +21,17 @@
             $comentarios = $this->modelo->getComments();
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
+            $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->render("productDetails/index_emp");
         }
 
-        public function isSubmit(){
-            if(isset($_POST["sendComment"])){
-                $this->Insertar();
+        public function isSubmit($form){
+            if(isset($_POST[$form])){
+                $this->{$form}();
             }   
         }
 
-        private function Insertar(){
+        private function sendComment(){
             $datos = array(
                 "ID" => intval(date("YmdHis")),
                 "Comentario" => $_POST["comentario"],
@@ -63,6 +64,25 @@
             $numeroComentarios == 0 ? $result = 0.0 : $result = $sumValor / $numeroComentarios;
             $result = number_format($result, 1);
             return $result;   
+        }
+
+        public function mostrarComment(){
+            if($_POST["mostrarComment"] == "Activar"){
+                $estado = array(
+                    "ID" => intval($_POST["date"]),
+                    "Mostrar" => 1 
+                );
+            }else if($_POST["mostrarComment"] == "Desactivar"){
+                $estado = array(
+                    "ID" => intval($_POST["date"]),
+                    "Mostrar" => 0
+                );
+            }
+            $exito = $this->modelo->actualizarComentario($estado);
+            
+            if($exito){
+                echo "<meta http-equiv='refresh' content='0'>";
+            }
         }
     }
 
