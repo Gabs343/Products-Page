@@ -98,5 +98,18 @@
             }
             return $exito;
         }
+
+        public function actualizarProducto($datos){
+            $exito = false;
+            $query = "UPDATE producto SET Nombre = '$datos[nombre]', 
+                                            Descripcion = '$datos[descripcion]',
+                                            Precio = $datos[precio] 
+                    WHERE ID = $_GET[id]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
     }
 ?>

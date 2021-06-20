@@ -25,6 +25,7 @@
             }
             $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
+            $this->view->actualizar = $this->isSubmit("actualizar");
             $this->view->render("productDetails/index_emp");
         }
 
@@ -85,6 +86,20 @@
             
             if($exito){
                 echo "<meta http-equiv='refresh' content='0'>";
+            }
+        }
+
+        public function actualizar(){
+            $datos = array(
+                "nombre" => $_POST["nombre"],
+                "descripcion" => $_POST["descripcion"],
+                "precio" => intval($_POST["precio"])
+            );
+            $exito = $this->modelo->actualizarProducto($datos);
+            if($exito){
+                echo "Actualizado con exito";
+            }else{
+                echo "error";
             }
         }
     }

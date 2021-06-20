@@ -17,26 +17,48 @@
             <div class="shop-buttons mt-5">
                 <h3><input type="number" size="5" name="precio" placeholder="$ <?php echo $this->newProduct ? "Precio" : $this->producto->precio; ?>"></h3>
                 <div class="ml-5">
-                    <input type="submit" value="Confirmar">
+                    <input type="submit" name="actualizar" value="Confirmar">
                     <a href="productList?categoria=0&marca=0&condicion=0&orden=0">Cancelar</a>
                 </div>
             </div>
         </div>
     </section>
+</form>
 
-    <section class="product-details container-fluid">
+<section class="product-details container-fluid">
         <h2 class="display-4">Características</h2>
         <hr class="linea">
-        <ul class="<?php echo $this->newProduct ? "d-none" : ""; ?>">
-            <?php foreach($this->producto->especificaciones as $clave){ ?>
-                <li>
-                    <!--<input type="text" placeholder="<?php echo $clave["Nombre"]; ?>"> : 
-                    <input type="text" size="100" placeholder="<?php echo $clave["Descripcion"];?>-->
-                </li>      
-            <?php } ?>
-            </ul>
+        <form>
+            <input type="text" id="especificacion" placeholder="Especificación">
+            <input type="text" id="descripcion" placeholder="Descripción">
+    	    <input type="button" class="add-row" value="Añadir">
+        </form>
+        <form action="<?php $_PHP_SELF; ?>" method="POST">
+        <table class="<?php echo $this->newProduct ? "d-none" : ""; ?>">
+        
+        <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Especificación</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if(!$this->newProduct){
+                        foreach($this->producto->especificaciones as $clave){ ?>
+                        <tr>    
+                            <td><input type="checkbox" name="check"></td>
+                            <td><input type="hidden" name="especificacion" value="<?php echo $clave["Nombre"]; ?>"><?php echo $clave["Nombre"]; ?></td>
+                            <td><input type="hidden" name="descripcion" value="<?php echo $clave["Descripcion"]; ?>"><?php echo $clave["Descripcion"];?></td>
+                        </tr> 
+                        <?php } 
+                    } ?>
+        </table>
+        <input type="submit" value="Confirmar">
+        </form>
+        <button type="button" class="delete-row">Eliminar</button>
     </section>
-</form>
 
 <section class="product-comments pb-5 <?php echo $this->newProduct ? "d-none" : ""; ?>">
     <div class="container">
