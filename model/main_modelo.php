@@ -53,6 +53,36 @@
                 return [];
             }
         }
+
+        public function getClientes(){
+            $clientes = [];
+            try{
+                $query = "SELECT DNI, Nombre, Apellido, Correo, ID_Perfil FROM cliente";
+                $con = $this->db->connect();
+                $con = $con->query($query);
+
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($clientes, $row);
+                }
+                return $clientes;
+            }catch(PDOException $e){
+                return [];
+            }
+        }
+
+        public function actualizarPerfil($perfil){
+            $exito = false;
+            $query = "UPDATE cliente SET ID_Perfil = $perfil[perfil] WHERE DNI = $perfil[key]";
+            $con = $this->db->connect();
+            try{
+                if($con->query($query)){
+                    $exito = true;
+                }
+            }catch(PDOException $e){
+                return $exito;
+            }
+            
+        }
     }
 
 ?>
