@@ -17,7 +17,26 @@
         }
 
         public function renderForEmpleados(){
+            $clientes = $this->modelo->getClientes();
+            $this->view->clientes = $clientes;
+            $this->view->setPerfil = $this->isSubmit("setPerfil");
             $this->view->render("main/index_emp");
+        }
+
+        public function isSubmit($form){
+            if(isset($_POST[$form])){
+                $this->{$form}();
+            }   
+        }
+
+        public function setPerfil(){
+            $perfil = array(
+                "key" => $_POST["key"],
+                "perfil" => intval($_POST["perfil"]));
+            $insertar =  $this->modelo->actualizarPerfil($perfil);
+            if($insertar){
+                echo "<meta http-equiv='refresh' content='0'>";
+            }
         }
     }
 
