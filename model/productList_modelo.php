@@ -49,19 +49,21 @@
             $where = " WHERE ID = $_GET[$filtro1]";
 
             if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] != 0){
-                $query = $query.$firstInner.$secondInner.$where;
+                $query = $query.$firstInner.$secondInner.$where." AND Mostrar = 1";
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro2] != 0 && $_GET[$filtro3] == 0){
-               $query = $query.$firstInner.$where; 
+               $query = $query.$firstInner.$where." AND Mostrar = 1"; 
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro2] == 0){
-                $query = $query.$secondInner.$where; 
+                $query = $query.$secondInner.$where." AND Mostrar = 1"; 
             }else if($_GET[$filtro2] != 0 && $_GET[$filtro3] != 0 && $_GET[$filtro1] == 0){
-                $query = $query.$firstInner.$secondInner;
+                $query = $query.$firstInner.$secondInner." WHERE Mostrar = 1";
             }else if($_GET[$filtro2] != 0 && $_GET[$filtro1] == 0 && $_GET[$filtro3] == 0){
-                $query = $query.$firstInner;
+                $query = $query.$firstInner." WHERE Mostrar = 1";
             }else if($_GET[$filtro3] != 0 && $_GET[$filtro2] == 0 && $_GET[$filtro1] == 0){
-                $query = $query.$secondInner;
+                $query = $query.$secondInner." WHERE Mostrar = 1";
             }else if($_GET[$filtro1] != 0 && $_GET[$filtro3] == 0 && $_GET[$filtro2] == 0){
-                $query = $query.$where;
+                $query = $query.$where." AND Mostrar = 1";
+            }else{
+                $query = $query." WHERE Mostrar = 1";
             }
             return $query;
         }
