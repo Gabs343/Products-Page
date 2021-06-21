@@ -70,6 +70,22 @@
             }
         }
 
+        public function getFiltro($filtro){
+            $categorias = [];
+            try{    
+                $query = "SELECT * FROM $filtro";
+                $con = $this->db->connect();
+                $con = $con->query($query);
+
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($categorias, $row);
+                }
+                return $categorias;
+            }catch(PDOException $e){
+                return [];
+            }
+        }
+
         public function actualizarPerfil($perfil){
             $exito = false;
             $query = "UPDATE cliente SET ID_Perfil = $perfil[perfil] WHERE DNI = $perfil[key]";
@@ -81,7 +97,27 @@
             }catch(PDOException $e){
                 return $exito;
             }
-            
+            return $exito;
+        }
+
+        public function mostrarFiltro($estado){
+            $exito = false;
+            $query = "UPDATE $estado[Tabla] SET Mostrar = $estado[Activo] WHERE ID = $estado[ID]";
+            $con = $this->db->connect();
+            if($con = $con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function cambiarFiltro($nombre){
+            $exito = false;
+            $query = "UPDATE $nombre[Tabla] SET Nombre = '$nombre[Nombre]' WHERE ID = $nombre[ID]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
         }
     }
 
