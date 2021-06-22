@@ -119,6 +119,16 @@
             }
             return $exito;
         }
+
+        public function nuevoFiltro($nuevo){
+            $exito = false;
+            $query = "INSERT INTO $nuevo[Tabla] (Nombre) VALUES ('$nuevo[Nombre]')";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
     }
 
 ?>

@@ -63,6 +63,12 @@
             <?php } ?>
         </tbody>
     </table>
+    <form action="<?php $_PHP_SELF;?>" method="POST">
+        <label for="categoria">Nombre de la Categoria:</label>
+        <input type="text" name="filtro">
+        <input type="hidden" name="tabla" value="categoria">
+        <input type="submit" name="ingresarFiltro" value="Ingresar">
+    </form>
 </section>
 
 <section class="container m-5">
@@ -94,6 +100,12 @@
             <?php } ?>
         </tbody>
     </table>
+    <form action="<?php $_PHP_SELF;?>" method="POST">
+        <label for="marca">Nombre de la Marca:</label>
+        <input type="text" name="filtro">
+        <input type="hidden" name="tabla" value="marca">
+        <input type="submit" name="ingresarFiltro" value="Ingresar">
+    </form>
 </section>
 
 <section class="container m-5">
@@ -125,6 +137,12 @@
             <?php } ?>
         </tbody>
     </table>
+    <form action="<?php $_PHP_SELF;?>" method="POST">
+        <label for="condicion">Nombre de la Condicion:</label>
+        <input type="text" name="filtro">
+        <input type="hidden" name="tabla" value="condicion">
+        <input type="submit" name="ingresarFiltro" value="Ingresar">
+    </form>
 </section>
 
 <?php require "view/footer.php"; ?>

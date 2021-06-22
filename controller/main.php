@@ -28,6 +28,7 @@
             $this->view->setPerfil = $this->isSubmit("setPerfil");
             $this->view->mostrarFiltro = $this->isSubmit("mostrarFiltro");
             $this->view->cambiarFiltro = $this->isSubmit("cambiarFiltro");
+            $this->view->ingresarCategoria = $this->isSubmit("ingresarFiltro");
             $this->view->render("main/index_emp");
         }
 
@@ -81,6 +82,18 @@
                 }
             }
         }
+
+        public function ingresarFiltro(){
+            $nuevo = array(
+                "Nombre" => $_POST["filtro"],
+                "Tabla" => $_POST["tabla"]
+            );
+            $insertar = $this->modelo->nuevoFiltro($nuevo);
+            if($insertar){
+                echo "<meta http-equiv='refresh' content='0'>";
+            }
+        }
+        
     }
 
 ?>
