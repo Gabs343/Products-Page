@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="ml-5 mr-5">
-                    <form action="<?php $_PHP_SELF;?>" method="POST">
+                    <form action="<?php $_PHP_SELF;?>" method="POST" enctype="multipart/form-data">
                         <div>
                             <label for="pk" class="form-label">DNI:</label>
                             <input type="tel" class="form-control" placeholder="DNI" id="pk" name="pk" required>
@@ -54,6 +54,11 @@
                         <div class="mt-3">
                             <label for="correo" class="form-label">Email:</label>
                             <input type="email" class="form-control" placeholder="@correo.com" id="correo" name="correo"
+                                required>
+                        </div>
+                        <div class="mt-3">
+                            <label for="img" class="form-label">Foto De Perfil:</label>
+                            <input type="file" class="form-control" placeholder="img" id="img" name="img"
                                 required>
                         </div>
                         <div class="mt-3">

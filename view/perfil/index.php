@@ -4,7 +4,7 @@
         <div class="row pt-3 pb-5">
             <div class="col">
                 <h3 class="mb-3">Foto Perfil:</h3>
-                <img src="img/kali-uchis-meme.jpg" alt="Foto De Perfil" width="304" height="206">
+                <img src="public/img/avatar/<?php echo $this->info["Imagen_Perfil"]?>" alt="Foto De Perfil" width="304" height="206">
             </div>
             <div class="col mt-5">
                 <div>
