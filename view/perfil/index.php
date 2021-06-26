@@ -4,11 +4,15 @@
         <div class="row pt-3 pb-5">
             <div class="col">
                 <h3 class="mb-3">Foto Perfil:</h3>
+<<<<<<< HEAD
                 <img src="public/img/avatar/<?php echo $this->info["Imagen_Perfil"]?>" alt="Foto De Perfil" width="304" height="206">
             <form action="<?php $_PHP_SELF;?>" method="POST" enctype="multipart/form-data">
                 <input type="file" class="form-control" placeholder="img" id="img" name="img">
                 <input class="sendForm" type="submit" name="sendImg" value="Cambiar Imagen">
             </form>
+=======
+                <img src="img/kali-uchis-meme.jpg" alt="Foto De Perfil" width="304" height="206">
+>>>>>>> main
             </div>
             <div class="col mt-5">
                 <div>

@@ -8,6 +8,7 @@
         public function render(){
             $info = $this->modelo->getInfo();
             $this->view->info = $info;
+<<<<<<< HEAD
             $this->view->upImg = $this->changeImg("sendImg");
             $this->view->render("perfil/index");
         }
@@ -18,11 +19,17 @@
             }
         }
 
+=======
+            $this->view->render("perfil/index");
+        }
+
+>>>>>>> main
         public function renderForEmpleados(){
             $info = $this->modelo->getInfo();
             $this->view->info = $info;
             $this->view->render("perfil/index_emp");
         }
+<<<<<<< HEAD
 
         public function sendImg(){
             $info = $this->modelo->getInfo();
@@ -37,6 +44,8 @@
 
             $this->modelo->chanImagen($nombrer);
         }
+=======
+>>>>>>> main
     }
 
 ?>
