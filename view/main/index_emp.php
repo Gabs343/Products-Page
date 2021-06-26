@@ -18,8 +18,11 @@
                     <td><?php echo $clave["Correo"]; ?></td>
                     <td>
                         <?php if(isset($_POST["editarPer-".$cont])) { ?>
-                        <input type="number" size="3" name="perfil">
-                    <?php } else { echo  $clave["ID_Perfil"]; } ?> </td>
+                            <select name="perfiles">
+                            <?php foreach($this->perfiles as $claveP) {?>
+                                <option value="<?php echo $claveP["ID"]; ?>"><?php echo $claveP["Nombre"]; ?></option>
+                            <?php } ?> 
+                            </select> <?php } else { echo  $clave["Perfil"]; } ?> </td>
                     <td><?php if(isset($_POST["editarPer-".$cont])) { ?>
                         <input type="submit" name="setPerfil" value="Confirmar"></td>
                     <?php } else { ?>  
