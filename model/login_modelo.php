@@ -35,6 +35,11 @@
                             $_SESSION["Key"] = $clave["DNI"];
                             $_SESSION["Nombre"] = $clave["Nombre"];
                             $_SESSION["Perfil"] = $clave["ID_Perfil"];
+                            $query = "SELECT Code FROM permiso
+                                    INNER JOIN rel_perfil_premiso WHERE permiso.ID = ID_Permiso AND ID_Perfil = $clave[ID_Perfil]";
+                            $con = $this->db->connect();
+                            $array = $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
+                            $_SESSION["Permisos"] = $array;
                             header("location: perfil");
                         }    
                     }    
