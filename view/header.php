@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <!--Vincula el archivo css -->
-    <link rel="stylesheet" href="<?= constant("URL"); ?>public/css/main.css">
+    <link rel="stylesheet" href="public/css/main.css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@1,200&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
     <script src="https://kit.fontawesome.com/cedf025736.js" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<?= constant("URL"); ?>public/js/main.js"></script>
+    <script src="<?php constant("URL"); ?>public/js/main.js"></script>
 
 </head>
 <body>
@@ -42,16 +42,16 @@
     <div class="collapse navbar-collapse separador-navbar" id="collapsibleNavId">
         <ul class="navbar-nav mt-1">
             <li class="nav-item active">
-                <a class="nav-link" href="<?= constant("URL"); ?>main">Home</a>
+                <a class="nav-link" href="main">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= constant("URL"); ?>productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>
+                <a class="nav-link" href="productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= constant("URL"); ?>contacto">Contacto</a>
+                <a class="nav-link" href="contacto">Contacto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= constant("URL"); echo $logPage; ?>"><?php echo $log; ?></a>
+                <a class="nav-link" href="<?php echo $logPage; ?>"><?php echo $log; ?></a>
             </li>
         </ul>
     </div>

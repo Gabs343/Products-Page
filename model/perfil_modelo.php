@@ -20,6 +20,14 @@
                 return $info;
             }
         }
+        public function chanImagen($nombrer){
+            $query = "UPDATE cliente SET 
+            Imagen_Perfil='$nombrer' WHERE DNI = $_SESSION[Key]";
+                $con = $this->db->connect();
+                $con = $con->query($query)->fetch();
+                $pagina = "view/perfil/index.php";
+                header("Location: perfil");
+        }
     }
 
 ?>
