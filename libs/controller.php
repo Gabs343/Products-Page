@@ -22,6 +22,12 @@
             }
             return $perfil;
         }
+
+        public function isSubmit($form){
+            if(isset($_POST[$form])){
+                $this->{$form}();
+            }   
+        }
     }
 
 ?>

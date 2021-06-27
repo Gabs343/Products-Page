@@ -34,12 +34,6 @@
             $this->view->render("main/index_emp");
         }
 
-        public function isSubmit($form){
-            if(isset($_POST[$form])){
-                $this->{$form}();
-            }   
-        }
-
         public function setPerfil(){
             $perfil = array(
                 "key" => $_POST["key"],

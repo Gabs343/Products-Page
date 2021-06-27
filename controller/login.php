@@ -13,12 +13,6 @@
             $this->view->render("login/index");
         }
 
-        public function isSubmit($form){
-            if(isset($_POST[$form])){
-                $this->{$form}();
-            }
-        }
-
         public function sendSubs(){
             
             $nombrea = $_FILES["img"]["name"] ; //Guardamos el nombre del archivo
