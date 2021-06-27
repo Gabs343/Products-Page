@@ -60,7 +60,7 @@
         <button type="button" class="delete-row">Eliminar</button>
     </section>
 
-<section class="product-comments pb-5 <?php echo $this->newProduct ? "d-none" : ""; ?>">
+<section class="product-comments pb-5 <?php echo $this->newProduct ? "d-none" : ""; echo $this->tienePermiso("DELCOM") ? "" : "d-none" ?>">
     <div class="container">
         <h2 class="display-4 comen-m">Comentarios</h2>
         <hr class="linea">

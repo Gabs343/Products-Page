@@ -18,10 +18,12 @@
 
         public function renderForEmpleados(){
             $clientes = $this->modelo->getClientes();
+            $perfiles = $this->modelo->getPerfiles();
             $categorias = $this->modelo->getFiltro("categoria");
             $marcas = $this->modelo->getFiltro("marca");
             $condiciones = $this->modelo->getFiltro("condicion");
             $this->view->clientes = $clientes;
+            $this->view->perfiles = $perfiles;
             $this->view->categorias = $categorias;
             $this->view->marcas = $marcas;
             $this->view->condiciones = $condiciones;
@@ -41,7 +43,7 @@
         public function setPerfil(){
             $perfil = array(
                 "key" => $_POST["key"],
-                "perfil" => intval($_POST["perfil"]));
+                "perfil" => intval($_POST["perfiles"]));
             $insertar =  $this->modelo->actualizarPerfil($perfil);
             if($insertar){
                 echo "<meta http-equiv='refresh' content='0'>";

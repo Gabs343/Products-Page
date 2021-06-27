@@ -1,4 +1,4 @@
-<?php require "view/header.php"; ?>
+<?php require "view/header.php";?>
 <section class="container-fluid d-flex mt-5 seccion-productos">
 <div class="filtro">
     <div>
@@ -65,7 +65,7 @@
             <li class="filterClean">
                 <a href="productList?categoria=0&marca=0&condicion=0&orden=0">Limpiar Filtros</a>
             </li>
-            <li>
+            <li class = "<?php echo $this->tienePermiso("ADDPROD") ? "" : "d-none" ?>">
                 <a href="productDetails">Añadir Producto</a>
             </li>
         </ul>
@@ -81,9 +81,9 @@
                 <p class="etiqueta-nombre mb-0"><?php echo "$ ", $producto->precio; ?></p>
                 <div class="action-link"> 
                     <form action="<?php $_PHP_SELF;?>" method="POST">
-                        <a href="productDetails?id=<?php echo $producto->id; ?>">Editar</a>
+                        <a class="<?php echo $this->tienePermiso("EDITPROD") ? "" : "d-none" ?>" href="productDetails?id=<?php echo $producto->id; ?>">Editar</a>
                         <input type="hidden" name="ID" value="<?php echo $producto->id; ?>">
-                        <input class="" type="submit" name="mostrarProducto" value="<?php echo $producto->active == 0 ? "Activar" : "Desactivar"; ?>">
+                        <input class="<?php echo $this->tienePermiso("DELPROD") ? "" : "d-none" ?>" type="submit" name="mostrarProducto" value="<?php echo $producto->active == 0 ? "Activar" : "Desactivar"; ?>">
                     </form>
                 </div>
             </div>

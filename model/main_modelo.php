@@ -57,7 +57,8 @@
         public function getClientes(){
             $clientes = [];
             try{
-                $query = "SELECT DNI, Nombre, Apellido, Correo, ID_Perfil FROM cliente";
+                $query = "SELECT DNI, cliente.Nombre, Apellido, Correo, perfil.Nombre AS Perfil FROM cliente
+                            INNER JOIN perfiL WHERE ID_Perfil = perfil.ID";
                 $con = $this->db->connect();
                 $con = $con->query($query);
 
@@ -65,6 +66,22 @@
                     array_push($clientes, $row);
                 }
                 return $clientes;
+            }catch(PDOException $e){
+                return [];
+            }
+        }
+
+        public function getPerfiles(){
+            $perfiles = [];
+            try{
+                $query = "SELECT * FROM perfil";
+                $con = $this->db->connect();
+                $con = $con->query($query);
+
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($perfiles, $row);
+                }
+                return $perfiles;
             }catch(PDOException $e){
                 return [];
             }
