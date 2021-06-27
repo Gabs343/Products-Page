@@ -10,8 +10,10 @@
         public function getProducto(){
             $producto = null;
             try{
-                $query = "SELECT producto.ID, producto.Nombre, Precio, producto.Descripcion, Ruta
+                $query = "SELECT producto.ID, producto.Nombre, Precio,
+                 producto.Descripcion, Ruta, marca.Nombre AS Nombre_Marca
                             FROM producto
+                            join marca
                             inner join imagen on producto.ID = imagen.ID_Producto
                             WHERE producto.ID = $_GET[id]";
                 $con = $this->db->connect();
@@ -21,6 +23,7 @@
                 $producto->id = $con["ID"];
                 $producto->nombre = $con["Nombre"];
                 $producto->precio = $con["Precio"];
+                $producto->marca = $con["Nombre_Marca"];
                 $producto->descripcion = $con["Descripcion"];
                 $producto->imagen = $con["Ruta"];
 
@@ -89,6 +92,22 @@
 
         }
 
+        // public function getMarcas(){
+        //     $marcas = [];
+        //     try{
+        //         $query = "SELECT marca.id, marca.Nombre AS Nombre_Marca FROM marca
+        //          INNER JOIN producto ON producto.ID_Marca = marca.ID
+        //                 WHERE ID_Producto =  $_GET[id]";
+        //                 return $marcas;
+
+        //                 while($row = $con->fetch(PDO::FETCH_ASSOC)){
+        //                     array_push($marcas, $row);
+        //                 }
+        //                 return $marcas
+        //            }catch(PDOException $e){
+        //         return [];
+        //     }
+        // }
         public function actualizarComentario($estado){  
             $exito = false;
             $query = "UPDATE comentario SET Mostrar = $estado[Mostrar] WHERE ID = $estado[ID]";
@@ -110,6 +129,19 @@
                 $exito = true;
             }
             return $exito;
+        }
+// AGREGANDO AGREGAR PRODUCTOS
+        public function agregarProducto($datos){
+            $query = "INSERT INTO producto (Nombre, Precio, Descripcion, ID_Marca, ID_Categoria, ID_Condicion)
+            VALUES (:nombre, :precio, :descripcion, 1, 1, 1)";
+            $con = $this->db->connect();
+            $con = $con->prepare($query);
+
+            if($con->execute($datos)){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 ?>

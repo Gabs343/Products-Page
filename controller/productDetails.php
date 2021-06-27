@@ -8,6 +8,7 @@
         public function render(){
             $producto = $this->modelo->getProducto();
             $comentarios = $this->modelo->getComments();
+            // $marcas = $this->modelo->getMarcas();
             $puntuarProducto = $this->puntuarProducto($comentarios);
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
@@ -22,9 +23,12 @@
                 $this->view->producto = $producto;
                 $comentarios = $this->modelo->getComments();
                 $this->view->comentarios = $comentarios;
+                // $marcas = $this->modelo->getMarcas;
+                // $this->view->marcas = $marcas;
             }
             $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
+            $this->view->agregar = $this->isSubmit("agregar");
             $this->view->actualizar = $this->isSubmit("actualizar");
             $this->view->render("productDetails/index_emp");
         }
@@ -101,6 +105,15 @@
             }else{
                 echo "error";
             }
+        }
+//AGREGANDO AGREGAR
+        public function agregar(){
+            $datos = array(
+            "nombre" => $_POST["nombre"],
+            "descripcion" => $_POST["descripcion"],
+            "precio" => intval($_POST["precio"])
+        );
+            $insertar = $this->modelo->agregarProducto($datos);
         }
     }
 
