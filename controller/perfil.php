@@ -9,19 +9,14 @@
             $info = $this->modelo->getInfo();
             $this->view->info = $info;
 
-            $this->view->upImg = $this->changeImg("sendImg");
+            $this->view->upImg = $this->isSubmit("sendImg");
             $this->view->render("perfil/index");
-        }
-
-        public function changeImg($form){
-            if(isset($_POST[$form])){
-                $this->{$form}();
-            }
         }
 
         public function renderForEmpleados(){
             $info = $this->modelo->getInfo();
             $this->view->info = $info;
+            $this->view->upImg = $this->isSubmit("sendImg");
             $this->view->render("perfil/index_emp");
         }
 

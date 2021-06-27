@@ -30,12 +30,6 @@
             $this->view->render("productList/index_emp");
         }
 
-        public function isSubmit($form){
-            if(isset($_POST[$form])){
-                $this->{$form}();
-            }
-        }
-
         public function mostrarProducto(){
             
             if($_POST["mostrarProducto"] == "Activar"){

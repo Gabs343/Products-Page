@@ -91,7 +91,7 @@
             }
 
         }
-
+        // Este es el intento de get que hice.
         // public function getMarcas(){
         //     $marcas = [];
         //     try{

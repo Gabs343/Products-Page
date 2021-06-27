@@ -33,12 +33,6 @@
             $this->view->render("productDetails/index_emp");
         }
 
-        public function isSubmit($form){
-            if(isset($_POST[$form])){
-                $this->{$form}();
-            }   
-        }
-
         private function sendComment(){
             $datos = array(
                 "ID" => intval(date("YmdHis")),
