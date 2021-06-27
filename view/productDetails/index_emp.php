@@ -1,11 +1,16 @@
 <?php require "view/header.php"; ?>
-<form action="<?php $_PHP_SELF; ?>" method="POST">
+<form action="<?php $_PHP_SELF; ?>" method="POST" enctype="multipart/form-data">>
 
     <section class="d-sm-flex product-info">
         <div>
-            <input class="display-3 text-center" name="nombre" type="text" placeholder="<?php echo $this->newProduct ? "Nombre" : $this->producto->nombre; ?>">
+            <input class="display-3 text-center" name="nombre" type="text" value="<?php echo $this->newProduct ? "Nombre" : $this->producto->nombre; ?>">
             <hr class="linea">
-            <p><textarea name="descripcion" id="" cols="80" rows="10" placeholder="<?php echo $this->newProduct ? "Descripcion" : $this->producto->descripcion; ?>"></textarea></p>
+            <p><textarea name="descripcion" id="" cols="80" rows="10" placeholder="Ingrese su Descripción"><?php echo $this->newProduct ? "Descripcion" : $this->producto->descripcion; ?></textarea></p>
+            <select name="changeMarca" id="cambiarMarca">
+            <?php foreach($this->marcas as $Marcas) { ?>
+            <option value="<?php echo $Marcas["id"]?>"> <?php echo $Marcas["Nombre_Marca"]?></option>
+        <?php } ?>
+            </select>
         </div>
 
         <div class="product-img">
@@ -17,7 +22,13 @@
             <div class="shop-buttons mt-5">
                 <h3><input type="number" size="5" name="precio" placeholder="$ <?php echo $this->newProduct ? "Precio" : $this->producto->precio; ?>"></h3>
                 <div class="ml-5">
+                <!-- <-- UN IF PARA LOS BOTONES -->
+                <?php if($this->newProduct){ ?>
+                    <input type="submit" name="agregar" value="Confirmar">
+                    <?php } else { ?>
                     <input type="submit" name="actualizar" value="Confirmar">
+                    <?php
+                    }?>
                     <a href="productList?categoria=0&marca=0&condicion=0&orden=0">Cancelar</a>
                 </div>
             </div>
