@@ -23,8 +23,12 @@
                 $comentarios = $this->modelo->getComments();
                 $this->view->comentarios = $comentarios;
             }
-            $marcas = $this->modelo->getMarcas();
+            $marcas = $this->modelo->getFiltro("marca");
+            $categorias = $this->modelo->getFiltro("categoria");
+            $condiciones = $this->modelo->getFiltro("condicion");
             $this->view->marcas = $marcas;
+            $this->view->categorias = $categorias;
+            $this->view->condiciones = $condiciones;
             $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->agregar = $this->isSubmit("agregar");
