@@ -11,6 +11,16 @@
                 <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
             <?php } ?>
             </select>
+            <select name="changeCategoria" id="cambiarCategoria">
+            <?php foreach($this->categorias as $clave) { ?>
+                <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
+            <?php } ?>
+            </select>
+            <select name="changeCondicin" id="cambiarCondicion">
+            <?php foreach($this->condiciones as $clave) { ?>
+                <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
+            <?php } ?>
+            </select>
         </div>
 
         <div class="product-img">
