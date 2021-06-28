@@ -8,7 +8,6 @@
         public function render(){
             $producto = $this->modelo->getProducto();
             $comentarios = $this->modelo->getComments();
-            // $marcas = $this->modelo->getMarcas();
             $puntuarProducto = $this->puntuarProducto($comentarios);
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
@@ -23,9 +22,9 @@
                 $this->view->producto = $producto;
                 $comentarios = $this->modelo->getComments();
                 $this->view->comentarios = $comentarios;
-                // $marcas = $this->modelo->getMarcas;
-                // $this->view->marcas = $marcas;
             }
+            $marcas = $this->modelo->getMarcas();
+            $this->view->marcas = $marcas;
             $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->agregar = $this->isSubmit("agregar");
@@ -91,22 +90,24 @@
             $datos = array(
                 "nombre" => $_POST["nombre"],
                 "descripcion" => $_POST["descripcion"],
-                "precio" => intval($_POST["precio"])
+                "precio" => intval($_POST["precio"]),
+                "marca" => intval($_POST["changeMarca"])
             );
             $exito = $this->modelo->actualizarProducto($datos);
             if($exito){
-                echo "Actualizado con exito";
+                //echo "Actualizado con exito";
             }else{
-                echo "error";
+                //echo "error";
             }
         }
 //AGREGANDO AGREGAR
         public function agregar(){
             $datos = array(
-            "nombre" => $_POST["nombre"],
-            "descripcion" => $_POST["descripcion"],
-            "precio" => intval($_POST["precio"])
-        );
+                "nombre" => $_POST["nombre"],
+                "descripcion" => $_POST["descripcion"],
+                "precio" => intval($_POST["precio"]),
+                "marca" => intval($_POST["changeMarca"])
+            );
             $insertar = $this->modelo->agregarProducto($datos);
         }
     }

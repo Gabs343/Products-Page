@@ -1,5 +1,5 @@
 <?php require "view/header.php"; ?>
-<form action="<?php $_PHP_SELF; ?>" method="POST" enctype="multipart/form-data">>
+<form action="<?php $_PHP_SELF; ?>" method="POST" enctype="multipart/form-data">
 
     <section class="d-sm-flex product-info">
         <div>
@@ -7,9 +7,9 @@
             <hr class="linea">
             <p><textarea name="descripcion" id="" cols="80" rows="10" placeholder="Ingrese su Descripción"><?php echo $this->newProduct ? "Descripcion" : $this->producto->descripcion; ?></textarea></p>
             <select name="changeMarca" id="cambiarMarca">
-            <?php foreach($this->marcas as $Marcas) { ?>
-            <option value="<?php echo $Marcas["id"]?>"> <?php echo $Marcas["Nombre_Marca"]?></option>
-        <?php } ?>
+            <?php foreach($this->marcas as $clave) { ?>
+                <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
+            <?php } ?>
             </select>
         </div>
 
