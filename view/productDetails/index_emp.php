@@ -28,7 +28,7 @@
 
         <div class="product-img">
             <?php if($this->newProduct){ ?>
-                <input type="file" name="imagen" id="" class="insertImg">
+                <input type="file" name="imagen" id="imagen" class="insertImg">
             <?php }else{ ?>
                 <img src="<?php echo $this->producto->imagen; ?>" alt="" class="d-block w-100">
             <?php } ?>
