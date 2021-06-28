@@ -6,16 +6,19 @@
             <input class="display-3 text-center" name="nombre" type="text" value="<?php echo $this->newProduct ? "Nombre" : $this->producto->nombre; ?>">
             <hr class="linea">
             <p><textarea name="descripcion" id="" cols="80" rows="10" placeholder="Ingrese su Descripción"><?php echo $this->newProduct ? "Descripcion" : $this->producto->descripcion; ?></textarea></p>
+            <label for="cambiarMarca">Marca:</label>
             <select name="changeMarca" id="cambiarMarca">
             <?php foreach($this->marcas as $clave) { ?>
                 <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
             <?php } ?>
             </select>
+            <label for="cambiarCategoria">Categoria:</label>
             <select name="changeCategoria" id="cambiarCategoria">
             <?php foreach($this->categorias as $clave) { ?>
                 <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
             <?php } ?>
             </select>
+            <label for="cambiarCondicion">Condicion:</label>
             <select name="changeCondicion" id="cambiarCondicion">
             <?php foreach($this->condiciones as $clave) { ?>
                 <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
