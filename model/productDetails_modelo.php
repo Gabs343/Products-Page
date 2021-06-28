@@ -91,20 +91,22 @@
             }
 
         }
-         public function getMarcas(){
-            $marcas = [];
-            try{
-                $query = "SELECT marca.ID, marca.Nombre FROM marca";
+        public function getFiltro($filtro){
+            $filtros = [];
+            try{    
+                $query = "SELECT $filtro.ID, $filtro.Nombre FROM $filtro";
                 $con = $this->db->connect();
                 $con = $con->query($query);
-                while ($row = $con->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($marcas, $row);
+
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($filtros, $row);
                 }
-                return $marcas;
+                return $filtros;
             }catch(PDOException $e){
                 return [];
-             }
+            }
         }
+
         public function actualizarComentario($estado){  
             $exito = false;
             $query = "UPDATE comentario SET Mostrar = $estado[Mostrar] WHERE ID = $estado[ID]";
@@ -120,7 +122,9 @@
             $query = "UPDATE producto SET Nombre = '$datos[nombre]', 
                                         Descripcion = '$datos[descripcion]',
                                         Precio = $datos[precio],
-                                        ID_Marca = $datos[marca]
+                                        ID_Marca = $datos[marca],
+                                        ID_Categoria = $datos[categoria],
+                                        ID_Condicion = $datos[condicion]
                     WHERE ID = $_GET[id]";
             $con = $this->db->connect();
             if($con->query($query)){
@@ -131,7 +135,7 @@
 // AGREGANDO AGREGAR PRODUCTOS
         public function agregarProducto($datos){
             $query = "INSERT INTO producto (Nombre, Precio, Descripcion, ID_Marca, ID_Categoria, ID_Condicion)
-            VALUES (:nombre, :precio, :descripcion, :marca, 1, 1)";
+            VALUES (:nombre, :precio, :descripcion, :marca, :categoria, :condicion)";
             $con = $this->db->connect();
             $con = $con->prepare($query);
 
