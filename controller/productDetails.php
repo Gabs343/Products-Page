@@ -23,8 +23,12 @@
                 $comentarios = $this->modelo->getComments();
                 $this->view->comentarios = $comentarios;
             }
-            $marcas = $this->modelo->getMarcas();
+            $marcas = $this->modelo->getFiltro("marca");
+            $categorias = $this->modelo->getFiltro("categoria");
+            $condiciones = $this->modelo->getFiltro("condicion");
             $this->view->marcas = $marcas;
+            $this->view->categorias = $categorias;
+            $this->view->condiciones = $condiciones;
             $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->agregar = $this->isSubmit("agregar");
@@ -91,7 +95,9 @@
                 "nombre" => $_POST["nombre"],
                 "descripcion" => $_POST["descripcion"],
                 "precio" => intval($_POST["precio"]),
-                "marca" => intval($_POST["changeMarca"])
+                "marca" => intval($_POST["changeMarca"]),
+                "condicion"  => intval($_POST["changeCondicion"]),
+                "categoria" => intval($_POST["changeCategoria"])
             );
             $exito = $this->modelo->actualizarProducto($datos);
             if($exito){
@@ -106,7 +112,9 @@
                 "nombre" => $_POST["nombre"],
                 "descripcion" => $_POST["descripcion"],
                 "precio" => intval($_POST["precio"]),
-                "marca" => intval($_POST["changeMarca"])
+                "marca" => intval($_POST["changeMarca"]),
+                "condicion"  => intval($_POST["changeCondicion"]),
+                "categoria" => intval($_POST["changeCategoria"])
             );
             $insertar = $this->modelo->agregarProducto($datos);
         }
