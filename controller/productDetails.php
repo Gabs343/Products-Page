@@ -95,7 +95,9 @@
                 "nombre" => $_POST["nombre"],
                 "descripcion" => $_POST["descripcion"],
                 "precio" => intval($_POST["precio"]),
-                "marca" => intval($_POST["changeMarca"])
+                "marca" => intval($_POST["changeMarca"]),
+                "condicion"  => intval($_POST["changeCondicion"]),
+                "categoria" => intval($_POST["changeCategoria"])
             );
             $exito = $this->modelo->actualizarProducto($datos);
             if($exito){
@@ -110,7 +112,9 @@
                 "nombre" => $_POST["nombre"],
                 "descripcion" => $_POST["descripcion"],
                 "precio" => intval($_POST["precio"]),
-                "marca" => intval($_POST["changeMarca"])
+                "marca" => intval($_POST["changeMarca"]),
+                "condicion"  => intval($_POST["changeCondicion"]),
+                "categoria" => intval($_POST["changeCategoria"])
             );
             $insertar = $this->modelo->agregarProducto($datos);
         }
