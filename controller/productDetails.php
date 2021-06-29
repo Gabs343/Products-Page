@@ -130,6 +130,9 @@ public function agregar(){
         }
     }
 }
+    public function agregar(){
+        
     }
+}
 
 ?>
