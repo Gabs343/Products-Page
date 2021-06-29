@@ -106,33 +106,31 @@
                 //echo "error";
             }
         }
-//AGREGANDO AGREGAR
-public function agregar(){
-    $nombrea = $_FILES["imagen"]["name"] ; 
-    $nombrer = strtolower($nombrea);
-    $cd=$_FILES["imagen"]["tmp_name"];
-    for($i = 1; ;$i++){
-        if(!is_dir("public/img/".$i."/")){
-            mkdir("public/img/".$i."/");
-            $ruta = "public/img/".$i."/".$nombrer;
-            move_uploaded_file($cd, $ruta);
-            $datos = array(
-                "nombre" => $_POST["nombre"],
-                "descripcion" => $_POST["descripcion"],
-                "precio" => intval($_POST["precio"]),
-                "marca" => intval($_POST["changeMarca"]),
-                "condicion"  => intval($_POST["changeCondicion"]),
-                "categoria" => intval($_POST["changeCategoria"]),
-                "id" => intval($i)
-            );
-            $insertar = $this->modelo->agregarProducto($datos);
-            break;
+    //AGREGANDO AGREGAR
+    public function agregar(){
+        $nombrea = $_FILES["imagen"]["name"] ; 
+        $nombrer = strtolower($nombrea);
+        $cd=$_FILES["imagen"]["tmp_name"];
+        for($i = 1; ;$i++){
+            if(!is_dir("public/img/".$i."/")){
+                mkdir("public/img/".$i."/");
+                $ruta = "public/img/".$i."/".$nombrer;
+                move_uploaded_file($cd, $ruta);
+                $datos = array(
+                    "nombre" => $_POST["nombre"],
+                    "descripcion" => $_POST["descripcion"],
+                    "precio" => intval($_POST["precio"]),
+                    "marca" => intval($_POST["changeMarca"]),
+                    "condicion"  => intval($_POST["changeCondicion"]),
+                    "categoria" => intval($_POST["changeCategoria"]),
+                    "id" => intval($i)
+                );
+                $insertar = $this->modelo->agregarProducto($datos);
+                break;
+            }
         }
     }
-}
-    public function agregar(){
-        
-    }
+    
 }
 
 ?>
