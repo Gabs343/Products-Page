@@ -55,7 +55,16 @@
         <form>
             <input type="text" id="especificacion" placeholder="Especificación">
             <input type="text" id="descripcion" placeholder="Descripción">
-    	    <input type="button" class="add-row" value="Añadir">
+    	    <input type="button" class="add-row" value="Añadir"r onclick="agregar()">
+            <script>
+            function agregar(){
+                <?php
+                $esp=$_POST["especificacion"];
+                $desp=$_POST["descripción"];
+                ?>
+                document.write("Hola");
+            }
+            </script>
         </form>
         <form action="<?php $_PHP_SELF; ?>" method="POST">
         <table class="<?php echo $this->newProduct ? "d-none" : ""; ?>">
@@ -79,7 +88,9 @@
                         <?php } 
                     } ?>
         </table>
+        <?php if(!$this->newProduct){ ?>
         <input type="submit" value="Confirmar">
+        <?php } ?>
         </form>
         <button type="button" class="delete-row">Eliminar</button>
     </section>
