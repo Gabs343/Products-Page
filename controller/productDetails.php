@@ -8,7 +8,6 @@
         public function render(){
             $producto = $this->modelo->getProducto();
             $comentarios = $this->modelo->getComments();
-            // $marcas = $this->modelo->getMarcas();
             $puntuarProducto = $this->puntuarProducto($comentarios);
             $this->view->producto = $producto;
             $this->view->comentarios = $comentarios;
@@ -23,9 +22,13 @@
                 $this->view->producto = $producto;
                 $comentarios = $this->modelo->getComments();
                 $this->view->comentarios = $comentarios;
-                // $marcas = $this->modelo->getMarcas;
-                // $this->view->marcas = $marcas;
             }
+            $marcas = $this->modelo->getFiltro("marca");
+            $categorias = $this->modelo->getFiltro("categoria");
+            $condiciones = $this->modelo->getFiltro("condicion");
+            $this->view->marcas = $marcas;
+            $this->view->categorias = $categorias;
+            $this->view->condiciones = $condiciones;
             $this->view->newProduct = !isset($_GET["id"]);
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->agregar = $this->isSubmit("agregar");
@@ -91,24 +94,42 @@
             $datos = array(
                 "nombre" => $_POST["nombre"],
                 "descripcion" => $_POST["descripcion"],
-                "precio" => intval($_POST["precio"])
+                "precio" => intval($_POST["precio"]),
+                "marca" => intval($_POST["changeMarca"]),
+                "condicion"  => intval($_POST["changeCondicion"]),
+                "categoria" => intval($_POST["changeCategoria"])
             );
             $exito = $this->modelo->actualizarProducto($datos);
             if($exito){
-                echo "Actualizado con exito";
+                //echo "Actualizado con exito";
             }else{
-                echo "error";
+                //echo "error";
             }
         }
 //AGREGANDO AGREGAR
-        public function agregar(){
+public function agregar(){
+    $nombrea = $_FILES["imagen"]["name"] ; 
+    $nombrer = strtolower($nombrea);
+    $cd=$_FILES["imagen"]["tmp_name"];
+    for($i = 1; ;$i++){
+        if(!is_dir("public/img/".$i."/")){
+            mkdir("public/img/".$i."/");
+            $ruta = "public/img/".$i."/".$nombrer;
+            move_uploaded_file($cd, $ruta);
             $datos = array(
-            "nombre" => $_POST["nombre"],
-            "descripcion" => $_POST["descripcion"],
-            "precio" => intval($_POST["precio"])
-        );
+                "nombre" => $_POST["nombre"],
+                "descripcion" => $_POST["descripcion"],
+                "precio" => intval($_POST["precio"]),
+                "marca" => intval($_POST["changeMarca"]),
+                "condicion"  => intval($_POST["changeCondicion"]),
+                "categoria" => intval($_POST["changeCategoria"]),
+                "id" => intval($i)
+            );
             $insertar = $this->modelo->agregarProducto($datos);
+            break;
         }
+    }
+}
     }
 
 ?>

@@ -1,21 +1,34 @@
 <?php require "view/header.php"; ?>
-<form action="<?php $_PHP_SELF; ?>" method="POST" enctype="multipart/form-data">>
+<form action="<?php $_PHP_SELF; ?>" method="POST" enctype="multipart/form-data">
 
     <section class="d-sm-flex product-info">
         <div>
             <input class="display-3 text-center" name="nombre" type="text" value="<?php echo $this->newProduct ? "Nombre" : $this->producto->nombre; ?>">
             <hr class="linea">
             <p><textarea name="descripcion" id="" cols="80" rows="10" placeholder="Ingrese su Descripción"><?php echo $this->newProduct ? "Descripcion" : $this->producto->descripcion; ?></textarea></p>
+            <label for="cambiarMarca">Marca:</label>
             <select name="changeMarca" id="cambiarMarca">
-            <?php foreach($this->marcas as $Marcas) { ?>
-            <option value="<?php echo $Marcas["id"]?>"> <?php echo $Marcas["Nombre_Marca"]?></option>
-        <?php } ?>
+            <?php foreach($this->marcas as $clave) { ?>
+                <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
+            <?php } ?>
+            </select>
+            <label for="cambiarCategoria">Categoria:</label>
+            <select name="changeCategoria" id="cambiarCategoria">
+            <?php foreach($this->categorias as $clave) { ?>
+                <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
+            <?php } ?>
+            </select>
+            <label for="cambiarCondicion">Condicion:</label>
+            <select name="changeCondicion" id="cambiarCondicion">
+            <?php foreach($this->condiciones as $clave) { ?>
+                <option value="<?php echo $clave["ID"]; ?>"> <?php echo $clave["Nombre"]; ?></option>
+            <?php } ?>
             </select>
         </div>
 
         <div class="product-img">
             <?php if($this->newProduct){ ?>
-                <input type="file" name="imagen" id="" class="insertImg">
+                <input type="file" name="imagen" id="imagen" class="insertImg">
             <?php }else{ ?>
                 <img src="<?php echo $this->producto->imagen; ?>" alt="" class="d-block w-100">
             <?php } ?>
@@ -42,7 +55,16 @@
         <form>
             <input type="text" id="especificacion" placeholder="Especificación">
             <input type="text" id="descripcion" placeholder="Descripción">
-    	    <input type="button" class="add-row" value="Añadir">
+    	    <input type="button" class="add-row" value="Añadir"r onclick="agregar()">
+            <script>
+            function agregar(){
+                <?php
+                $esp=$_POST["especificacion"];
+                $desp=$_POST["descripción"];
+                ?>
+                document.write("Hola");
+            }
+            </script>
         </form>
         <form action="<?php $_PHP_SELF; ?>" method="POST">
         <table class="<?php echo $this->newProduct ? "d-none" : ""; ?>">
@@ -66,7 +88,9 @@
                         <?php } 
                     } ?>
         </table>
+        <?php if(!$this->newProduct){ ?>
         <input type="submit" value="Confirmar">
+        <?php } ?>
         </form>
         <button type="button" class="delete-row">Eliminar</button>
     </section>

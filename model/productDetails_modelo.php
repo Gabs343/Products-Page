@@ -91,23 +91,22 @@
             }
 
         }
-        // Este es el intento de get que hice.
-        // public function getMarcas(){
-        //     $marcas = [];
-        //     try{
-        //         $query = "SELECT marca.id, marca.Nombre AS Nombre_Marca FROM marca
-        //          INNER JOIN producto ON producto.ID_Marca = marca.ID
-        //                 WHERE ID_Producto =  $_GET[id]";
-        //                 return $marcas;
+        public function getFiltro($filtro){
+            $filtros = [];
+            try{    
+                $query = "SELECT $filtro.ID, $filtro.Nombre FROM $filtro";
+                $con = $this->db->connect();
+                $con = $con->query($query);
 
-        //                 while($row = $con->fetch(PDO::FETCH_ASSOC)){
-        //                     array_push($marcas, $row);
-        //                 }
-        //                 return $marcas
-        //            }catch(PDOException $e){
-        //         return [];
-        //     }
-        // }
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($filtros, $row);
+                }
+                return $filtros;
+            }catch(PDOException $e){
+                return [];
+            }
+        }
+
         public function actualizarComentario($estado){  
             $exito = false;
             $query = "UPDATE comentario SET Mostrar = $estado[Mostrar] WHERE ID = $estado[ID]";
@@ -121,8 +120,11 @@
         public function actualizarProducto($datos){
             $exito = false;
             $query = "UPDATE producto SET Nombre = '$datos[nombre]', 
-                                            Descripcion = '$datos[descripcion]',
-                                            Precio = $datos[precio] 
+                                        Descripcion = '$datos[descripcion]',
+                                        Precio = $datos[precio],
+                                        ID_Marca = $datos[marca],
+                                        ID_Categoria = $datos[categoria],
+                                        ID_Condicion = $datos[condicion]
                     WHERE ID = $_GET[id]";
             $con = $this->db->connect();
             if($con->query($query)){
@@ -132,8 +134,8 @@
         }
 // AGREGANDO AGREGAR PRODUCTOS
         public function agregarProducto($datos){
-            $query = "INSERT INTO producto (Nombre, Precio, Descripcion, ID_Marca, ID_Categoria, ID_Condicion)
-            VALUES (:nombre, :precio, :descripcion, 1, 1, 1)";
+            $query = "INSERT INTO producto (ID, Nombre, Precio, Descripcion, ID_Marca, ID_Categoria, ID_Condicion)
+            VALUES (:id, :nombre, :precio, :descripcion, :marca, :categoria, :condicion)";
             $con = $this->db->connect();
             $con = $con->prepare($query);
 

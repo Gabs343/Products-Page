@@ -88,16 +88,16 @@
         }
 
         public function getFiltro($filtro){
-            $categorias = [];
+            $filtros = [];
             try{    
                 $query = "SELECT * FROM $filtro";
                 $con = $this->db->connect();
                 $con = $con->query($query);
 
                 while($row = $con->fetch(PDO::FETCH_ASSOC)){
-                    array_push($categorias, $row);
+                    array_push($filtros, $row);
                 }
-                return $categorias;
+                return $filtros;
             }catch(PDOException $e){
                 return [];
             }
