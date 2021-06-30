@@ -147,7 +147,14 @@
     }
 
     public function editEspecificacion(){
-
+        $datos = array(
+            "Especificacion" => intval($_POST["especificaciones"]),
+            "Descripcion" => $_POST["descripcion"]
+        );
+        $exito = $this->modelo->updateEspecificacion($datos);
+        if($exito){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
     }
     
 }
