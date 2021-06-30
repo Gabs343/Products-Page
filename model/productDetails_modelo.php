@@ -132,7 +132,7 @@
             }
             return $exito;
         }
-// AGREGANDO AGREGAR PRODUCTOS
+
         public function agregarProducto($datos){
             $query = "INSERT INTO producto (ID, Nombre, Precio, Descripcion, ID_Marca, ID_Categoria, ID_Condicion)
             VALUES (:id, :nombre, :precio, :descripcion, :marca, :categoria, :condicion)";
@@ -140,6 +140,62 @@
             $con = $con->prepare($query);
 
             if($con->execute($datos)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function getEspecificaciones(){
+            $especificaciones = [];
+            try{
+                $query = "SELECT * FROM especificacion";
+                $con = $this->db->connect();
+                $con = $con->query($query);
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($especificaciones, $row);
+                }
+                return $especificaciones;
+            }catch(PDOException $e){
+                return [];
+            }
+          
+        }
+
+        public function insertEspecificacion($datos){
+            $descripcion = array_pop($datos);
+            $idEspecificacion = "";
+            if(is_string($datos["Nombre"])){
+                $query = "INSERT INTO especificacion (Nombre) VALUES (:Nombre)";
+                $con = $this->db->connect();
+                $con = $con->prepare($query);
+                $con->execute($datos);
+
+                try{
+                    $query = "SELECT ID FROM especificacion WHERE Nombre = '$datos[Nombre]'";
+                    $con = $this->db->connect();
+                    $con = $con->query($query);
+
+                    while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                        $idEspecificacion = $row["ID"];
+                    }
+                }catch(PDOException $e){
+                    
+                }
+            }else{
+                $idEspecificacion = $datos["Nombre"];
+            }
+
+            $newDatos = array(
+                "ID_Producto" => intval($_GET["id"]),
+                "ID_Especificacion" => $idEspecificacion,
+                "Descripcion" => $descripcion
+            );
+            $query = "INSERT INTO esp_descripcion (ID_Producto, ID_Especificacion, Descripcion) VALUES
+                    (:ID_Producto, :ID_Especificacion, :Descripcion)";
+            $con = $this->db->connect();
+            $con = $con->prepare($query);
+            if($con->execute($newDatos)){
                 return true;
             }else{
                 return false;
