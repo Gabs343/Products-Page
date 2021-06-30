@@ -21,11 +21,11 @@
                 $producto = $this->modelo->getProducto();
                 $comentarios = $this->modelo->getComments();
                 $especificaciones = $this->modelo->getEspecificaciones();
-                $productEspec = $this->modelo->getProductoEspec();
+                //$productEspec = $this->modelo->getProductoEspec();
                 $this->view->producto = $producto;
                 $this->view->comentarios = $comentarios;
                 $this->view->especificaciones = $especificaciones;
-                $this->view->productEspec = $productEspec;
+                //$this->view->productEspec = $productEspec;
             }
             $marcas = $this->modelo->getFiltro("marca");
             $categorias = $this->modelo->getFiltro("categoria");
@@ -43,7 +43,7 @@
             $this->view->render("productDetails/index_emp");
         }
 
-        private function sendComment(){
+        public function sendComment(){
             $datos = array(
                 "ID" => intval(date("YmdHis")),
                 "Comentario" => $_POST["comentario"],
