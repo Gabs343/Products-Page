@@ -19,9 +19,11 @@
         public function renderForEmpleados(){
             if(isset($_GET["id"])){
                 $producto = $this->modelo->getProducto();
-                $this->view->producto = $producto;
                 $comentarios = $this->modelo->getComments();
+                $especificaciones = $this->modelo->getEspecificaciones();
+                $this->view->producto = $producto;
                 $this->view->comentarios = $comentarios;
+                $this->view->especificaciones = $especificaciones;
             }
             $marcas = $this->modelo->getFiltro("marca");
             $categorias = $this->modelo->getFiltro("categoria");
@@ -33,6 +35,8 @@
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->agregar = $this->isSubmit("agregar");
             $this->view->actualizar = $this->isSubmit("actualizar");
+            $this->view->newEspec = $this->isSubmit("newEspecificacion");
+            $this->view->setEspec = $this->isSubmit("editEspecificacion");
             $this->view->render("productDetails/index_emp");
         }
 
@@ -106,33 +110,46 @@
                 //echo "error";
             }
         }
-//AGREGANDO AGREGAR
-public function agregar(){
-    $nombrea = $_FILES["imagen"]["name"] ; 
-    $nombrer = strtolower($nombrea);
-    $cd=$_FILES["imagen"]["tmp_name"];
-    for($i = 1; ;$i++){
-        if(!is_dir("public/img/".$i."/")){
-            mkdir("public/img/".$i."/");
-            $ruta = "public/img/".$i."/".$nombrer;
-            move_uploaded_file($cd, $ruta);
-            $datos = array(
-                "nombre" => $_POST["nombre"],
-                "descripcion" => $_POST["descripcion"],
-                "precio" => intval($_POST["precio"]),
-                "marca" => intval($_POST["changeMarca"]),
-                "condicion"  => intval($_POST["changeCondicion"]),
-                "categoria" => intval($_POST["changeCategoria"]),
-                "id" => intval($i)
-            );
-            $insertar = $this->modelo->agregarProducto($datos);
-            break;
+
+    public function agregar(){
+        $nombrea = $_FILES["imagen"]["name"] ; 
+        $nombrer = strtolower($nombrea);
+        $cd=$_FILES["imagen"]["tmp_name"];
+        for($i = 1; ;$i++){
+            if(!is_dir("public/img/".$i."/")){
+                mkdir("public/img/".$i."/");
+                $ruta = "public/img/".$i."/".$nombrer;
+                move_uploaded_file($cd, $ruta);
+                $datos = array(
+                    "nombre" => $_POST["nombre"],
+                    "descripcion" => $_POST["descripcion"],
+                    "precio" => intval($_POST["precio"]),
+                    "marca" => intval($_POST["changeMarca"]),
+                    "condicion"  => intval($_POST["changeCondicion"]),
+                    "categoria" => intval($_POST["changeCategoria"]),
+                    "id" => intval($i)
+                );
+                $insertar = $this->modelo->agregarProducto($datos);
+                break;
+            }
         }
     }
-}
-    public function agregar(){
-        
+
+    public function newEspecificacion(){
+        $datos = array(
+            "Nombre" => $_POST["especificaciones"] == 0 ? $_POST["especificacion"] : intval($_POST["especificaciones"]),
+            "Descripcion" => $_POST["descripcion"]
+        );
+        $insertar = $this->modelo->insertEspecificacion($datos);
+        if($insertar){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
     }
+
+    public function editEspecificacion(){
+
+    }
+    
 }
 
 ?>
