@@ -35,7 +35,6 @@
             <div class="shop-buttons mt-5">
                 <h3><input type="number" size="5" name="precio" placeholder="$ <?php echo $this->newProduct ? "Precio" : $this->producto->precio; ?>"></h3>
                 <div class="ml-5">
-                    <!-- <-- UN IF PARA LOS BOTONES -->
                     <?php if ($this->newProduct) { ?>
                         <input type="submit" name="agregar" value="Confirmar">
                     <?php } else { ?>
@@ -91,7 +90,12 @@
                                 <?php } else { ?>
                                     <input type="submit" name="enviarCaract-<?php echo $cont; ?>" value="Editar">
                             </td>
-                            <!--<td><input class="" type="submit" name="mostrarEspec" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>-->
+                            <!--<td><form  method="POST">
+                                <input type="hidden" name="nombre_Espec" value="<?php echo $claveP["Nombre"];?>">
+                         
+                                <input class="" type="submit" name="mostrarEspec" value="<?php echo $this->productEspec[$cont]["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>">
+                                </form>
+                            </td>-->
                         <?php } ?> </td>
                         </tr>
                 <?php }
