@@ -201,5 +201,17 @@
                 return false;
             }
         }
+
+        public function updateEspecificacion($datos){
+            $exito = false;
+            $query = "UPDATE esp_descripcion SET ID_Especificacion = $datos[Especificacion],
+                                                Descripcion = '$datos[Descripcion]'
+                                                WHERE ID = $_GET[id]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;                                   
+        }
     }
 ?>
