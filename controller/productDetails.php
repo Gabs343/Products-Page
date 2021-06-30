@@ -21,9 +21,11 @@
                 $producto = $this->modelo->getProducto();
                 $comentarios = $this->modelo->getComments();
                 $especificaciones = $this->modelo->getEspecificaciones();
+                $productEspec = $this->modelo->getProductoEspec();
                 $this->view->producto = $producto;
                 $this->view->comentarios = $comentarios;
                 $this->view->especificaciones = $especificaciones;
+                $this->view->productEspec = $productEspec;
             }
             $marcas = $this->modelo->getFiltro("marca");
             $categorias = $this->modelo->getFiltro("categoria");
@@ -37,6 +39,7 @@
             $this->view->actualizar = $this->isSubmit("actualizar");
             $this->view->newEspec = $this->isSubmit("newEspecificacion");
             $this->view->setEspec = $this->isSubmit("editEspecificacion");
+            $this->view->mostrarEspec = $this->isSubmit("mostrarEspec");
             $this->view->render("productDetails/index_emp");
         }
 
@@ -127,7 +130,9 @@
                     "marca" => intval($_POST["changeMarca"]),
                     "condicion"  => intval($_POST["changeCondicion"]),
                     "categoria" => intval($_POST["changeCategoria"]),
-                    "id" => intval($i)
+                    "id" => intval($i),
+                    "ruta" => $ruta
+
                 );
                 $insertar = $this->modelo->agregarProducto($datos);
                 break;
@@ -155,6 +160,26 @@
         if($exito){
             echo "<meta http-equiv='refresh' content='0'>";
         }
+    }
+
+    public function mostrarEspec(){
+        if ($_POST["mostrarEspec"] == "Activar") {
+            $estado = array(
+                "ID_Producto" => intval($_GET["id"]),
+                "Nombre" => $_POST["nombre_Espec"],
+                "Mostrar" => 1 
+            );
+        }else if($_POST["mostrarEspec"] == "Desactivar"){
+            $estado = array(
+                "ID_Producto" => intval($_GET["id"]),
+                "Nombre" => $_POST["nombre_Espec"],
+                "Mostrar" => 0
+            );
+        }
+        $exito = $this->modelo->mostrarEspec($estado);
+        if ($exito) {
+            echo "<meta http-equiv='refresh' content='0'>";
+        }   
     }
     
 }
