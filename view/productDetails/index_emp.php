@@ -60,6 +60,7 @@
                     <th>Especificación</th>
                     <th>Descripción</th>
                     <th>Editar</th>
+                    <th>Activar/Desactivar</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,8 +69,6 @@
                     $cont = 0;
                     foreach ($this->producto->especificaciones as $claveP) {
                         $cont++; ?>
-                        <input type="hidden" name="especificacion" value="<?php echo $claveP["Nombre"]; ?>">
-                        <input type="hidden" name="descripcion" value="<?php echo $claveP["Descripcion"]; ?>">
                         <tr>
                             <td><?php if (isset($_POST["enviarCaract-" . $cont])) { ?>
                                     <select name="especificaciones">
@@ -82,7 +81,7 @@
                                 } ?>
                             </td>
                             <td><?php if (isset($_POST["enviarCaract-" . $cont])) { ?>
-                                    <input type="text" value="<?php echo $claveP["Descripcion"]; ?>">
+                                    <input type="text" name="descripcion" value="<?php echo $claveP["Descripcion"]; ?>">
                                 <?php } else {
                                     echo $claveP["Descripcion"];
                                 } ?>
@@ -92,6 +91,7 @@
                                 <?php } else { ?>
                                     <input type="submit" name="enviarCaract-<?php echo $cont; ?>" value="Editar">
                             </td>
+                            <!--<td><input class="" type="submit" name="mostrarEspec" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>-->
                         <?php } ?> </td>
                         </tr>
                 <?php }
