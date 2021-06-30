@@ -29,9 +29,17 @@
 
                 $especificaciones = array();
 
-                $query = "SELECT especificacion.Nombre, esp_descripcion.Descripcion FROM esp_descripcion
+                $query = "SELECT ID_Especificacion as ID, especificacion.Nombre, esp_descripcion.Descripcion, Mostrar FROM esp_descripcion
                 INNER JOIN especificacion ON especificacion.ID = ID_Especificacion 
                 WHERE ID_Producto =  $_GET[id]";
+
+                if(empty($_SESSION)){
+                    $query = $query." AND Mostrar = 1";
+                }else{
+                    if($_SESSION["Perfil"] <= 2){
+                    $query = $query." AND Mostrar = 1";    
+                    }
+                }
 
                 $con = $this->db->connect();
                 $con = $con->query($query);   
@@ -172,21 +180,6 @@
           
         }
 
-        /*public function getProductoEspec(){
-            $productEspec = [];
-            try{
-                $query = "SELECT Mostrar FROM esp_descripcion WHERE ID_Producto = $_GET[id]";
-                $con = $this->db->connect();
-                $con = $con->query($query);
-                while($row = $con->fetch(PDO::FETCH_ASSOC)){
-                    array_push($productEspec, $row);
-                }
-                return $productEspec;
-            }catch(PDOException $e){
-                return [];
-            }
-        }*/
-
         public function insertEspecificacion($datos){
             $descripcion = array_pop($datos);
             $idEspecificacion = "";
@@ -242,8 +235,7 @@
         public function mostrarEspec($estado){
             $exito = false;
             $query="UPDATE esp_descripcion SET Mostrar = $estado[Mostrar]
-                    WHERE  ID_Producto = $estado[ID_Producto] AND ID_Especificacion = 
-                    (SELECT ID FROM especificacion WHERE Nombre = '$estado[Nombre]')";
+                    WHERE  ID_Producto = $estado[ID_Producto] AND ID_Especificacion = $estado[ID_Espec]";
             $con = $this->db->connect();
             if($con = $con->query($query)){
                 $exito = true;
