@@ -134,12 +134,22 @@
         }
 
         public function agregarProducto($datos){
+            $imagen = array(
+                "ID_Producto" => $datos["id"],
+                "ruta" => array_pop($datos)
+            );
+
             $query = "INSERT INTO producto (ID, Nombre, Precio, Descripcion, ID_Marca, ID_Categoria, ID_Condicion)
             VALUES (:id, :nombre, :precio, :descripcion, :marca, :categoria, :condicion)";
             $con = $this->db->connect();
             $con = $con->prepare($query);
+            $con->execute($datos);
 
-            if($con->execute($datos)){
+            $query = "INSERT INTO imagen(ID_Producto, ruta) VALUES(:ID_Producto, :ruta)";
+            $con = $this->db->connect();
+            $con = $con->prepare($query);
+
+            if($con->execute($imagen)){
                 return true;
             }else{
                 return false;
@@ -149,7 +159,7 @@
         public function getEspecificaciones(){
             $especificaciones = [];
             try{
-                $query = "SELECT * FROM especificacion";
+                $query = "SELECT espec.ID, espec.Nombre FROM especificacion AS espec";
                 $con = $this->db->connect();
                 $con = $con->query($query);
                 while($row = $con->fetch(PDO::FETCH_ASSOC)){
@@ -161,6 +171,21 @@
             }
           
         }
+
+        /*public function getProductoEspec(){
+            $productEspec = [];
+            try{
+                $query = "SELECT Mostrar FROM esp_descripcion WHERE ID_Producto = $_GET[id]";
+                $con = $this->db->connect();
+                $con = $con->query($query);
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($productEspec, $row);
+                }
+                return $productEspec;
+            }catch(PDOException $e){
+                return [];
+            }
+        }*/
 
         public function insertEspecificacion($datos){
             $descripcion = array_pop($datos);
@@ -200,6 +225,30 @@
             }else{
                 return false;
             }
+        }
+
+        public function updateEspecificacion($datos){
+            $exito = false;
+            $query = "UPDATE esp_descripcion SET ID_Especificacion = $datos[Especificacion],
+                                                Descripcion = '$datos[Descripcion]'
+                                                WHERE ID = $_GET[id]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;                                   
+        }
+
+        public function mostrarEspec($estado){
+            $exito = false;
+            $query="UPDATE esp_descripcion SET Mostrar = $estado[Mostrar]
+                    WHERE  ID_Producto = $estado[ID_Producto] AND ID_Especificacion = 
+                    (SELECT ID FROM especificacion WHERE Nombre = '$estado[Nombre]')";
+            $con = $this->db->connect();
+            if($con = $con->query($query)){
+                $exito = true;
+            }
+            return $exito;
         }
     }
 ?>
