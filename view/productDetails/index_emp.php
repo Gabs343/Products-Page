@@ -90,12 +90,12 @@
                                 <?php } else { ?>
                                     <input type="submit" name="enviarCaract-<?php echo $cont; ?>" value="Editar">
                             </td>
-                            <!--<td><form  method="POST">
-                                <input type="hidden" name="nombre_Espec" value="<?php echo $claveP["Nombre"];?>">
-                         
-                                <input class="" type="submit" name="mostrarEspec" value="<?php echo $this->productEspec[$cont]["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>">
+                            <td><form  method="POST">
+                                <input type="hidden" name="ID_Espec" value="<?php echo $claveP["ID"];?>">
+        
+                                <input type="submit" name="mostrarEspec" value="<?php echo $claveP["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>">
                                 </form>
-                            </td>-->
+                            </td>
                         <?php } ?> </td>
                         </tr>
                 <?php }
