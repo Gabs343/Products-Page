@@ -19,9 +19,11 @@
         public function renderForEmpleados(){
             if(isset($_GET["id"])){
                 $producto = $this->modelo->getProducto();
-                $this->view->producto = $producto;
                 $comentarios = $this->modelo->getComments();
+                $especificaciones = $this->modelo->getEspecificaciones();
+                $this->view->producto = $producto;
                 $this->view->comentarios = $comentarios;
+                $this->view->especificaciones = $especificaciones;
             }
             $marcas = $this->modelo->getFiltro("marca");
             $categorias = $this->modelo->getFiltro("categoria");
@@ -33,6 +35,8 @@
             $this->view->mostrarCom = $this->isSubmit("mostrarComment");
             $this->view->agregar = $this->isSubmit("agregar");
             $this->view->actualizar = $this->isSubmit("actualizar");
+            $this->view->newEspec = $this->isSubmit("newEspecificacion");
+            $this->view->setEspec = $this->isSubmit("editEspecificacion");
             $this->view->render("productDetails/index_emp");
         }
 
@@ -106,7 +110,7 @@
                 //echo "error";
             }
         }
-    //AGREGANDO AGREGAR
+
     public function agregar(){
         $nombrea = $_FILES["imagen"]["name"] ; 
         $nombrer = strtolower($nombrea);
@@ -129,6 +133,21 @@
                 break;
             }
         }
+    }
+
+    public function newEspecificacion(){
+        $datos = array(
+            "Nombre" => $_POST["especificaciones"] == 0 ? $_POST["especificacion"] : intval($_POST["especificaciones"]),
+            "Descripcion" => $_POST["descripcion"]
+        );
+        $insertar = $this->modelo->insertEspecificacion($datos);
+        if($insertar){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
+    }
+
+    public function editEspecificacion(){
+
     }
     
 }
