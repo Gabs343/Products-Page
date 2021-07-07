@@ -1,5 +1,5 @@
 <?php require "view/header.php"; ?>
-<section class="container m-5 <?php echo $this->tienePermiso("EDITUSER") ? "" : "d-none" ?>">
+<section class="container m-5 <?php echo $this->tienePermiso("EDITUSER") ? "" : "d-none" ?> <?php echo $_GET["showList"] == "Perfiles" ? "" : "d-none" ?>">
     <h1>Clientes</h1>
     <hr>
     <table>
@@ -37,7 +37,7 @@
     </table>
 </section>
 
-<section class="container m-5">
+<section class="container m-5 <?php echo $_GET["showList"] == "Categorias" ? "" : "d-none" ?>">
     <h1>Categorias</h1>
     <hr>
     <table>
@@ -75,7 +75,7 @@
     </form>
 </section>
 
-<section class="container m-5">
+<section class="container m-5 <?php echo $_GET["showList"] == "Marcas" ? "" : "d-none" ?>">
     <h1>Marcas</h1>
     <hr>
     <table>
@@ -112,7 +112,7 @@
     </form>
 </section>
 
-<section class="container m-5">
+<section class="container m-5 <?php echo $_GET["showList"] == "Condiciones" ? "" : "d-none" ?>">
     <h1>Condiciones</h1>
     <hr>
     <table>
