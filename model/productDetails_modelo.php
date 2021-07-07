@@ -33,12 +33,8 @@
                 INNER JOIN especificacion ON especificacion.ID = ID_Especificacion 
                 WHERE ID_Producto =  $_GET[id]";
 
-                if(empty($_SESSION)){
-                    $query = $query." AND Mostrar = 1";
-                }else{
-                    if($_SESSION["Perfil"] <= 2){
-                    $query = $query." AND Mostrar = 1";    
-                    }
+                if(!$this->isEmpleado){
+                    $query = $query." AND Mostrar = 1"; 
                 }
 
                 $con = $this->db->connect();
@@ -76,17 +72,14 @@
                         INNER JOIN cliente ON ID_Cliente = cliente.DNI 
                         WHERE ID_Producto =  $_GET[id]";
 
-                if(empty($_SESSION)){
-                    $query = $query." AND Mostrar = 1";
+                if($this->isEmpleado){
+                    if(isset($_GET["estado"])){
+                        $query = $query." AND Mostrar = $_GET[estado]";
+                    }   
                 }else{
-                    if($_SESSION["Perfil"] <= 2){
-                        $query = $query." AND Mostrar = 1";    
-                    }else{
-                        if(isset($_GET["estado"])){
-                            $query = $query." AND Mostrar = $_GET[estado]";
-                        }                    
-                    }
+                    $query = $query." AND Mostrar = 1"; 
                 }
+    
                 $con = $this->db->connect();
                 $con = $con->query($query);
 
