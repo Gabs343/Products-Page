@@ -12,6 +12,7 @@
                 require $url;
                 $modelName = $modelo."Modelo";
                 $this->modelo = new $modelName();
+                $this->modelo->isEmpleado = $this->isEmpleado();
             }
         }
 
@@ -27,6 +28,17 @@
             if(isset($_POST[$form])){
                 $this->{$form}();
             }   
+        }
+
+        public function isEmpleado(){
+            $isEmpleado = false;
+            if(!empty($_SESSION)){
+                if($_SESSION["Perfil"] > 2){
+                    $isEmpleado = true;
+                }
+            }
+
+            return $isEmpleado;
         }
     }
 
