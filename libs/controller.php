@@ -4,6 +4,7 @@
         {
             session_start();
             $this->view = new View();
+            $this->view->isEmpleado = $this->isEmpleado();
         }
 
         public function loadModel($modelo){
