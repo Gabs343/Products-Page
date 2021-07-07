@@ -17,14 +17,6 @@
             }
         }
 
-        public function getPerfil(){
-            $perfil = null;
-            if(!empty($_SESSION)){
-                $perfil = $this->modelo->getperfil();
-            }
-            return $perfil;
-        }
-
         public function isSubmit($form){
             if(isset($_POST[$form])){
                 $this->{$form}();
