@@ -15,11 +15,8 @@
                 $controlador = new $ruta;
                 $controlador->loadModel($ruta);
 
-                if($controlador->isEmpleado()){
-                    $controlador->renderForEmpleados();
-                }else{
-                    $controlador->render();
-                }
+                $controlador->render();
+                
             }else{
                 $controlador = new Errores();
             }
