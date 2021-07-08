@@ -6,41 +6,47 @@
         }
 
         public function render(){
-            $producto = $this->modelo->getProducto();
-            $comentarios = $this->modelo->getComments();
-            $puntuarProducto = $this->puntuarProducto($comentarios);
-            $this->view->producto = $producto;
-            $this->view->comentarios = $comentarios;
-            $this->view->puntos = $puntuarProducto;
-            $this->view->enviar = $this->isSubmit("sendComment");
-            $this->view->render("productDetails/index");
-        }
 
-        public function renderForEmpleados(){
-            if(isset($_GET["id"])){
+            if($this->isEmpleado()){
+
+                if(isset($_GET["id"])){
+                    $producto = $this->modelo->getProducto();
+                    $comentarios = $this->modelo->getComments();
+                    $especificaciones = $this->modelo->getEspecificaciones();
+                    $this->view->producto = $producto;
+                    $this->view->comentarios = $comentarios;
+                    $this->view->especificaciones = $especificaciones;
+                }
+                $marcas = $this->modelo->getFiltro("marca");
+                $categorias = $this->modelo->getFiltro("categoria");
+                $condiciones = $this->modelo->getFiltro("condicion");
+                $this->view->marcas = $marcas;
+                $this->view->categorias = $categorias;
+                $this->view->condiciones = $condiciones;
+                $this->view->newProduct = !isset($_GET["id"]);
+                $this->view->mostrarCom = $this->isSubmit("mostrarComment");
+                $this->view->agregar = $this->isSubmit("agregar");
+                $this->view->actualizar = $this->isSubmit("actualizar");
+                $this->view->newEspec = $this->isSubmit("newEspecificacion");
+                $this->view->setEspec = $this->isSubmit("editEspecificacion");
+                $this->view->mostrarEspec = $this->isSubmit("mostrarEspec");
+                $this->view->render("productDetails/index_emp");
+
+            }else{
+
                 $producto = $this->modelo->getProducto();
                 $comentarios = $this->modelo->getComments();
-                $especificaciones = $this->modelo->getEspecificaciones();
+                $puntuarProducto = $this->puntuarProducto($comentarios);
                 $this->view->producto = $producto;
                 $this->view->comentarios = $comentarios;
-                $this->view->especificaciones = $especificaciones;
-            }
-            $marcas = $this->modelo->getFiltro("marca");
-            $categorias = $this->modelo->getFiltro("categoria");
-            $condiciones = $this->modelo->getFiltro("condicion");
-            $this->view->marcas = $marcas;
-            $this->view->categorias = $categorias;
-            $this->view->condiciones = $condiciones;
-            $this->view->newProduct = !isset($_GET["id"]);
-            $this->view->mostrarCom = $this->isSubmit("mostrarComment");
-            $this->view->agregar = $this->isSubmit("agregar");
-            $this->view->actualizar = $this->isSubmit("actualizar");
-            $this->view->newEspec = $this->isSubmit("newEspecificacion");
-            $this->view->setEspec = $this->isSubmit("editEspecificacion");
-            $this->view->mostrarEspec = $this->isSubmit("mostrarEspec");
-            $this->view->render("productDetails/index_emp");
-        }
+                $this->view->puntos = $puntuarProducto;
+                $this->view->enviar = $this->isSubmit("sendComment");
+                $this->view->render("productDetails/index");
 
+            }
+            
+        }
+        
         public function sendComment(){
             $datos = array(
                 "ID" => intval(date("YmdHis")),

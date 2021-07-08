@@ -41,8 +41,23 @@
 
     <div class="collapse navbar-collapse separador-navbar" id="collapsibleNavId">
         <ul class="navbar-nav mt-1">
-            <li class="nav-item active">
+            <li class="nav-item active <?php echo $this->isEmpleado ? "d-none" : ""; ?>">
                 <a class="nav-link" href="main">Home</a>
+            </li>
+            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link" href="main?showList=Perfiles">Perfiles</a>
+            </li>
+            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link" href="main?showList=Permisos">Permisos</a>
+            </li>
+            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link" href="main?showList=Categorias">Categorias</a>
+            </li>
+            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link" href="main?showList=Marcas">Marcas</a>
+            </li>
+            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link" href="main?showList=Condiciones">Condiciones</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>

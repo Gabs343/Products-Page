@@ -13,6 +13,11 @@ ul {
     list-style-type: none;
 }
 
+.nav-item a{
+    margin: 0 25px;
+}
+
+
 .product-section{
     margin: 130px 0;
 }
@@ -175,7 +180,7 @@ ul {
 }
 
 .separador-navbar {
-    margin-left: 500px;
+    margin-left: 85px;
     margin-right: -150px;
 }
 
