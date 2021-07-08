@@ -6,12 +6,18 @@
         }
 
         function render(){
-            $this->view->render("contacto/index");
+            if($this->isEmpleado()){
+
+                $this->view->render("contacto/index_emp");
+
+            }else{
+
+                $this->view->render("contacto/index");
+
+            }
+            
         }
 
-        public function renderForEmpleados(){
-            $this->view->render("contacto/index_emp");
-        }
     }
 
 ?>
