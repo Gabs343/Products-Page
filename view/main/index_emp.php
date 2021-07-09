@@ -1,5 +1,5 @@
 <?php require "view/header.php"; ?>
-<section class="container m-5 <?php echo $this->tienePermiso("EDITUSER") ? "" : "d-none" ?> <?php echo $_GET["showList"] == "Clientes" ? "" : "d-none" ?>">
+<section class="container m-5 <?php /*echo $this->tienePermiso("EDITUSER") ? "" : "d-none"*/ ?> <?php echo $_GET["showList"] == "Clientes" ? "" : "d-none" ?>">
     <h1>Clientes</h1>
     <hr>
     <table>
@@ -51,6 +51,8 @@
         <table>
             <thead>
                 <th>Nombre</th>
+                <th class="">Editar</th>
+                <th class="">Activar/Desactivar</th>
             </thead>
             <tbody>
                 <?php $cont = 0;
@@ -58,35 +60,97 @@
                     $cont++; ?>
                     <form action="<?php $_PHP_SELF; ?>" method="POST">
                         <tr>
-                            <td><?php echo $clave["Nombre"]; ?></td>
+                            <td><?php if (isset($_POST["editarPer-" . $cont])) { ?>
+                                <input type="text" name="nombre" placeholder="<?php echo $clave["Nombre"]; ?>">
+                                <?php } else {
+                                    echo $clave["Nombre"];
+                                } ?>
+                            </td>
+
+                            <td class="">
+                                <?php if (isset($_POST["editarPer-" . $cont])) { ?>
+                                    <input type="submit" name="editPerfil" value="Confirmar">
+                                    </td>
+                            <?php } else { ?>
+                                <input type="submit" name="editarPer-<?php echo $cont; ?>" value="Editar"></td>
+                            <?php } ?> </td>
+
+                            <td class=""> <input class="" type="submit" name="statePerfil" value="<?php echo $clave["Activo"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
                         </tr>
+                        <input type="hidden" name="ID" value="<?php echo $clave["ID"]; ?>">
                     </form>
                 <?php } ?>
             </tbody>
         </table>
+
+        <h3>Añadir</h3>
+        <form action="<?php $_PHP_SELF; ?>" method="POST" class="">
+            <label for="perfil">Nombre del Perfil:</label>
+            <input type="text" name="perfil">
+            <input type="submit" name="ingresarPerfil" value="Ingresar">
+        </form>
     </div>
 
     <div>
         <h1>Permisos</h1>
         <hr>
-        <table>
+
+        <form action="<?php $_PHP_SELF; ?>" method="POST">
+            <select name="permiso" id="">
+                <?php foreach ($this->permisos as $clave) {?>
+                    <option value="<?php echo $clave["ID"]; ?>"><?php echo $clave["Nombre"]; ?></option>
+                <?php } ?>    
+            </select>
+            <input type="submit" name="verPermiso" value="Ver">
+            <table class="<?php echo isset($_POST["permiso"]) ? "" : "d-none"; ?>">
             <thead>
                 <th>Nombre</th>
                 <th>Code</th>
+                <th class="">Editar</th>
+                <th class="">Activar/Desactivar</th>
             </thead>
             <tbody>
-                <?php $cont = 0;
-                foreach ($this->permisos as $clave) {
-                    $cont++; ?>
-                    <form action="<?php $_PHP_SELF; ?>" method="POST">
+                <?php if(isset($_POST["permiso"])) { foreach($this->permisos as $clave) { if($clave["ID"] == $_POST["permiso"]) {?>
+                    
                         <tr>
-                            <td><?php echo $clave["Nombre"]; ?></td>
-                            <td><?php echo $clave["Code"]; ?></td>
+                            <td><?php if (isset($_POST["editarPermiso"])) { ?>
+                                <input type="text" name="nombre" placeholder="<?php echo $clave["Nombre"]; ?>">
+                                <?php } else {
+                                    echo $clave["Nombre"];
+                                } ?>
+                            </td>
+
+                            <td><?php if (isset($_POST["editarPermiso"])) { ?>
+                                <input type="text" name="code" placeholder="<?php echo $clave["Code"]; ?>">
+                                <?php } else {
+                                    echo $clave["Code"];
+                                } ?>
+                            </td>
+
+                            <td class="">
+                                <?php if (isset($_POST["editarPermiso"])) { ?>
+                                    <input type="submit" name="cambiarPermiso" value="Confirmar">
+                                    </td>
+                            <?php } else { ?>
+                                <input type="submit" name="editarPermiso" value="Editar"></td>
+                            <?php } ?> </td>
+
+                            <td class=""> <input class="" type="submit" name="ActivarPermiso" value="<?php echo $clave["Activo"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
                         </tr>
-                    </form>
-                <?php } ?>
+                        <input type="hidden" name="ID" value="<?php echo $clave["ID"]; ?>">
+                <?php } } } ?>    
             </tbody>
         </table>
+        </form>
+
+        <h3>Añadir</h3>
+        <form action="<?php $_PHP_SELF; ?>" method="POST" class="">
+            <label for="permiso">Descripción del Permiso:</label>
+            <input type="text" name="permiso">
+            <label for="code">Código del Permiso:</label>
+            <input type="text" name="code">
+            <input type="submit" name="ingresarPermiso" value="Ingresar">
+        </form>
     </div>
 
 </section>
@@ -97,8 +161,8 @@
     <table>
         <thead>
             <th>Nombre</th>
-            <th class="<?php echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none" ?>">Editar</th>
-            <th class="<?php echo $this->tienePermiso("DELFILTRO") ? "" : "d-none" ?>">Activar/Desactivar</th>
+            <th class="<?php /*echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none"*/ ?>">Editar</th>
+            <th class="<?php /*echo $this->tienePermiso("DELFILTRO") ? "" : "d-none"*/ ?>">Activar/Desactivar</th>
         </thead>
         <tbody>
             <?php $cont = 0;
@@ -112,14 +176,14 @@
                                 echo $clave["Nombre"];
                             } ?>
                         </td>
-                        <td class="<?php echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none" ?>">
+                        <td class="<?php /*echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none"*/ ?>">
                             <?php if (isset($_POST["editarCat-" . $cont])) { ?>
                                 <input type="submit" name="cambiarFiltro" value="Confirmar">
                         </td>
                     <?php } else { ?>
                         <input type="submit" name="editarCat-<?php echo $cont; ?>" value="Editar"></td>
                     <?php } ?> </td>
-                    <td class="<?php echo $this->tienePermiso("DELFILTRO") ? "" : "d-none" ?>"> <input class="" type="submit" name="mostrarFiltro" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
+                    <td class="<?php /*echo $this->tienePermiso("DELFILTRO") ? "" : "d-none"*/ ?>"> <input class="" type="submit" name="mostrarFiltro" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
                     </tr>
                     <input type="hidden" name="ID" value="<?php echo $clave["ID"]; ?>">
                     <input type="hidden" name="tabla" value="categoria">
@@ -127,7 +191,8 @@
             <?php } ?>
         </tbody>
     </table>
-    <form action="<?php $_PHP_SELF; ?>" method="POST" class="<?php echo $this->tienePermiso("ADDFILTRO") ? "" : "d-none" ?>">
+    <h3>Añadir</h3>
+    <form action="<?php $_PHP_SELF; ?>" method="POST" class="<?php /*echo $this->tienePermiso("ADDFILTRO") ? "" : "d-none"*/ ?>">
         <label for="categoria">Nombre de la Categoria:</label>
         <input type="text" name="filtro">
         <input type="hidden" name="tabla" value="categoria">
@@ -141,8 +206,8 @@
     <table>
         <thead>
             <th>Nombre</th>
-            <th class="<?php echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none" ?>">Editar</th>
-            <th class="<?php echo $this->tienePermiso("DELFILTRO") ? "" : "d-none" ?>">Activar/Desactivar</th>
+            <th class="<?php /*echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none"*/ ?>">Editar</th>
+            <th class="<?php /*echo $this->tienePermiso("DELFILTRO") ? "" : "d-none"*/ ?>">Activar/Desactivar</th>
         </thead>
         <tbody>
             <?php $cont = 0;
@@ -156,13 +221,13 @@
                                 echo $clave["Nombre"];
                             } ?>
                         </td>
-                        <td class="<?php echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none" ?>"><?php if (isset($_POST["editarM-" . $cont])) { ?>
+                        <td class="<?php /*echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none"*/ ?>"><?php if (isset($_POST["editarM-" . $cont])) { ?>
                                 <input type="submit" name="cambiarFiltro" value="Confirmar">
                         </td>
                     <?php } else { ?>
                         <input type="submit" name="editarM-<?php echo $cont; ?>" value="Editar"></td>
                     <?php } ?> </td>
-                    <td class="<?php echo $this->tienePermiso("DELFILTRO") ? "" : "d-none" ?>"> <input class="" type="submit" name="mostrarFiltro" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
+                    <td class="<?php /*echo $this->tienePermiso("DELFILTRO") ? "" : "d-none"*/ ?>"> <input class="" type="submit" name="mostrarFiltro" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
                     </tr>
                     <input type="hidden" name="ID" value="<?php echo $clave["ID"]; ?>">
                     <input type="hidden" name="tabla" value="marca">
@@ -170,7 +235,8 @@
             <?php } ?>
         </tbody>
     </table>
-    <form action="<?php $_PHP_SELF; ?>" method="POST" class="<?php echo $this->tienePermiso("ADDFILTRO") ? "" : "d-none" ?>">
+    <h3>Añadir</h3>
+    <form action="<?php $_PHP_SELF; ?>" method="POST" class="<?php /*echo $this->tienePermiso("ADDFILTRO") ? "" : "d-none"*/ ?>">
         <label for="marca">Nombre de la Marca:</label>
         <input type="text" name="filtro">
         <input type="hidden" name="tabla" value="marca">
@@ -184,8 +250,8 @@
     <table>
         <thead>
             <th>Nombre</th>
-            <th class="<?php echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none" ?>">Editar</th>
-            <th class="<?php echo $this->tienePermiso("DELFILTRO") ? "" : "d-none" ?>">Activar/Desactivar</th>
+            <th class="<?php /*echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none"*/ ?>">Editar</th>
+            <th class="<?php /*echo $this->tienePermiso("DELFILTRO") ? "" : "d-none"*/ ?>">Activar/Desactivar</th>
         </thead>
         <tbody>
             <?php $cont = 0;
@@ -199,14 +265,14 @@
                                 echo $clave["Nombre"];
                             } ?>
                         </td>
-                        <td class="<?php echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none" ?>">
+                        <td class="<?php /*echo $this->tienePermiso("EDITFILTRO") ? "" : "d-none"*/ ?>">
                             <?php if (isset($_POST["editarCon-" . $cont])) { ?>
                                 <input type="submit" name="cambiarFiltro" value="Confirmar">
                         </td>
                     <?php } else { ?>
                         <input type="submit" name="editarCon-<?php echo $cont; ?>" value="Editar"></td>
                     <?php } ?> </td>
-                    <td class="<?php echo $this->tienePermiso("DELFILTRO") ? "" : "d-none" ?>"> <input type="submit" name="mostrarFiltro" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
+                    <td class="<?php /*echo $this->tienePermiso("DELFILTRO") ? "" : "d-none"*/ ?>"> <input type="submit" name="mostrarFiltro" value="<?php echo $clave["Mostrar"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
                     </tr>
                     <input type="hidden" name="ID" value="<?php echo $clave["ID"]; ?>">
                     <input type="hidden" name="tabla" value="condicion">
@@ -214,7 +280,8 @@
             <?php } ?>
         </tbody>
     </table>
-    <form action="<?php $_PHP_SELF; ?>" method="POST" class="<?php echo $this->tienePermiso("ADDFILTRO") ? "" : "d-none" ?>">
+    <h3>Añadir</h3>
+    <form action="<?php $_PHP_SELF; ?>" method="POST" class="<?php /*echo $this->tienePermiso("ADDFILTRO") ? "" : "d-none"*/ ?>">
         <label for="condicion">Nombre de la Condicion:</label>
         <input type="text" name="filtro">
         <input type="hidden" name="tabla" value="condicion">
