@@ -45,10 +45,10 @@
                 <a class="nav-link" href="main">Home</a>
             </li>
             <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
-                <a class="nav-link" href="main?showList=Perfiles">Perfiles</a>
+                <a class="nav-link" href="main?showList=Clientes">Clientes</a>
             </li>
             <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
-                <a class="nav-link" href="main?showList=Permisos">Permisos</a>
+                <a class="nav-link" href="main?showList=Perfiles">Perfiles</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
