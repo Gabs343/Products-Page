@@ -84,6 +84,22 @@
             }
         }
 
+        public function getPermisos(){
+            $permisos = [];
+            try{
+                $query = "SELECT * FROM permiso";
+                $con = $this->db->connect();
+                $con = $con->query($query);
+
+                while($row = $con->fetch(PDO::FETCH_ASSOC)){
+                    array_push($permisos, $row);
+                }
+                return $permisos;
+            }catch(PDOException $e){
+                return [];
+            }
+        }
+
         public function getFiltro($filtro){
             $filtros = [];
             try{    
