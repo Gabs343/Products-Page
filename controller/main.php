@@ -13,11 +13,13 @@ class Main extends Controller
 
             $clientes = $this->modelo->getClientes();
             $perfiles = $this->modelo->getPerfiles();
+            $permisos = $this->modelo->getPermisos();
             $categorias = $this->modelo->getFiltro("categoria");
             $marcas = $this->modelo->getFiltro("marca");
             $condiciones = $this->modelo->getFiltro("condicion");
             $this->view->clientes = $clientes;
             $this->view->perfiles = $perfiles;
+            $this->view->permisos = $permisos;
             $this->view->categorias = $categorias;
             $this->view->marcas = $marcas;
             $this->view->condiciones = $condiciones;
