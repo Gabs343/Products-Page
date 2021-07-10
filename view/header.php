@@ -50,7 +50,7 @@
             <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
                 <a class="nav-link" href="main?showList=Perfiles">Perfiles</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filtros
                 </a>
