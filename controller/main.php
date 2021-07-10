@@ -24,8 +24,14 @@ class Main extends Controller
             $this->view->marcas = $marcas;
             $this->view->condiciones = $condiciones;
             $this->view->setPerfil = $this->isSubmit("setPerfil");
+            $this->view->editPerfil = $this->isSubmit("editPerfil");
+            $this->view->addPerfil = $this->isSubmit("addPerfil");
+            $this->view->statePerfil = $this->isSubmit("statePerfil");
+            $this->view->editPermiso = $this->isSubmit("editPermiso");
+            $this->view->statePermiso = $this->isSubmit("statePermiso");
             $this->view->mostrarFiltro = $this->isSubmit("mostrarFiltro");
             $this->view->cambiarFiltro = $this->isSubmit("cambiarFiltro");
+            $this->view->addPermiso = $this->isSubmit("addPermiso");
             $this->view->ingresarCategoria = $this->isSubmit("ingresarFiltro");
             $this->view->render("main/index_emp");
 
@@ -47,8 +53,91 @@ class Main extends Controller
             "key" => $_POST["key"],
             "perfil" => intval($_POST["perfiles"])
         );
-        $insertar =  $this->modelo->actualizarPerfil($perfil);
+        $insertar =  $this->modelo->actualizarCliente($perfil);
         if ($insertar) {
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
+    }
+
+    public function editPerfil(){
+        $editPerfil = array(
+            "ID" => intval($_POST["ID"]),
+            "Nombre" => $_POST["nombre"]
+        );
+        $update = $this->modelo->actualizarPerfil($editPerfil);
+        if ($update) {
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
+        
+    }
+
+    public function statePerfil(){
+        if($_POST["statePerfil"] == "Activar"){
+            $statePerfil = array(
+                "ID" => intval($_POST["ID"]),
+                "Activo" => 1
+            );
+        }else if($_POST["statePerfil"] == "Desactivar"){
+            $statePerfil = array(
+                "ID" => intval($_POST["ID"]),
+                "Activo" => 0
+            );
+        }
+        $update = $this->modelo->activarPerfil($statePerfil);
+        if($update){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
+
+    }
+
+    public function addPerfil(){
+        $newPerfil = array(
+            "Nombre" => $_POST["nombre"]
+        );
+        $addPerfil = $this->modelo->addPerfil($newPerfil);
+        if($addPerfil){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
+    }
+
+    public function editPermiso(){
+        $editPermiso = array(
+            "ID" => intval($_POST["ID"]),
+            "Nombre" => $_POST["nombre"],
+            "Code" => $_POST["code"]
+        );
+        $update = $this->modelo->actualizarPermiso($editPermiso);
+        if($update){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }   
+    
+    }
+
+    public function statePermiso(){
+        if($_POST["statePermiso"] == "Activar"){
+            $statePermiso = array(
+                "ID" => intval($_POST["ID"]),
+                "Activo" => 1 
+            );
+        }else if($_POST["statePermiso"] == "Desactivar"){
+            $statePermiso = array(
+                "ID" => intval($_POST["ID"]),
+                "Activo" => 0 
+            );
+        }
+        $update = $this->modelo->activarPermiso($statePermiso);
+        if($update){
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
+    }
+
+    public function addPermiso(){
+        $newPermiso = array(
+            "Nombre" => $_POST["descripcion"],
+            "Code" => strtoupper($_POST["code"])
+        );
+        $addPermiso =$this->modelo->addPermiso($newPermiso);
+        if($addPermiso){
             echo "<meta http-equiv='refresh' content='0'>";
         }
     }
