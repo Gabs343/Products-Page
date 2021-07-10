@@ -104,7 +104,7 @@ class Main extends Controller
         $editPermiso = array(
             "ID" => intval($_POST["ID"]),
             "Nombre" => $_POST["nombre"],
-            "Code" => $_POST["code"]
+            "Code" => strtoupper($_POST["code"])
         );
         $update = $this->modelo->actualizarPermiso($editPermiso);
         if($update){
