@@ -45,19 +45,20 @@
                 <a class="nav-link" href="main">Home</a>
             </li>
             <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link" href="main?showList=Clientes">Clientes</a>
+            </li>
+            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
                 <a class="nav-link" href="main?showList=Perfiles">Perfiles</a>
             </li>
-            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
-                <a class="nav-link" href="main?showList=Permisos">Permisos</a>
-            </li>
-            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
-                <a class="nav-link" href="main?showList=Categorias">Categorias</a>
-            </li>
-            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
-                <a class="nav-link" href="main?showList=Marcas">Marcas</a>
-            </li>
-            <li class="nav-item  <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
-                <a class="nav-link" href="main?showList=Condiciones">Condiciones</a>
+            <li class="nav-item dropdown <?php echo !$this->isEmpleado ? "d-none" : ""; ?>">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filtros
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="main?showList=Categorias">Categorias</a>
+                    <a class="dropdown-item" href="main?showList=Marcas">Marcas</a>
+                    <a class="dropdown-item" href="main?showList=Condiciones">Condiciones</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="productList?categoria=0&marca=0&condicion=0&orden=0">Productos</a>
