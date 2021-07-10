@@ -61,7 +61,7 @@
                     <form action="<?php $_PHP_SELF; ?>" method="POST">
                         <tr>
                             <td><?php if (isset($_POST["editarPer-" . $cont])) { ?>
-                                <input type="text" name="nombre" placeholder="<?php echo $clave["Nombre"]; ?>">
+                                <input type="text" name="nombre" placeholder="<?php echo $clave["Nombre"]; ?>" value="<?php echo $clave["Nombre"]; ?>" required>
                                 <?php } else {
                                     echo $clave["Nombre"];
                                 } ?>
@@ -85,9 +85,9 @@
 
         <h3>Añadir</h3>
         <form action="<?php $_PHP_SELF; ?>" method="POST" class="">
-            <label for="perfil">Nombre del Perfil:</label>
-            <input type="text" name="perfil">
-            <input type="submit" name="ingresarPerfil" value="Ingresar">
+            <label for="nombre">Nombre del Perfil:</label>
+            <input type="text" name="nombre">
+            <input type="submit" name="addPerfil" value="Ingresar">
         </form>
     </div>
 
@@ -96,12 +96,16 @@
         <hr>
 
         <form action="<?php $_PHP_SELF; ?>" method="POST">
+            
             <select name="permiso" id="">
-                <?php foreach ($this->permisos as $clave) {?>
+                <?php foreach ($this->permisos as $clave) { if(isset($_POST["verPermiso"]) || isset($_POST["editarPermiso"])){ if($clave["ID"] == $_POST["permiso"]){?>
                     <option value="<?php echo $clave["ID"]; ?>"><?php echo $clave["Nombre"]; ?></option>
-                <?php } ?>    
+                <?php } }else{ ?> 
+                    <option value="<?php echo $clave["ID"]; ?>"><?php echo $clave["Nombre"]; ?></option> 
+                <?php } }?>    
             </select>
             <input type="submit" name="verPermiso" value="Ver">
+            
             <table class="<?php echo isset($_POST["permiso"]) ? "" : "d-none"; ?>">
             <thead>
                 <th>Nombre</th>
@@ -114,14 +118,14 @@
                     
                         <tr>
                             <td><?php if (isset($_POST["editarPermiso"])) { ?>
-                                <input type="text" name="nombre" placeholder="<?php echo $clave["Nombre"]; ?>">
+                                <input type="text" name="nombre" placeholder="<?php echo $clave["Nombre"]; ?>" value="<?php echo $clave["Nombre"]; ?>">
                                 <?php } else {
                                     echo $clave["Nombre"];
                                 } ?>
                             </td>
 
                             <td><?php if (isset($_POST["editarPermiso"])) { ?>
-                                <input type="text" name="code" placeholder="<?php echo $clave["Code"]; ?>">
+                                <input type="text" name="code" placeholder="<?php echo $clave["Code"]; ?>" value="<?php echo $clave["Code"]; ?>">
                                 <?php } else {
                                     echo $clave["Code"];
                                 } ?>
@@ -129,13 +133,13 @@
 
                             <td class="">
                                 <?php if (isset($_POST["editarPermiso"])) { ?>
-                                    <input type="submit" name="cambiarPermiso" value="Confirmar">
+                                    <input type="submit" name="editPermiso" value="Confirmar">
                                     </td>
                             <?php } else { ?>
                                 <input type="submit" name="editarPermiso" value="Editar"></td>
                             <?php } ?> </td>
 
-                            <td class=""> <input class="" type="submit" name="ActivarPermiso" value="<?php echo $clave["Activo"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
+                            <td class=""> <input class="" type="submit" name="statePermiso" value="<?php echo $clave["Activo"] == 0 ? "Activar" : "Desactivar"; ?>"></td>
                         </tr>
                         <input type="hidden" name="ID" value="<?php echo $clave["ID"]; ?>">
                 <?php } } } ?>    
@@ -146,10 +150,10 @@
         <h3>Añadir</h3>
         <form action="<?php $_PHP_SELF; ?>" method="POST" class="">
             <label for="permiso">Descripción del Permiso:</label>
-            <input type="text" name="permiso">
+            <input type="text" name="descripcion">
             <label for="code">Código del Permiso:</label>
             <input type="text" name="code">
-            <input type="submit" name="ingresarPermiso" value="Ingresar">
+            <input type="submit" name="addPermiso" value="Ingresar">
         </form>
     </div>
 
