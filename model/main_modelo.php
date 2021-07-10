@@ -116,7 +116,7 @@
             }
         }
 
-        public function actualizarPerfil($perfil){
+        public function actualizarCliente($perfil){
             $exito = false;
             $query = "UPDATE cliente SET ID_Perfil = $perfil[perfil] WHERE DNI = $perfil[key]";
             $con = $this->db->connect();
@@ -152,9 +152,76 @@
 
         public function nuevoFiltro($nuevo){
             $exito = false;
-            $query = "INSERT INTO $nuevo[Tabla] (Nombre) VALUES ('$nuevo[Nombre]')";
+            $query = "INSERT INTO $nuevo[Tabla] (Nombre) VALUES (:Nombre)";
+            $con = $this->db->connect();
+            $con = $con->prepare($query);
+            if($con->execute($nuevo)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function actualizarPerfil($perfil){
+            $exito = false;
+            $query = "UPDATE perfil SET Nombre = '$perfil[Nombre]' WHERE ID = $perfil[ID]";
             $con = $this->db->connect();
             if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function activarPerfil($perfil){
+            $exito = false;
+            $query = "UPDATE perfil SET Activo = $perfil[Activo] WHERE ID = $perfil[ID]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function addPerfil($perfil){
+            $exito = false;
+            $query = "INSERT INTO perfil (Nombre) VALUES (:Nombre)";
+            $con = $this->db->connect();
+            $con = $con->prepare($query);
+
+            if($con->execute($perfil)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function actualizarPermiso($permiso){
+            $exito = false;
+            $query = "UPDATE permiso SET Nombre = '$permiso[Nombre]',
+                                    Code = '$permiso[Code]'
+                                    WHERE ID = $permiso[ID]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function activarPermiso($permiso){
+            $exito = false;
+            $query = "UPDATE permiso SET Activo = $permiso[Activo] WHERE ID = $permiso[ID]";
+            $con = $this->db->connect();
+            if($con->query($query)){
+                $exito = true;
+            }
+            return $exito;
+        }
+
+        public function addPermiso($permiso){
+            $exito = false;
+            $query = "INSERT INTO permiso (Nombre, Code) VALUES (:Nombre, :Code)";
+            $con = $this->db->connect();
+            $con = $con->prepare($query);
+
+            if($con->execute($permiso)){
                 $exito = true;
             }
             return $exito;
